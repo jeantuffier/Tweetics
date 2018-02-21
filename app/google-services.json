@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "796393565299",
+    "firebase_url": "https://tweetic-5eb0c.firebaseio.com",
+    "project_id": "tweetic-5eb0c",
+    "storage_bucket": "tweetic-5eb0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796393565299:android:91af2e94ff5caa08",
+        "android_client_info": {
+          "package_name": "fr.jeantuffier.tweetics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796393565299-hcdqimlrkqjp1i4221i6lss6vu45tj6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIT-wTMhYI6JbSZ-I9hDKjtmKdw1oAnis"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
