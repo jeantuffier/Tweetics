@@ -1,0 +1,195 @@
+{
+  "data":[{
+    "_id": "5a9cf2d81b29b8e25dd155bb",
+    "screen_name": "EPhilippePM",
+    "name": "Édouard Philippe",
+    "role": "Premier ministre",
+    "group": "governement LREM"
+  }, {
+    "_id": "5a9cf3161b29b8e25dd15794",
+    "screen_name": "MarleneSchiappa",
+    "name": "Marlène Schiappa",
+    "role": "Secrétaire d'État auprès du Premier ministre, chargée de l'Égalité entre les femmes et les hommes",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3471b29b8e25dd15961",
+    "screen_name": "gerardcollomb",
+    "name": "Gérard Collomb",
+    "role": "Ministre d'État, ministre de l'Intérieur",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf35a1b29b8e25dd15a2d",
+    "screen_name": "j_gourault",
+    "name": "Jacqueline Gourault",
+    "role": "Ministre auprès du ministre d'État, ministre de l'Intérieur",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3671b29b8e25dd15a77",
+    "screen_name": "N_Hulot",
+    "name": "Nicolas Hulot",
+    "role": "Ministre d'État, ministre de la Transition écologique et solidaire",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3741b29b8e25dd15af2",
+    "screen_name": "Elisabeth_Borne",
+    "name": "Élisabeth Borne",
+    "role": "Ministre auprès du ministre d'État, ministre de la Transition écologique et solidaire, chargée des Transports",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3841b29b8e25dd15b4e",
+    "screen_name": "SebLecornu",
+    "name": "Sébastien Lecornu",
+    "role": "Secrétaire d'État auprès du ministre d'État, ministre de la Transition écologique et solidaire",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3931b29b8e25dd15bba",
+    "screen_name": "brunepoirson",
+    "name": "Brune Poirson",
+    "role": "Secrétaire d'État auprès du ministre d'État, ministre de la Transition écologique et solidaire",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3a31b29b8e25dd15c33",
+    "screen_name": "NBelloubet",
+    "name": "Nicole Belloubet",
+    "role": "Garde des Sceaux, ministre de la Justice",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3b11b29b8e25dd15c9d",
+    "screen_name": "JY_LeDrian",
+    "name": "Jean-Yves Le Drian",
+    "role": "Ministre de l'Europe et des Affaires étrangères",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3c11b29b8e25dd15d07",
+    "screen_name": "NathalieLoiseau",
+    "name": "Nathalie Loiseau",
+    "role": "Ministre auprès du ministre de l'Europe et des Affaires étrangères, chargée des Affaires européennes",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3cf1b29b8e25dd15d5b",
+    "screen_name": "JBLemoyne",
+    "name": "Jean-Baptiste Lemoyne",
+    "role": "Secrétaire d'État auprès du ministre de l'Europe et des Affaires étrangères",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3de1b29b8e25dd15db2",
+    "screen_name": "florence_parly",
+    "name": "Florence Parly",
+    "role": "Ministre des Armées",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3ee1b29b8e25dd15e2b",
+    "screen_name": "gdarrieussecq",
+    "name": "Geneviève Darrieussecq",
+    "role": "Secrétaire d'État auprès de la ministre des Armées",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4071b29b8e25dd15f0a",
+    "screen_name": "MezardJacques",
+    "name": "Jacques Mézard",
+    "role": "Ministre de la Cohésion des territoires",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4151b29b8e25dd15f62",
+    "screen_name": "J_Denormandie",
+    "name": "Julien Denormandie",
+    "role": "Secrétaire d'Etat auprès du ministre de la Cohésion des territoires",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4251b29b8e25dd15ff3",
+    "screen_name": "agnesbuzyn",
+    "name": "Agnès Buzyn",
+    "role": "Ministre des Solidarités et de la Santé",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4361b29b8e25dd1606a",
+    "screen_name": "BrunoLeMaire",
+    "name": "Bruno Le Maire",
+    "role": "Ministre de l'Économie et des Finances",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4411b29b8e25dd160c2",
+    "screen_name": "DelphineGeny",
+    "name": "Delphine Gény-Stephann",
+    "role": "Secrétaire d’État auprès du ministre de l’Économie et des Finances",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf44f1b29b8e25dd1612e",
+    "screen_name": "FrancoiseNyssen",
+    "name": "Françoise Nyssen",
+    "role": "Ministre de la Culture",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf45e1b29b8e25dd16191",
+    "screen_name": "murielpenicaud",
+    "name": "Muriel Pénicaud",
+    "role": "Ministre du Travail",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4701b29b8e25dd1620d",
+    "screen_name": "jmblanquer",
+    "name": "Jean-Michel Blanquer",
+    "role": "Ministre de l'Éducation nationale",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf47e1b29b8e25dd16277",
+    "screen_name": "StTRAVERT",
+    "name": "Stéphane Travert",
+    "role": "Ministre de l'Agriculture et de l'Alimentation",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf48c1b29b8e25dd162ce",
+    "screen_name": "GDarmanin",
+    "name": "Gérald Darmanin",
+    "role": "Ministre de l'Action et des Comptes publics",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4981b29b8e25dd1631b",
+    "screen_name": "olivierdussopt",
+    "name": "Olivier Dussopt",
+    "role": "Secrétaire d’État auprès du ministre de l’Action et des Comptes publics",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4a61b29b8e25dd163a2",
+    "screen_name": "VidalFrederique",
+    "name": "Frédérique Vidal",
+    "role": "Ministre de l’Enseignement supérieur, de la Recherche et de l’Innovation",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4b61b29b8e25dd16401",
+    "screen_name": "AnnickGirardin",
+    "name": "Annick Girardin",
+    "role": "Ministre des Outre-Mer",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf4cd1b29b8e25dd16508",
+    "screen_name": "FlesselLaura",
+    "name": "Laura Flessel",
+    "role": "Ministre des Sports",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf2f01b29b8e25dd15680",
+    "screen_name": "CCastaner",
+    "name": "Christophe Castaner",
+    "role": "Secrétaire d’État auprès du Premier ministre, chargé des Relations avec le Parlement",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3061b29b8e25dd15716",
+    "screen_name": "BGriveaux",
+    "name": "Benjamin Griveaux",
+    "role": "Secrétaire d'État auprès du Premier ministre, porte-parole du Gouvernement",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3241b29b8e25dd157fc",
+    "screen_name": "s_cluzel",
+    "name": "Sophie Cluzel",
+    "role": "Secrétaire d'État auprès du Premier ministre, chargée des Personnes handicapées",
+    "group": "government LREM"
+  }, {
+    "_id": "5a9cf3351b29b8e25dd158bf",
+    "screen_name": "mounir",
+    "name": "Mounir Mahjoubi",
+    "role": "Secrétaire d'État auprès du Premier ministre, chargé du Numérique",
+    "group": "government LREM"
+  }]
+}
