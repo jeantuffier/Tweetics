@@ -1,28 +1,25 @@
 package fr.jeantuffier.tweetics.politician.repository
 
+import android.content.Context
 import fr.jeantuffier.tweetics.common.model.politician.Politician
 import fr.jeantuffier.tweetics.common.model.politician.PoliticianDao
-import fr.jeantuffier.tweetics.common.model.tableupdate.TableUpdate
-import fr.jeantuffier.tweetics.common.model.tableupdate.TableUpdateDao
-import io.reactivex.Maybe
 import io.reactivex.Observable
-import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-private const val POLITICIAN = "Politician"
+private const val POLITICIAN_PREFERENCES = "politician_preferences"
+private const val POLITICIAN_UPDATE = "politician_update"
 
 class PoliticianRepository @Inject constructor(
+    private val context: Context,
     private val politicianService: PoliticianService,
-    private val politicianDao: PoliticianDao,
-    private val tableUpdateDao: TableUpdateDao
+    private val politicianDao: PoliticianDao
 ) {
 
-    fun getMinister(): Observable<List<Politician>> {
-        return getTableUpdate()
-            .zipWith(getPoliticiansFromDatabase(), zipWithTableUpdate())
-            .flatMap { (tableUpdate, politicians) ->
-                if (shouldLoadFromApi(tableUpdate, politicians)) {
+    fun getPoliticians(): Observable<List<Politician>> {
+        return getPoliticiansFromDatabase()
+            .flatMap { politicians ->
+                if (shouldLoadFromApi(getLastUpdate(), politicians)) {
                     getPoliticiansFromApi()
                 } else {
                     Observable.just(politicians)
@@ -30,11 +27,10 @@ class PoliticianRepository @Inject constructor(
             }
     }
 
-    private fun getTableUpdate(): Observable<TableUpdate> {
-        return tableUpdateDao
-            .getTableUpdate(POLITICIAN)
-            .switchIfEmpty(Maybe.just(TableUpdate.getDefault()))
-            .toObservable()
+    private fun getLastUpdate(): Long {
+        return context
+            .getSharedPreferences(POLITICIAN_PREFERENCES, Context.MODE_PRIVATE)
+            .getLong(POLITICIAN_UPDATE, 0)
     }
 
     private fun getPoliticiansFromDatabase(): Observable<List<Politician>> {
@@ -43,12 +39,8 @@ class PoliticianRepository @Inject constructor(
             .toObservable()
     }
 
-    private fun zipWithTableUpdate(): BiFunction<TableUpdate, List<Politician>, Pair<TableUpdate, List<Politician>>> {
-        return BiFunction { tableUpdate, politicians -> tableUpdate to politicians }
-    }
-
-    private fun shouldLoadFromApi(tableUpdate: TableUpdate, politicians: List<Politician>)
-            = isMoreThanTenMinutesSinceLastUpdate(tableUpdate.timeStamp) || politicians.isEmpty()
+    private fun shouldLoadFromApi(timestamp: Long, politicians: List<Politician>) =
+        isMoreThanTenMinutesSinceLastUpdate(timestamp) || politicians.isEmpty()
 
     private fun isMoreThanTenMinutesSinceLastUpdate(timeStamp: Long): Boolean {
         return (timeStamp - System.currentTimeMillis()) > 10 * 60 * 1000

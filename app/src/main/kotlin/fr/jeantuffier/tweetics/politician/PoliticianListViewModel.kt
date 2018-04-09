@@ -15,7 +15,7 @@ class PoliticianListViewModel @Inject constructor(private val politicianReposito
 
     fun loadContent(): Observable<List<Politician>> {
         return politicianRepository
-            .getMinister()
+            .getPoliticians()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .map { politicians -> sortList(politicians) }

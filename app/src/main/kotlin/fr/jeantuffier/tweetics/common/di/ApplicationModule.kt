@@ -53,10 +53,6 @@ class ApplicationModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun providesTableUpdateDao(database: ApplicationDatabase) = database.tableUpdateDao()
-
-    @Singleton
-    @Provides
     fun providesTweetDao(database: ApplicationDatabase) = database.tweetDao()
 
     @Singleton
