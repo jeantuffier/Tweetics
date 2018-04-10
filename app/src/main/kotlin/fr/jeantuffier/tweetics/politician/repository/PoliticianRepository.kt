@@ -56,7 +56,16 @@ class PoliticianRepository @Inject constructor(
         Observable.fromCallable { politicianDao.insertAll(politicians) }
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
+            .doOnNext { setLastUpdate() }
             .subscribe()
+    }
+
+    private fun setLastUpdate() {
+        context
+            .getSharedPreferences(POLITICIAN_PREFERENCES, Context.MODE_PRIVATE)
+            .edit()
+            .putLong(POLITICIAN_UPDATE, System.currentTimeMillis())
+            .apply()
     }
 
 }

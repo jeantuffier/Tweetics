@@ -1,67 +1,50 @@
 package fr.jeantuffier.tweetics.tweets.repository
 
+import android.content.Context
 import fr.jeantuffier.tweetics.common.model.tweet.Tweet
 import fr.jeantuffier.tweetics.common.model.tweet.TweetDao
-import fr.jeantuffier.tweetics.common.model.tweet.TweetWrapper
-import fr.jeantuffier.tweetics.common.model.tweet.TweetWrapperDao
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
+private const val TWEETS_PREFERENCES = "tweets_preferences"
+private const val POLITICIAN_TWEETS = "politician_tweets"
+
 class TweetRepository @Inject constructor(
+    private val context: Context,
     private val tweetService: TweetService,
-    private val tweetDao: TweetDao,
-    private val tweetWrapperDao: TweetWrapperDao
+    private val tweetDao: TweetDao
 ) {
 
-    fun getTweetWrapper(screenName: String): Observable<TweetWrapper> {
-        return getTweetWrapperFromDatabase(screenName)
-            .flatMap { tweetWrapper ->
-                if (shouldLoadFromApi(tweetWrapper)) {
-                    getTweetWrapperFromApi(screenName)
+    fun getTweetWrapper(screenName: String): Observable<List<Tweet>> {
+        return getTweetsFromDatabase(screenName)
+            .flatMap { tweets ->
+                if (shouldLoadFromApi(tweets.size, screenName)) {
+                    getTweetsFromApi(screenName)
                 } else {
                     getTweetsFromDatabase(screenName)
-                        .map {
-                            tweetWrapper.tweets = it
-                            tweetWrapper
-                        }
                 }
             }
     }
 
-    private fun getTweetWrapperFromDatabase(screenName: String): Observable<TweetWrapper> {
-        return tweetWrapperDao
-            .getTweetWrapper(screenName)
-            .switchIfEmpty(Maybe.just(TweetWrapper.getDefault()))
-            .toObservable()
+    private fun shouldLoadFromApi(listSize: Int, screenName: String) =
+        listSize == 0 || isMoreThanTenMinutesSinceLastUpdate(screenName)
+
+    private fun isMoreThanTenMinutesSinceLastUpdate(screeName: String): Boolean {
+        return getLastUpdate(screeName) > 10 * 60 * 1000
     }
 
-    private fun shouldLoadFromApi(tweetWrapper: TweetWrapper) =
-        tweetWrapper.lastUpdate.isEmpty() || isMoreThanTenMinutesSinceLastUpdate(tweetWrapper.lastUpdate)
-
-    private fun isMoreThanTenMinutesSinceLastUpdate(lastUpdate: String): Boolean {
-        val formatter = SimpleDateFormat("yyyy-dd-MM'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-        val date = formatter.parse(lastUpdate)
-        return (System.currentTimeMillis() - date.time) > 10 * 60 * 1000
+    private fun getLastUpdate(screenName: String): Long {
+        return context
+            .getSharedPreferences(TWEETS_PREFERENCES, Context.MODE_PRIVATE)
+            .getLong(getPreferenceKey(screenName), 0)
     }
 
-    private fun getTweetWrapperFromApi(screenName: String): Observable<TweetWrapper> {
+    private fun getTweetsFromApi(screenName: String): Observable<List<Tweet>> {
         return tweetService
-            .getTweetWrapper(screenName)
-            .doOnNext {
-                saveTweetWrapperInDatabase(it)
-                saveTweetsInDatabase(screenName, it.tweets)
-            }
-    }
-
-    private fun saveTweetWrapperInDatabase(tweetWrapper: TweetWrapper) {
-        Observable.fromCallable { tweetWrapperDao.insert(tweetWrapper) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe()
+            .getTweets(screenName)
+            .doOnNext { saveTweetsInDatabase(screenName, it) }
     }
 
     private fun saveTweetsInDatabase(screenName: String, tweets: List<Tweet>?) {
@@ -73,9 +56,20 @@ class TweetRepository @Inject constructor(
             Observable.fromCallable { tweetDao.insertAll(tweets) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
+                .doOnNext { setLastUpdate(screenName) }
                 .subscribe()
         }
     }
+
+    private fun setLastUpdate(screenName: String) {
+        context
+            .getSharedPreferences(TWEETS_PREFERENCES, Context.MODE_PRIVATE)
+            .edit()
+            .putLong(getPreferenceKey(screenName), System.currentTimeMillis())
+            .apply()
+    }
+
+    private fun getPreferenceKey(screenName: String) = "$POLITICIAN_TWEETS:$screenName"
 
     private fun getTweetsFromDatabase(screenName: String): Observable<List<Tweet>> {
         return tweetDao

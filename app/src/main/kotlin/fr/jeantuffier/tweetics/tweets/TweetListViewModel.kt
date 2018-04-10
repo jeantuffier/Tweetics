@@ -1,7 +1,7 @@
 package fr.jeantuffier.tweetics.tweets
 
 import fr.jeantuffier.tweetics.R
-import fr.jeantuffier.tweetics.common.model.tweet.TweetWrapper
+import fr.jeantuffier.tweetics.common.model.tweet.Tweet
 import fr.jeantuffier.tweetics.tweets.repository.TweetRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class TweetListViewModel @Inject constructor(private val tweetRepository: TweetRepository) {
 
-    fun loadContent(screenName: String): Observable<TweetWrapper> {
+    fun loadContent(screenName: String): Observable<List<Tweet>> {
         return tweetRepository
             .getTweetWrapper(screenName)
             .observeOn(AndroidSchedulers.mainThread())

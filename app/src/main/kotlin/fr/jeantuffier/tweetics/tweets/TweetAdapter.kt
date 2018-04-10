@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
 import fr.jeantuffier.tweetics.R
-import fr.jeantuffier.tweetics.common.model.tweet.TweetWrapper
+import fr.jeantuffier.tweetics.common.model.tweet.Tweet
 import fr.jeantuffier.tweetics.common.utils.picasso.CircleImage
 
-class TweetAdapter(var tweetWrapper: TweetWrapper) : RecyclerView.Adapter<TweetViewHolder>() {
+class TweetAdapter(var tweets: List<Tweet>) : RecyclerView.Adapter<TweetViewHolder>() {
 
-    override fun getItemCount() = tweetWrapper.tweets?.size ?: 0
+    override fun getItemCount() = tweets.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TweetViewHolder {
         val view = LayoutInflater
@@ -22,14 +22,11 @@ class TweetAdapter(var tweetWrapper: TweetWrapper) : RecyclerView.Adapter<TweetV
 
     override fun onBindViewHolder(holder: TweetViewHolder, position: Int) {
         holder.clear()
-        tweetWrapper.tweets?.get(position)?.let {
-            //val politicianClicked = PoliticianClicked(politician.name, politician.screenName)
-            //holder.itemView.setOnClickListener { PoliticianOnItemClickHandler.onNext(politicianClicked) }
+        val tweet = tweets[position]
 
-            loadProfileImage(holder, it.getImageUrl())
-            holder.name.text = it.screenName
-            holder.text.text = it.fullText
-        }
+        loadProfileImage(holder, tweet.getImageUrl())
+        holder.name.text = tweet.screenName
+        holder.text.text = tweet.fullText
     }
 
     private fun loadProfileImage(holder: TweetViewHolder, url: String) {

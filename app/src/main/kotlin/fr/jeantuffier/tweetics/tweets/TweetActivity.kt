@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.common.Tweetics
-import fr.jeantuffier.tweetics.common.model.tweet.TweetWrapper
+import fr.jeantuffier.tweetics.common.model.tweet.Tweet
 import kotlinx.android.synthetic.main.tweets_activity.*
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class TweetActivity : AppCompatActivity() {
     @Inject
     lateinit var tweetListViewModel: TweetListViewModel
 
-    private val adapter by lazy { TweetAdapter(TweetWrapper.getDefault()) }
+    private val adapter by lazy { TweetAdapter(emptyList()) }
 
     private val screenName by lazy { intent.extras.getString(SCREEN_NAME) }
 
@@ -53,8 +53,8 @@ class TweetActivity : AppCompatActivity() {
             )
     }
 
-    private fun updateAdapter(tweetWrapper: TweetWrapper) {
-        adapter.tweetWrapper = tweetWrapper
+    private fun updateAdapter(tweets: List<Tweet>) {
+        adapter.tweets = tweets
         adapter.notifyDataSetChanged()
     }
 

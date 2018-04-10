@@ -55,8 +55,4 @@ class ApplicationModule(private val context: Context) {
     @Provides
     fun providesTweetDao(database: ApplicationDatabase) = database.tweetDao()
 
-    @Singleton
-    @Provides
-    fun providesTweetWrapperDao(database: ApplicationDatabase) = database.tweetWrapperDao()
-
 }
