@@ -17,7 +17,7 @@ class TweetRepository @Inject constructor(
     private val tweetDao: TweetDao
 ) {
 
-    fun getTweetWrapper(screenName: String): Observable<List<Tweet>> {
+    fun getTweets(screenName: String): Observable<List<Tweet>> {
         return getTweetsFromDatabase(screenName)
             .flatMap { tweets ->
                 if (shouldLoadFromApi(tweets.size, screenName)) {

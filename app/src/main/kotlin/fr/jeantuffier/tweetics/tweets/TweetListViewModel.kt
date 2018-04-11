@@ -13,7 +13,7 @@ class TweetListViewModel @Inject constructor(private val tweetRepository: TweetR
 
     fun loadContent(screenName: String): Observable<List<Tweet>> {
         return tweetRepository
-            .getTweetWrapper(screenName)
+            .getTweets(screenName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
     }

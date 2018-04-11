@@ -1,12 +1,14 @@
 package fr.jeantuffier.tweetics.tweets
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.squareup.picasso.Picasso
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.common.model.tweet.Tweet
-import fr.jeantuffier.tweetics.common.utils.picasso.CircleImage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TweetAdapter(var tweets: List<Tweet>) : RecyclerView.Adapter<TweetViewHolder>() {
 
@@ -24,8 +26,17 @@ class TweetAdapter(var tweets: List<Tweet>) : RecyclerView.Adapter<TweetViewHold
         holder.clear()
         val tweet = tweets[position]
 
-        holder.date.text = tweet.createdAt
+        holder.date.text = getDisplayDate(holder.itemView.context, tweet.createdAt)
         holder.text.text = tweet.fullText
+    }
+
+    private fun getDisplayDate(context: Context, date: String): String {
+        val formatter = SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.getDefault())
+        val parsedDate = formatter.parse(date)
+
+        val dateFormat = DateFormat.getLongDateFormat(context)
+        val timeFormat = DateFormat.getTimeFormat(context)
+        return "${dateFormat.format(parsedDate)} ${timeFormat.format(parsedDate)}"
     }
 
 }
