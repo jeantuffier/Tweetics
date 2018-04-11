@@ -3,7 +3,9 @@ package fr.jeantuffier.tweetics.tweets
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.common.Tweetics
 import fr.jeantuffier.tweetics.common.model.tweet.Tweet
@@ -59,16 +61,17 @@ class TweetActivity : AppCompatActivity() {
     }
 
     private fun setToolbar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = intent.extras.getString(TITLE)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        collapsingToolbarViewModel.setImage(collapsingToolbarImage, screenName)
+        name.text = intent.extras.getString(TITLE)
+        collapsingToolbarViewModel.setBackgroundImage(background, screenName)
+        collapsingToolbarViewModel.setProfileImage(profile, screenName)
     }
 
     private fun setRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        val dividerItemDecoration = DividerItemDecoration(this, RecyclerView.VERTICAL)
+        recyclerView.addItemDecoration(dividerItemDecoration)
     }
 
     private fun showErrorMessage(throwable: Throwable) {
@@ -77,4 +80,5 @@ class TweetActivity : AppCompatActivity() {
             .make(container, errorMessage, Snackbar.LENGTH_SHORT)
             .show()
     }
+
 }

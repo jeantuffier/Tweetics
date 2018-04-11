@@ -24,15 +24,8 @@ class TweetAdapter(var tweets: List<Tweet>) : RecyclerView.Adapter<TweetViewHold
         holder.clear()
         val tweet = tweets[position]
 
-        loadProfileImage(holder, tweet.getImageUrl())
-        holder.name.text = tweet.screenName
+        holder.date.text = tweet.createdAt
         holder.text.text = tweet.fullText
     }
 
-    private fun loadProfileImage(holder: TweetViewHolder, url: String) {
-        Picasso.get()
-            .load(url)
-            .transform(CircleImage())
-            .into(holder.image)
-    }
 }

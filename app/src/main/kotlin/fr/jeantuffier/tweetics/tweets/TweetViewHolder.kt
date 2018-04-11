@@ -6,15 +6,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import fr.jeantuffier.tweetics.R
 
-class TweetViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class TweetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    val image: ImageView = view.findViewById(R.id.image)
-    val name: TextView = view.findViewById(R.id.name)
+    val date: TextView = view.findViewById(R.id.date)
     val text: TextView = view.findViewById(R.id.text)
 
     fun clear() {
-        image.setImageResource(0)
-        name.text = ""
+        date.text = ""
         text.text = ""
     }
 

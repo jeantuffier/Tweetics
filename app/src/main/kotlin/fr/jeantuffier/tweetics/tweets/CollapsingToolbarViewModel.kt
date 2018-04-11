@@ -4,14 +4,22 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import fr.jeantuffier.tweetics.common.Config
 import fr.jeantuffier.tweetics.common.utils.picasso.BlurImage
+import fr.jeantuffier.tweetics.common.utils.picasso.CircleImage
 import javax.inject.Inject
 
 class CollapsingToolbarViewModel @Inject constructor() {
 
-    fun setImage(imageView: ImageView, screenName: String) {
+    fun setBackgroundImage(imageView: ImageView, screenName: String) {
         Picasso.get()
             .load("${Config.IMAGE_BASE_URL}$screenName.jpg")
-            .transform(BlurImage(imageView.context, 15f))
+            .transform(BlurImage(imageView.context, 25f))
+            .into(imageView)
+    }
+
+    fun setProfileImage(imageView: ImageView, screenName: String) {
+        Picasso.get()
+            .load("${Config.IMAGE_BASE_URL}$screenName.jpg")
+            .transform(CircleImage())
             .into(imageView)
     }
 }
