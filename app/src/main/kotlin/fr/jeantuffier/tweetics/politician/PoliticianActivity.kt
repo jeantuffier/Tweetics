@@ -27,8 +27,8 @@ class PoliticianActivity : AppCompatActivity() {
         injectDependency()
         loadContent()
 
+        setToolbar()
         setRecyclerView()
-        setSwipeToRefresh()
 
         PoliticianOnItemClickHandler(this)
             .registerOnClickHandler()
@@ -49,26 +49,14 @@ class PoliticianActivity : AppCompatActivity() {
             )
     }
 
+    private fun setToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.app_name)
+    }
+
     private fun setRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-        //recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-    }
-
-    private fun setSwipeToRefresh() {
-        swipeToRefresh.setOnRefreshListener { refresh() }
-    }
-
-    private fun refresh() {
-        politicianListViewModel
-            .loadContent()
-            .subscribe(
-                {
-                    updateAdapter(it)
-                    swipeToRefresh.isRefreshing = false
-                },
-                { showErrorMessage(it) }
-            )
     }
 
     private fun updateAdapter(politicians: List<Politician>) {
@@ -82,4 +70,5 @@ class PoliticianActivity : AppCompatActivity() {
             .make(container, errorMessage, Snackbar.LENGTH_SHORT)
             .show()
     }
+
 }

@@ -18,6 +18,9 @@ class TweetActivity : AppCompatActivity() {
     }
 
     @Inject
+    lateinit var collapsingToolbarViewModel: CollapsingToolbarViewModel
+
+    @Inject
     lateinit var tweetListViewModel: TweetListViewModel
 
     private val adapter by lazy { TweetAdapter(emptyList()) }
@@ -27,15 +30,12 @@ class TweetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tweets_activity)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        title = intent.extras.getString(TITLE)
 
         injectDependency()
         loadContent()
 
+        setToolbar()
         setRecyclerView()
-        setSwipeToRefresh()
     }
 
     private fun injectDependency() {
@@ -58,25 +58,17 @@ class TweetActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
+    private fun setToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = intent.extras.getString(TITLE)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        collapsingToolbarViewModel.setImage(collapsingToolbarImage, screenName)
+    }
+
     private fun setRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-    }
-
-    private fun setSwipeToRefresh() {
-        swipeToRefresh.setOnRefreshListener { refresh() }
-    }
-
-    private fun refresh() {
-        tweetListViewModel
-            .loadContent(screenName)
-            .subscribe(
-                {
-                    updateAdapter(it)
-                    swipeToRefresh.isRefreshing = false
-                },
-                { showErrorMessage(it) }
-            )
     }
 
     private fun showErrorMessage(throwable: Throwable) {
