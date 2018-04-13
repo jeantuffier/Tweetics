@@ -3,10 +3,12 @@ package fr.jeantuffier.tweetics.tweets
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.common.model.tweet.Tweet
+import fr.jeantuffier.tweetics.tweets.util.TweetParser
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,7 +29,8 @@ class TweetAdapter(var tweets: List<Tweet>) : RecyclerView.Adapter<TweetViewHold
         val tweet = tweets[position]
 
         holder.date.text = getDisplayDate(holder.itemView.context, tweet.createdAt)
-        holder.text.text = tweet.fullText
+        holder.text.text = TweetParser.parse(tweet.fullText)
+        holder.text.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun getDisplayDate(context: Context, date: String): String {
