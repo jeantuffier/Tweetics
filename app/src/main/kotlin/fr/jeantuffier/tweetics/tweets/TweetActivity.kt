@@ -20,12 +20,13 @@ class TweetActivity : AppCompatActivity() {
     }
 
     @Inject
-    lateinit var collapsingToolbarViewModel: CollapsingToolbarViewModel
+    lateinit var toolbarViewModel: ToolbarViewModel
 
     @Inject
     lateinit var tweetListViewModel: TweetListViewModel
 
-    private val adapter by lazy { TweetAdapter(emptyList()) }
+    @Inject
+    lateinit var adapter: TweetAdapter
 
     private val screenName by lazy { intent.extras.getString(SCREEN_NAME) }
 
@@ -62,8 +63,8 @@ class TweetActivity : AppCompatActivity() {
 
     private fun setToolbar() {
         name.text = intent.extras.getString(TITLE)
-        collapsingToolbarViewModel.setBackgroundImage(background, screenName)
-        collapsingToolbarViewModel.setProfileImage(profile, screenName)
+        toolbarViewModel.setBackgroundImage(background, screenName)
+        toolbarViewModel.setProfileImage(profile, screenName)
     }
 
     private fun setRecyclerView() {

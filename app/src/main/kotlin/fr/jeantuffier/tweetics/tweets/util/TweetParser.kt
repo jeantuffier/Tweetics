@@ -1,17 +1,20 @@
 package fr.jeantuffier.tweetics.tweets.util
 
+import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
+import android.support.v4.content.ContextCompat
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View
+import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.common.Config
 import java.util.regex.Pattern
+import javax.inject.Inject
 
-object TweetParser {
+class TweetParser @Inject constructor(private val context: Context) {
 
     private val urlPattern by lazy {
         Pattern.compile("(http|https)://(\\w+\\.)?(\\w+)\\.(\\w+)(/\\w+)?")
@@ -25,15 +28,17 @@ object TweetParser {
         Pattern.compile("@\\w+")
     }
 
-    private class UrlSpan(private val url: String) : ClickableSpan() {
+    private val twitterBlue by lazy { ContextCompat.getColor(context, R.color.twitterBlue) }
+
+    private inner class UrlSpan(private val url: String) : ClickableSpan() {
         override fun onClick(view: View) {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            view.context.startActivity(intent)
+            context.startActivity(intent)
         }
 
         override fun updateDrawState(paint: TextPaint) {
             super.updateDrawState(paint)
-            paint.color = Color.BLUE
+            paint.color = twitterBlue
         }
     }
 

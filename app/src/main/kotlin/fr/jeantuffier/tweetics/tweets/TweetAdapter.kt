@@ -11,8 +11,13 @@ import fr.jeantuffier.tweetics.common.model.tweet.Tweet
 import fr.jeantuffier.tweetics.tweets.util.TweetParser
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class TweetAdapter(var tweets: List<Tweet>) : RecyclerView.Adapter<TweetViewHolder>() {
+class TweetAdapter @Inject constructor(
+    private val tweetParser: TweetParser
+) : RecyclerView.Adapter<TweetViewHolder>() {
+
+    var tweets: List<Tweet> = emptyList()
 
     override fun getItemCount() = tweets.size
 
@@ -29,7 +34,7 @@ class TweetAdapter(var tweets: List<Tweet>) : RecyclerView.Adapter<TweetViewHold
         val tweet = tweets[position]
 
         holder.date.text = getDisplayDate(holder.itemView.context, tweet.createdAt)
-        holder.text.text = TweetParser.parse(tweet.fullText)
+        holder.text.text = tweetParser.parse(tweet.fullText)
         holder.text.movementMethod = LinkMovementMethod.getInstance()
     }
 

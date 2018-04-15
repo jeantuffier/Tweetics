@@ -7,7 +7,7 @@ import fr.jeantuffier.tweetics.common.utils.picasso.BlurImage
 import fr.jeantuffier.tweetics.common.utils.picasso.CircleImage
 import javax.inject.Inject
 
-class CollapsingToolbarViewModel @Inject constructor() {
+class ToolbarViewModel @Inject constructor() {
 
     fun setBackgroundImage(imageView: ImageView, screenName: String) {
         Picasso.get()
