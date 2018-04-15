@@ -11,14 +11,14 @@ class CollapsingToolbarViewModel @Inject constructor() {
 
     fun setBackgroundImage(imageView: ImageView, screenName: String) {
         Picasso.get()
-            .load("${Config.IMAGE_BASE_URL}$screenName.jpg")
+            .load("${Config.TWEETICS_SERVER_IMAGE}$screenName.jpg")
             .transform(BlurImage(imageView.context, 25f))
             .into(imageView)
     }
 
     fun setProfileImage(imageView: ImageView, screenName: String) {
         Picasso.get()
-            .load("${Config.IMAGE_BASE_URL}$screenName.jpg")
+            .load("${Config.TWEETICS_SERVER_IMAGE}$screenName.jpg")
             .transform(CircleImage())
             .into(imageView)
     }

@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import fr.jeantuffier.tweetics.common.Config
 import fr.jeantuffier.tweetics.common.room.ApplicationDatabase
 import fr.jeantuffier.tweetics.politician.repository.PoliticianService
 import fr.jeantuffier.tweetics.tweets.repository.TweetService
@@ -23,7 +24,7 @@ class ApplicationModule(private val context: Context) {
     @Provides
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://tweetics-server.herokuapp.com/")
+            .baseUrl(Config.TWEETICS_SERVER)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

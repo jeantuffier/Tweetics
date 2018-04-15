@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import fr.jeantuffier.tweetics.common.Config.IMAGE_BASE_URL
+import fr.jeantuffier.tweetics.common.Config.TWEETICS_SERVER_IMAGE
 
 @Entity(tableName = "Politician")
 data class Politician(
@@ -30,5 +30,5 @@ data class Politician(
     val group: String
 ) {
 
-    fun getImageUrl() = "$IMAGE_BASE_URL$screenName.jpg"
+    fun getImageUrl() = "$TWEETICS_SERVER_IMAGE$screenName.jpg"
 }

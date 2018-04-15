@@ -27,5 +27,5 @@ data class Tweet(
     var screenName: String
 ) {
 
-    fun getImageUrl() = "${Config.IMAGE_BASE_URL}$screenName.jpg"
+    fun getImageUrl() = "${Config.TWEETICS_SERVER_IMAGE}$screenName.jpg"
 }
