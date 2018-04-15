@@ -8,12 +8,21 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View
+import fr.jeantuffier.tweetics.common.Config
 import java.util.regex.Pattern
 
 object TweetParser {
 
     private val urlPattern by lazy {
         Pattern.compile("(http|https)://(\\w+\\.)?(\\w+)\\.(\\w+)(/\\w+)?")
+    }
+
+    private val hashTagPattern by lazy {
+        Pattern.compile("#\\w+")
+    }
+
+    private val userPattern by lazy {
+        Pattern.compile("@\\w+")
     }
 
     private class UrlSpan(private val url: String) : ClickableSpan() {
@@ -29,21 +38,28 @@ object TweetParser {
     }
 
     fun parse(tweetText: String): SpannableString {
-        return parseUrls(tweetText)
+        val baseSpan = SpannableString(tweetText)
+        parseLink(baseSpan, urlPattern)
+        parseLink(baseSpan, hashTagPattern)
+        parseLink(baseSpan, userPattern)
+
+        return baseSpan
     }
 
-    private fun parseUrls(tweetText: String): SpannableString {
-        val baseSpan = SpannableString(tweetText)
-        val matcher = urlPattern.matcher(tweetText)
+    private fun parseLink(baseSpan: SpannableString, pattern: Pattern, isUrl: Boolean = false) {
+        val matcher = pattern.matcher(baseSpan)
         while (matcher.find()) {
+            val url = when (isUrl) {
+                true -> matcher.group()
+                false -> "${Config.TWITTER}/${matcher.group()}"
+            }
             baseSpan.setSpan(
-                UrlSpan(matcher.group()),
+                UrlSpan(url),
                 matcher.start(),
                 matcher.end(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
-        return baseSpan
     }
 
 }
