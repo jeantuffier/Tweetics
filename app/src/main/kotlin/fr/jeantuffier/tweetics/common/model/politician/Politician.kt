@@ -30,5 +30,5 @@ data class Politician(
     val group: String
 ) {
 
-    fun getImageUrl() = "$TWEETICS_SERVER_IMAGE$screenName.jpg"
+    fun getImageUrl() = "$TWEETICS_SERVER_IMAGE/$screenName.jpg"
 }

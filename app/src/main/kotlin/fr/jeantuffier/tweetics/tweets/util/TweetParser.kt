@@ -16,6 +16,8 @@ import javax.inject.Inject
 
 class TweetParser @Inject constructor(private val context: Context) {
 
+    private enum class LinkType { URL, HASHTAG, AT }
+
     private val urlPattern by lazy {
         Pattern.compile("(http|https)://(\\w+\\.)?(\\w+)\\.(\\w+)(/\\w+)?")
     }
@@ -44,26 +46,30 @@ class TweetParser @Inject constructor(private val context: Context) {
 
     fun parse(tweetText: String): SpannableString {
         val baseSpan = SpannableString(tweetText)
-        parseLink(baseSpan, urlPattern)
-        parseLink(baseSpan, hashTagPattern)
-        parseLink(baseSpan, userPattern)
+        parseLink(baseSpan, urlPattern, LinkType.URL)
+        parseLink(baseSpan, hashTagPattern, LinkType.HASHTAG)
+        parseLink(baseSpan, userPattern, LinkType.AT)
 
         return baseSpan
     }
 
-    private fun parseLink(baseSpan: SpannableString, pattern: Pattern, isUrl: Boolean = false) {
+    private fun parseLink(baseSpan: SpannableString, pattern: Pattern, linkType: LinkType) {
         val matcher = pattern.matcher(baseSpan)
         while (matcher.find()) {
-            val url = when (isUrl) {
-                true -> matcher.group()
-                false -> "${Config.TWITTER}/${matcher.group()}"
-            }
             baseSpan.setSpan(
-                UrlSpan(url),
+                UrlSpan(getUrl(linkType, matcher.group())),
                 matcher.start(),
                 matcher.end(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
+        }
+    }
+
+    private fun getUrl(linkType: LinkType, string: String): String {
+        return when(linkType) {
+            LinkType.URL -> string
+            LinkType.HASHTAG -> "${Config.TWITTER_HASHTAG}/${string.substring(1, string.length)}"
+            LinkType.AT -> "${Config.TWITTER}/${string.substring(1, string.length)}"
         }
     }
 
