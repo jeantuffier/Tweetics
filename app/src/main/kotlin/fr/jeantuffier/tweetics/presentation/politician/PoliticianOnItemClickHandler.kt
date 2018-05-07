@@ -3,28 +3,26 @@ package fr.jeantuffier.tweetics.presentation.politician
 import android.content.Context
 import android.content.Intent
 import fr.jeantuffier.tweetics.domain.model.Politician
-import fr.jeantuffier.tweetics.presentation.tweets.TweetActivity
+import fr.jeantuffier.tweetics.presentation.tweets.TweetsActivity
 import io.reactivex.subjects.PublishSubject
+import javax.inject.Inject
 
-class PoliticianOnItemClickHandler(private val context: Context) {
+class PoliticianOnItemClickHandler @Inject constructor(private val context: Context) {
 
-    companion object {
-        private val subject: PublishSubject<Politician> =
-            PublishSubject.create<Politician>()
+    private val subject by lazy { PublishSubject.create<Politician>() }
 
-        fun onNext(politician: Politician) {
-            subject.onNext(politician)
-        }
-    }
-
-    fun registerOnClickHandler() {
+    init {
         subject.subscribe {
-            val intent = Intent(context, TweetActivity::class.java).apply {
-                putExtra(TweetActivity.TITLE, it.name)
-                putExtra(TweetActivity.SCREEN_NAME, it.screenName)
+            val intent = Intent(context, TweetsActivity::class.java).apply {
+                putExtra(TweetsActivity.TITLE, it.name)
+                putExtra(TweetsActivity.SCREEN_NAME, it.screenName)
             }
             context.startActivity(intent)
         }
+    }
+
+    fun onNext(politician: Politician) {
+        subject.onNext(politician)
     }
 
 }

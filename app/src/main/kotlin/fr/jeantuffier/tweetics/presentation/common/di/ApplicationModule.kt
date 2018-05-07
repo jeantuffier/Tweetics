@@ -1,12 +1,11 @@
-package fr.jeantuffier.tweetics.di
+package fr.jeantuffier.tweetics.presentation.common.di
 
 import android.arch.persistence.room.Room
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import fr.jeantuffier.tweetics.presentation.common.Config
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
-import fr.jeantuffier.tweetics.data.retrofit.service.TweetService
+import fr.jeantuffier.tweetics.presentation.common.Config
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,19 +30,10 @@ class ApplicationModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun providesTweetService(retrofit: Retrofit): TweetService =
-        retrofit.create(TweetService::class.java)
-
-    @Singleton
-    @Provides
     fun providesDatabase(context: Context): ApplicationDatabase {
         return Room
             .databaseBuilder(context, ApplicationDatabase::class.java, "database")
             .build()
     }
-
-    @Singleton
-    @Provides
-    fun providesTweetDao(database: ApplicationDatabase) = database.tweetDao()
 
 }

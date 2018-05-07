@@ -5,8 +5,7 @@ import dagger.Module
 import dagger.Provides
 import fr.jeantuffier.tweetics.data.datastore.politicians.LocalPoliticiansDataStoreImpl
 import fr.jeantuffier.tweetics.data.datastore.politicians.RemotePoliticiansDataStoreImpl
-import fr.jeantuffier.tweetics.data.mapper.LocalPoliticianMapper
-import fr.jeantuffier.tweetics.data.mapper.RemotePoliticianMapper
+import fr.jeantuffier.tweetics.data.mapper.PoliticiansMapper
 import fr.jeantuffier.tweetics.data.repository.PoliticiansRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.PoliticianService
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
@@ -17,7 +16,6 @@ import fr.jeantuffier.tweetics.domain.repositories.PoliticiansRepository
 import fr.jeantuffier.tweetics.presentation.politician.PoliticianContract
 import fr.jeantuffier.tweetics.presentation.politician.PoliticianPresenter
 import retrofit2.Retrofit
-import javax.inject.Singleton
 
 @Module
 class PoliticianContractPresenterModule {
@@ -34,22 +32,24 @@ class PoliticianContractPresenterModule {
     @PoliticianActivityScope
     @Provides
     fun providesLocalPoliticiansDataStore(
-        politicianDao: PoliticianDao
+        politicianDao: PoliticianDao,
+        politiciansMapper: PoliticiansMapper
     ): LocalPoliticiansDataStore {
         return LocalPoliticiansDataStoreImpl(
             politicianDao,
-            LocalPoliticianMapper()
+            politiciansMapper
         )
     }
 
     @PoliticianActivityScope
     @Provides
     fun providesRemotePoliticiansDataStore(
-        politicianService: PoliticianService
+        politicianService: PoliticianService,
+        politiciansMapper: PoliticiansMapper
     ): RemotePoliticiansDataStore {
         return RemotePoliticiansDataStoreImpl(
             politicianService,
-            RemotePoliticianMapper()
+            politiciansMapper
         )
     }
 

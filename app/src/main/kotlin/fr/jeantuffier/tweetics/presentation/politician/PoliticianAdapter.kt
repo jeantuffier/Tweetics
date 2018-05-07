@@ -8,9 +8,13 @@ import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Politician
 import fr.jeantuffier.tweetics.presentation.common.Config
 import fr.jeantuffier.tweetics.presentation.common.picasso.CircleImage
+import javax.inject.Inject
 
-class PoliticianAdapter(var politicians: List<Politician>) :
-    RecyclerView.Adapter<PoliticianViewHolder>() {
+class PoliticianAdapter @Inject constructor(
+    private val politicianOnItemClickHandler: PoliticianOnItemClickHandler
+) : RecyclerView.Adapter<PoliticianViewHolder>() {
+
+    var politicians: MutableList<Politician> = mutableListOf()
 
     override fun getItemCount() = politicians.size
 
@@ -26,7 +30,7 @@ class PoliticianAdapter(var politicians: List<Politician>) :
         holder.clear()
         val politician = politicians[position]
 
-        holder.itemView.setOnClickListener { PoliticianOnItemClickHandler.onNext(politician) }
+        holder.itemView.setOnClickListener { politicianOnItemClickHandler.onNext(politician) }
 
         loadProfileImage(holder, "${Config.TWEETICS_SERVER_IMAGE}/${politician.screenName}.jpg")
         holder.name.text = politician.name

@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.data.retrofit.responses
+package fr.jeantuffier.tweetics.data.retrofit.responses.link
 
 import com.google.gson.annotations.SerializedName
 

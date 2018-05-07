@@ -1,6 +1,8 @@
 package fr.jeantuffier.tweetics.data.retrofit.responses
 
 import com.google.gson.annotations.SerializedName
+import fr.jeantuffier.tweetics.data.retrofit.responses.link.EntityResponse
+import fr.jeantuffier.tweetics.data.retrofit.responses.link.UserResponse
 
 data class TweetResponse(
 
@@ -14,12 +16,12 @@ data class TweetResponse(
     val fullText: String,
 
     @SerializedName("user")
-    val user: UserResponse,
+    val user: UserResponse?,
 
     @SerializedName("retweeted_status")
-    val retweetedStatus: TweetResponse,
+    val retweetedStatus: TweetResponse?,
 
     @SerializedName("entities")
-    val entities: List<EntityResponse>
+    val entities: EntityResponse
 
 )

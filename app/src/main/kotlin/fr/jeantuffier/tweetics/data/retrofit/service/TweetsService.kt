@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 private const val SCREEN_NAME = "screenName"
 
-interface TweetService {
+interface TweetsService {
 
     @GET("/politicians/{$SCREEN_NAME}")
     fun getTweets(@Path(SCREEN_NAME) screenName: String): Single<List<TweetResponse>>

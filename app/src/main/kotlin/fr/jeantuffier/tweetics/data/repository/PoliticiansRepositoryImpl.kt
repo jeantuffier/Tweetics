@@ -18,14 +18,15 @@ class PoliticiansRepositoryImpl @Inject constructor(
 ) : PoliticiansRepository {
 
     override fun getPoliticians(): Single<List<Politician>> {
-        return localDataStore.getPoliticians()
+        return getRemotePoliticians()
+        /*return localDataStore.getPoliticians()
             .flatMap { politicians ->
                 if (shouldLoadFromApi(getLastUpdate(), politicians)) {
                     getRemotePoliticians()
                 } else {
                     Single.just(politicians)
                 }
-            }
+            }*/
     }
 
     private fun shouldLoadFromApi(timestamp: Long, politicians: List<Politician>) =
@@ -44,7 +45,7 @@ class PoliticiansRepositoryImpl @Inject constructor(
     private fun getRemotePoliticians(): Single<List<Politician>> {
         return remoteDataStore
             .getPoliticians()
-            .doOnSuccess { savePoliticians(it) }
+        //.doOnSuccess { savePoliticians(it) }
     }
 
     private fun savePoliticians(politicians: List<Politician>) {

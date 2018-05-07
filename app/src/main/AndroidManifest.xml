@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="fr.jeantuffier.tweetics.presentation.tweets.TweetActivity">
+        <activity android:name="fr.jeantuffier.tweetics.presentation.tweets.TweetsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fr.jeantuffier.tweetics.presentation.politician.PoliticianActivity" />

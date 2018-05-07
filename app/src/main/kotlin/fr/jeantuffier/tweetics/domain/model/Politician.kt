@@ -5,6 +5,5 @@ data class Politician(
     val groups: List<String>,
     val name: String,
     val role: String,
-    val screenName: String,
-    val tweets: List<Tweet>
+    val screenName: String
 )

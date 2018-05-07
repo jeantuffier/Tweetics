@@ -18,14 +18,15 @@ class TweetsRepositoryImpl @Inject constructor(
 ) : TweetsRepository {
 
     override fun getTweets(screenName: String): Single<List<Tweet>> {
-        return localTweetsDataStore.getTweets(screenName)
+        return getRemoteTweets(screenName)
+        /*return localTweetsDataStore.getTweets(screenName)
             .flatMap { tweets ->
                 if (shouldLoadFromApi(tweets.size, screenName)) {
                     getRemoteTweets(screenName)
                 } else {
                     Single.just(tweets)
                 }
-            }
+            }*/
     }
 
     private fun shouldLoadFromApi(listSize: Int, screenName: String) =
@@ -46,7 +47,7 @@ class TweetsRepositoryImpl @Inject constructor(
     private fun getRemoteTweets(screenName: String): Single<List<Tweet>> {
         return remoteTweetsDataStore
             .getTweets(screenName)
-            .doOnSuccess { saveTweets(screenName, it) }
+            //.doOnSuccess { saveTweets(screenName, it) }
     }
 
     private fun saveTweets(screenName: String, tweets: List<Tweet>) {

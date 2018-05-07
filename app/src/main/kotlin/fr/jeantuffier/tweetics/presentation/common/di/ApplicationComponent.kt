@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.di
+package fr.jeantuffier.tweetics.presentation.common.di
 
 import dagger.Component
 import dagger.android.AndroidInjector

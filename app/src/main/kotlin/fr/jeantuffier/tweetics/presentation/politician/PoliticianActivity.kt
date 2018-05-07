@@ -15,7 +15,8 @@ class PoliticianActivity : AppCompatActivity(), PoliticianContract.View {
     @Inject
     lateinit var politicianPresenter: PoliticianContract.Presenter
 
-    private val adapter by lazy { PoliticianAdapter(emptyList()) }
+    @Inject
+    lateinit var adapter : PoliticianAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -27,9 +28,6 @@ class PoliticianActivity : AppCompatActivity(), PoliticianContract.View {
         setToolbar()
         setRecyclerView()
         loadContent()
-
-        PoliticianOnItemClickHandler(this)
-            .registerOnClickHandler()
     }
 
     override fun updateViewState(state: PoliticianViewState) {
@@ -60,7 +58,8 @@ class PoliticianActivity : AppCompatActivity(), PoliticianContract.View {
     }
 
     private fun updateAdapter(politicians: List<Politician>) {
-        adapter.politicians = politicians
+        adapter.politicians.clear()
+        adapter.politicians.addAll(politicians)
         adapter.notifyDataSetChanged()
     }
 

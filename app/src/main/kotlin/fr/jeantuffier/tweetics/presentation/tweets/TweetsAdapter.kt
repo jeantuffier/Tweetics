@@ -7,29 +7,29 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import fr.jeantuffier.tweetics.R
-import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
+import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.presentation.tweets.util.TweetParser
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class TweetAdapter @Inject constructor(
+class TweetsAdapter @Inject constructor(
     private val tweetParser: TweetParser
-) : RecyclerView.Adapter<TweetViewHolder>() {
+) : RecyclerView.Adapter<TweetsViewHolder>() {
 
-    var tweets: List<TweetEntity> = emptyList()
+    var tweets: List<Tweet> = emptyList()
 
     override fun getItemCount() = tweets.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TweetViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TweetsViewHolder {
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.tweets_item_layout, parent, false)
 
-        return TweetViewHolder(view)
+        return TweetsViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: TweetViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TweetsViewHolder, position: Int) {
         holder.clear()
         val tweet = tweets[position]
 
