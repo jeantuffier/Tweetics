@@ -34,7 +34,7 @@ class TweetsAdapter @Inject constructor(
         val tweet = tweets[position]
 
         holder.date.text = getDisplayDate(holder.itemView.context, tweet.createdAt)
-        holder.text.text = tweetParser.parse(tweet.fullText)
+        holder.text.text = tweetParser.parse(tweet)
         holder.text.movementMethod = LinkMovementMethod.getInstance()
     }
 

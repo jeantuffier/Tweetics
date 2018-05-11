@@ -10,25 +10,13 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View
 import fr.jeantuffier.tweetics.R
+import fr.jeantuffier.tweetics.domain.model.Link
+import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.presentation.common.Config
 import java.util.regex.Pattern
 import javax.inject.Inject
 
 class TweetParser @Inject constructor(private val context: Context) {
-
-    private enum class LinkType { URL, HASHTAG, AT }
-
-    private val urlPattern by lazy {
-        Pattern.compile("(http|https)://(\\w+\\.)?(\\w+)\\.(\\w+)(/\\w+)?")
-    }
-
-    private val hashTagPattern by lazy {
-        Pattern.compile("#\\w+")
-    }
-
-    private val userPattern by lazy {
-        Pattern.compile("@\\w+")
-    }
 
     private val twitterBlue by lazy { ContextCompat.getColor(context, R.color.twitterBlue) }
 
@@ -44,32 +32,46 @@ class TweetParser @Inject constructor(private val context: Context) {
         }
     }
 
-    fun parse(tweetText: String): SpannableString {
-        val baseSpan = SpannableString(tweetText)
-        parseLink(baseSpan, urlPattern, LinkType.URL)
-        parseLink(baseSpan, hashTagPattern, LinkType.HASHTAG)
-        parseLink(baseSpan, userPattern, LinkType.AT)
+    fun parse(tweet: Tweet): SpannableString {
+        val text = tweet.fullText.substring(tweet.displayTextRange)
+        val baseSpan = SpannableString(text)
+        parseHashTags(tweet, baseSpan)
+        parseUrls(tweet, baseSpan)
+        parseUserMentions(tweet, baseSpan)
 
         return baseSpan
     }
 
-    private fun parseLink(baseSpan: SpannableString, pattern: Pattern, linkType: LinkType) {
-        val matcher = pattern.matcher(baseSpan)
-        while (matcher.find()) {
+    private fun parseHashTags(tweet: Tweet, baseSpan: SpannableString) {
+        tweet.hashTags?.forEach {
             baseSpan.setSpan(
-                UrlSpan(getUrl(linkType, matcher.group())),
-                matcher.start(),
-                matcher.end(),
+                UrlSpan("${Config.TWITTER_HASHTAG}/${it.text}"),
+                it.indices.first(),
+                it.indices.last(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
     }
 
-    private fun getUrl(linkType: LinkType, string: String): String {
-        return when(linkType) {
-            LinkType.URL -> string
-            LinkType.HASHTAG -> "${Config.TWITTER_HASHTAG}/${string.substring(1, string.length)}"
-            LinkType.AT -> "${Config.TWITTER}/${string.substring(1, string.length)}"
+    private fun parseUrls(tweet: Tweet, baseSpan: SpannableString) {
+        tweet.urls?.forEach {
+            baseSpan.setSpan(
+                UrlSpan(it.url),
+                it.indices.first(),
+                it.indices.last(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+    }
+
+    private fun parseUserMentions(tweet: Tweet, baseSpan: SpannableString) {
+        tweet.userMentions?.forEach {
+            baseSpan.setSpan(
+                UrlSpan("${Config.TWITTER}/${it.screenName}"),
+                it.indices.first(),
+                it.indices.last(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
     }
 

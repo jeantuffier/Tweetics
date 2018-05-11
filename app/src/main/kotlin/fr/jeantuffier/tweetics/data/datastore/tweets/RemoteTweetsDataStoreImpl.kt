@@ -1,6 +1,6 @@
 package fr.jeantuffier.tweetics.data.datastore.tweets
 
-import fr.jeantuffier.tweetics.data.mapper.TweetsMapper
+import fr.jeantuffier.tweetics.data.mapper.TweetsFactory
 import fr.jeantuffier.tweetics.data.retrofit.service.TweetsService
 import fr.jeantuffier.tweetics.domain.datastore.RemoteTweetsDataStore
 import fr.jeantuffier.tweetics.domain.model.Tweet
@@ -9,13 +9,13 @@ import javax.inject.Inject
 
 class RemoteTweetsDataStoreImpl @Inject constructor(
     private val tweetService: TweetsService,
-    private val mapper: TweetsMapper
+    private val factory: TweetsFactory
 ) : RemoteTweetsDataStore {
 
     override fun getTweets(screenName: String): Single<List<Tweet>> {
         return tweetService
             .getTweets(screenName)
-            .map { mapper.responsesToModels(it, screenName) }
+            .map { factory.getTweets(it, screenName) }
     }
 
 }

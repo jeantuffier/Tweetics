@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import fr.jeantuffier.tweetics.data.datastore.politicians.LocalPoliticiansDataStoreImpl
 import fr.jeantuffier.tweetics.data.datastore.politicians.RemotePoliticiansDataStoreImpl
-import fr.jeantuffier.tweetics.data.mapper.PoliticiansMapper
+import fr.jeantuffier.tweetics.data.mapper.PoliticiansFactory
 import fr.jeantuffier.tweetics.data.repository.PoliticiansRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.PoliticianService
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
@@ -33,7 +33,7 @@ class PoliticianContractPresenterModule {
     @Provides
     fun providesLocalPoliticiansDataStore(
         politicianDao: PoliticianDao,
-        politiciansMapper: PoliticiansMapper
+        politiciansMapper: PoliticiansFactory
     ): LocalPoliticiansDataStore {
         return LocalPoliticiansDataStoreImpl(
             politicianDao,
@@ -45,7 +45,7 @@ class PoliticianContractPresenterModule {
     @Provides
     fun providesRemotePoliticiansDataStore(
         politicianService: PoliticianService,
-        politiciansMapper: PoliticiansMapper
+        politiciansMapper: PoliticiansFactory
     ): RemotePoliticiansDataStore {
         return RemotePoliticiansDataStoreImpl(
             politicianService,

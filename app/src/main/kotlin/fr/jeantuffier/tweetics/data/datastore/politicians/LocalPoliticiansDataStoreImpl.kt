@@ -1,6 +1,6 @@
 package fr.jeantuffier.tweetics.data.datastore.politicians
 
-import fr.jeantuffier.tweetics.data.mapper.PoliticiansMapper
+import fr.jeantuffier.tweetics.data.mapper.PoliticiansFactory
 import fr.jeantuffier.tweetics.data.room.dao.PoliticianDao
 import fr.jeantuffier.tweetics.domain.datastore.LocalPoliticiansDataStore
 import fr.jeantuffier.tweetics.domain.model.Politician
@@ -11,18 +11,18 @@ import javax.inject.Inject
 
 class LocalPoliticiansDataStoreImpl @Inject constructor(
     private val politicianDao: PoliticianDao,
-    private val mapper: PoliticiansMapper
+    private val factory: PoliticiansFactory
 ) : LocalPoliticiansDataStore {
 
     override fun getPoliticians(): Single<List<Politician>> {
         return politicianDao
             .getPoliticians()
-            .map { mapper.entitiesToModel(it) }
+            .map { factory.getPoliticiansFromEntities(it) }
     }
 
     override fun savePoliticians(politicians: List<Politician>, doOnNext: () -> Unit) {
         Observable
-            .fromCallable { mapper.modelsToEntities(politicians) }
+            .fromCallable { factory.getPoliticianEntities(politicians) }
             .map { politicianDao.insertAll(it) }
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())

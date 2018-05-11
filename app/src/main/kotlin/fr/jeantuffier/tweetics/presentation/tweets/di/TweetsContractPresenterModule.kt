@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import fr.jeantuffier.tweetics.data.datastore.tweets.LocalTweetsDataStoreImpl
 import fr.jeantuffier.tweetics.data.datastore.tweets.RemoteTweetsDataStoreImpl
-import fr.jeantuffier.tweetics.data.mapper.TweetsMapper
+import fr.jeantuffier.tweetics.data.mapper.TweetsFactory
 import fr.jeantuffier.tweetics.data.repository.TweetsRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.TweetsService
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
@@ -33,7 +33,7 @@ class TweetsContractPresenterModule {
     @Provides
     fun providesLocalPoliticiansDataStore(
         tweetDao: TweetDao,
-        tweetsMapper: TweetsMapper
+        tweetsMapper: TweetsFactory
     ): LocalTweetsDataStore {
         return LocalTweetsDataStoreImpl(
             tweetDao,
@@ -45,7 +45,7 @@ class TweetsContractPresenterModule {
     @Provides
     fun providesRemoteTweetsDataStore(
         tweetsService: TweetsService,
-        tweetsMapper: TweetsMapper
+        tweetsMapper: TweetsFactory
     ): RemoteTweetsDataStore {
         return RemoteTweetsDataStoreImpl(
             tweetsService,

@@ -50,9 +50,9 @@ class TweetsRepositoryImpl @Inject constructor(
             //.doOnSuccess { saveTweets(screenName, it) }
     }
 
-    private fun saveTweets(screenName: String, tweets: List<Tweet>) {
+    private fun saveTweets(screenName: String, tweets: List<Tweet>, politicianId: String) {
         localTweetsDataStore
-            .saveTweets(screenName, tweets) {
+            .saveTweets(screenName, tweets, politicianId) {
                 setLastUpdate(screenName)
             }
     }

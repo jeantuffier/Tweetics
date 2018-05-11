@@ -22,6 +22,9 @@ data class TweetResponse(
     val retweetedStatus: TweetResponse?,
 
     @SerializedName("entities")
-    val entities: EntityResponse
+    val entities: EntityResponse?,
+
+    @SerializedName("display_text_range")
+    val displayTextRange: List<Int>?
 
 )
