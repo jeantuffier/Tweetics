@@ -7,13 +7,13 @@ import fr.jeantuffier.tweetics.data.retrofit.responses.link.UserResponse
 data class TweetResponse(
 
     @SerializedName("id_str")
-    val idStr: String,
+    val idStr: String?,
 
     @SerializedName("created_at")
-    val createdAt: String,
+    val createdAt: String?,
 
     @SerializedName("full_text")
-    val fullText: String,
+    val fullText: String?,
 
     @SerializedName("user")
     val user: UserResponse?,

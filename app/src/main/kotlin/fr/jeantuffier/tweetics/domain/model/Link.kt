@@ -5,19 +5,19 @@ sealed class Link {
     data class HashTag(
         val id: String,
         val text: String,
-        val indices: List<Int>
+        val indices: IntRange
     ) : Link()
 
     data class UserMention(
         val id: String,
         val screenName: String,
-        val indices: List<Int>
+        val indices: IntRange
     ) : Link()
 
     data class Url(
         val id: String,
         val url: String,
-        val indices: List<Int>
+        val indices: IntRange
     ) : Link()
 
 }

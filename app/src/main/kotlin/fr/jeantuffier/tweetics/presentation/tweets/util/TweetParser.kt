@@ -7,13 +7,13 @@ import android.support.v4.content.ContextCompat
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
+import android.text.TextUtils
 import android.text.style.ClickableSpan
 import android.view.View
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.presentation.common.Config
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 class TweetParser @Inject constructor(private val context: Context) {
@@ -32,18 +32,48 @@ class TweetParser @Inject constructor(private val context: Context) {
         }
     }
 
-    fun parse(tweet: Tweet): SpannableString {
-        val text = tweet.fullText.substring(tweet.displayTextRange)
+    fun parse(tweet: Tweet): CharSequence {
+        return if (tweet.reTweet == null) {
+            getSpannableTweet(tweet)
+        } else {
+            val prefix = getReTweetPrefix(tweet)
+            val content = getSpannableTweet(tweet.reTweet)
+            TextUtils.concat(prefix, content)
+        }
+    }
+
+    private fun getSpannableTweet(tweet: Tweet): SpannableString {
+        val text = getContent(tweet)
         val baseSpan = SpannableString(text)
-        parseHashTags(tweet, baseSpan)
-        parseUrls(tweet, baseSpan)
-        parseUserMentions(tweet, baseSpan)
+
+        parseHashTags(tweet.hashTags, baseSpan)
+        parseUrls(
+            tweet.urls?.filter { it.indices.first() < tweet.displayTextRange.endInclusive },
+            baseSpan
+        )
+        parseUserMentions(tweet.userMentions, baseSpan)
 
         return baseSpan
     }
 
-    private fun parseHashTags(tweet: Tweet, baseSpan: SpannableString) {
-        tweet.hashTags?.forEach {
+    private fun getContent(tweet: Tweet) =
+        tweet.fullText.substring(tweet.displayTextRange.start, tweet.displayTextRange.endInclusive)
+
+    private fun getReTweetPrefix(tweet: Tweet): SpannableString {
+        if (tweet.reTweet == null) return SpannableString("")
+
+        val text = "RT @${tweet.userMentions!!.first().screenName}: "
+        val prefixSpan = SpannableString(text)
+        parseUserMentions(
+            tweet.userMentions.filter { it.indices.endInclusive <= text.length },
+            prefixSpan
+        )
+
+        return prefixSpan
+    }
+
+    private fun parseHashTags(hashTags: List<Link.HashTag>?, baseSpan: SpannableString) {
+        hashTags?.forEach {
             baseSpan.setSpan(
                 UrlSpan("${Config.TWITTER_HASHTAG}/${it.text}"),
                 it.indices.first(),
@@ -53,8 +83,8 @@ class TweetParser @Inject constructor(private val context: Context) {
         }
     }
 
-    private fun parseUrls(tweet: Tweet, baseSpan: SpannableString) {
-        tweet.urls?.forEach {
+    private fun parseUrls(urls: List<Link.Url>?, baseSpan: SpannableString) {
+        urls?.forEach {
             baseSpan.setSpan(
                 UrlSpan(it.url),
                 it.indices.first(),
@@ -64,8 +94,11 @@ class TweetParser @Inject constructor(private val context: Context) {
         }
     }
 
-    private fun parseUserMentions(tweet: Tweet, baseSpan: SpannableString) {
-        tweet.userMentions?.forEach {
+    private fun parseUserMentions(
+        userMentions: List<Link.UserMention>?,
+        baseSpan: SpannableString
+    ) {
+        userMentions?.forEach {
             baseSpan.setSpan(
                 UrlSpan("${Config.TWITTER}/${it.screenName}"),
                 it.indices.first(),

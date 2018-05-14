@@ -1,6 +1,7 @@
 package fr.jeantuffier.tweetics.data.mapper
 
 import fr.jeantuffier.tweetics.data.retrofit.responses.TweetResponse
+import fr.jeantuffier.tweetics.data.retrofit.responses.link.EntityResponse
 import fr.jeantuffier.tweetics.data.retrofit.responses.link.HashTagResponse
 import fr.jeantuffier.tweetics.data.retrofit.responses.link.UrlResponse
 import fr.jeantuffier.tweetics.data.retrofit.responses.link.UserMentionResponse
@@ -61,36 +62,35 @@ class TweetsFactory @Inject constructor() {
 
     fun getTweets(responses: List<TweetResponse>, screenName: String): List<Tweet> {
         return responses.map {
-            val reTweet = if (it.retweetedStatus != null) {
-                getTweet(it.retweetedStatus, screenName, null)
-            } else null
-
-            getTweet(it, screenName, reTweet)
+            getTweet(it, screenName)
         }
     }
 
     private fun getTweet(
         response: TweetResponse,
-        screenName: String,
-        reTweet: Tweet?
+        screenName: String
     ): Tweet {
+        val reTweet = if (response.retweetedStatus?.idStr != null) {
+             getTweet(response.retweetedStatus, screenName)
+        } else null
+
         return Tweet(
-            response.idStr,
+            response.idStr ?: "",
             screenName,
-            response.createdAt,
-            response.fullText,
+            response.createdAt ?: "",
+            response.fullText ?: "",
             reTweet,
             response.entities?.hashTags?.map(getHashTagFactory()),
             response.entities?.userMentions?.map(getUserMentionFactory()),
             response.entities?.urls?.map(getUrlFactory()),
             response.entities?.media?.map(getUrlFactory()),
-            getDisplayTextRangeFromResponse(response.displayTextRange)
+            getDisplayTextRangeFromResponse(response.displayTextRange ?: listOf(0, 0))
         )
     }
 
-    private fun getDisplayTextRangeFromResponse(range: List<Int>?): IntRange {
-        val start = range?.first() ?: 0
-        val end = range?.last() ?: 0
+    private fun getDisplayTextRangeFromResponse(range: List<Int>): IntRange {
+        val start = range.first()
+        val end = range.last()
         return IntRange(start, end)
     }
 
@@ -99,7 +99,7 @@ class TweetsFactory @Inject constructor() {
             Link.HashTag(
                 UUID.randomUUID().toString(),
                 it.text,
-                it.indices
+                IntRange(it.indices.first(), it.indices.last())
             )
         }
     }
@@ -109,7 +109,7 @@ class TweetsFactory @Inject constructor() {
             Link.UserMention(
                 UUID.randomUUID().toString(),
                 it.screenName,
-                it.indices
+                IntRange(it.indices.first(), it.indices.last())
             )
         }
     }
@@ -122,7 +122,7 @@ class TweetsFactory @Inject constructor() {
         return Link.Url(
             UUID.randomUUID().toString(),
             response.url,
-            response.indices
+            IntRange(response.indices.first(), response.indices.last())
         )
     }
 
