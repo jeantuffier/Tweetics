@@ -14,6 +14,6 @@ data class EntityResponse (
     val urls: List<UrlResponse>,
 
     @SerializedName("media")
-    val media: List<UrlResponse>
+    val media: List<MediaResponse>
 
 )

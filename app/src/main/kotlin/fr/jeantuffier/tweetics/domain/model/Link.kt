@@ -1,23 +1,14 @@
 package fr.jeantuffier.tweetics.domain.model
 
-sealed class Link {
+data class Link (
+    val id: String,
+    val text: String,
+    val indices: IntRange,
+    val type: LinkType
+) {
 
-    data class HashTag(
-        val id: String,
-        val text: String,
-        val indices: IntRange
-    ) : Link()
-
-    data class UserMention(
-        val id: String,
-        val screenName: String,
-        val indices: IntRange
-    ) : Link()
-
-    data class Url(
-        val id: String,
-        val url: String,
-        val indices: IntRange
-    ) : Link()
+    companion object {
+        enum class LinkType { HASH_TAG, URL, USER_MENTION }
+    }
 
 }

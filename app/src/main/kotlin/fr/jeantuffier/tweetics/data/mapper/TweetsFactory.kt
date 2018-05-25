@@ -1,12 +1,11 @@
 package fr.jeantuffier.tweetics.data.mapper
 
 import fr.jeantuffier.tweetics.data.retrofit.responses.TweetResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.link.EntityResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.link.HashTagResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.link.UrlResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.link.UserMentionResponse
+import fr.jeantuffier.tweetics.data.retrofit.responses.link.*
 import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
 import fr.jeantuffier.tweetics.domain.model.Link
+import fr.jeantuffier.tweetics.domain.model.Media
+import fr.jeantuffier.tweetics.domain.model.Size
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import java.util.*
 import javax.inject.Inject
@@ -16,10 +15,8 @@ class TweetsFactory @Inject constructor() {
     fun getTweets(
         entities: List<TweetEntity>,
         screenName: String,
-        hashTags: List<Link.HashTag>,
-        userMentions: List<Link.UserMention>,
-        urls: List<Link.Url>,
-        media: List<Link.Url>
+        links: List<Link>,
+        medias: List<Media>
     ): List<Tweet> {
         return entities.map {
             Tweet(
@@ -28,10 +25,8 @@ class TweetsFactory @Inject constructor() {
                 it.createdAt,
                 it.fullText,
                 null,
-                hashTags,
-                userMentions,
-                urls,
-                media,
+                links,
+                medias,
                 getDisplayTextRangeFromEntity(it.displayTextRange)
             )
         }
@@ -71,7 +66,7 @@ class TweetsFactory @Inject constructor() {
         screenName: String
     ): Tweet {
         val reTweet = if (response.retweetedStatus?.idStr != null) {
-             getTweet(response.retweetedStatus, screenName)
+            getTweet(response.retweetedStatus, screenName)
         } else null
 
         return Tweet(
@@ -80,50 +75,66 @@ class TweetsFactory @Inject constructor() {
             response.createdAt ?: "",
             response.fullText ?: "",
             reTweet,
-            response.entities?.hashTags?.map(getHashTagFactory()),
-            response.entities?.userMentions?.map(getUserMentionFactory()),
-            response.entities?.urls?.map(getUrlFactory()),
-            response.entities?.media?.map(getUrlFactory()),
+            getLinks(response),
+            getMedias(response.entities?.media),
             getDisplayTextRangeFromResponse(response.displayTextRange ?: listOf(0, 0))
         )
     }
+
+    private fun getLinks(response: TweetResponse): List<Link> {
+        return mutableListOf<Link>().apply {
+            addAll(getHashTags(response.entities?.hashTags))
+            addAll(getUserMentions(response.entities?.userMentions))
+            addAll(getUrls(response.entities?.urls))
+        }
+    }
+
+    private fun getHashTags(responses: List<HashTagResponse>?): List<Link> {
+        return responses?.map { createLink(it.text, it.indices, Link.Companion.LinkType.HASH_TAG) }
+                ?: emptyList()
+    }
+
+    private fun getUserMentions(responses: List<UserMentionResponse>?): List<Link> {
+        return responses?.map {
+            createLink(
+                it.screenName,
+                it.indices,
+                Link.Companion.LinkType.USER_MENTION
+            )
+        } ?: emptyList()
+    }
+
+    private fun getUrls(responses: List<UrlResponse>?): List<Link> {
+        return responses?.map { createLink(it.url, it.indices, Link.Companion.LinkType.URL) }
+                ?: emptyList()
+    }
+
+    private fun createLink(text: String, indices: List<Int>, type: Link.Companion.LinkType): Link {
+        val id = UUID.randomUUID().toString()
+        val range = IntRange(indices.first(), indices.last())
+        return Link(id, text, range, type)
+    }
+
+    private fun getMedias(medias: List<MediaResponse>?): List<Media> {
+        return medias?.map { Media(it.id, it.url, it.type, getSizes(it.sizes)) } ?: emptyList()
+    }
+
+    private fun getSizes(response: SizesResponse): List<Size> {
+        return mutableListOf<Size>().apply {
+            add(getSize(response.thumb, Size.Companion.Type.THUMB))
+            add(getSize(response.small, Size.Companion.Type.SMALL))
+            add(getSize(response.medium, Size.Companion.Type.MEDIUM))
+            add(getSize(response.large, Size.Companion.Type.LARGE))
+        }
+    }
+
+    private fun getSize(response: SizeResponse, type: Size.Companion.Type) =
+        Size(UUID.randomUUID().toString(), response.width, response.height, response.resize, type)
 
     private fun getDisplayTextRangeFromResponse(range: List<Int>): IntRange {
         val start = range.first()
         val end = range.last()
         return IntRange(start, end)
-    }
-
-    private fun getHashTagFactory(): (response: HashTagResponse) -> Link.HashTag {
-        return {
-            Link.HashTag(
-                UUID.randomUUID().toString(),
-                it.text,
-                IntRange(it.indices.first(), it.indices.last())
-            )
-        }
-    }
-
-    private fun getUserMentionFactory(): (response: UserMentionResponse) -> Link.UserMention {
-        return {
-            Link.UserMention(
-                UUID.randomUUID().toString(),
-                it.screenName,
-                IntRange(it.indices.first(), it.indices.last())
-            )
-        }
-    }
-
-    private fun getUrlFactory(): (response: UrlResponse) -> Link.Url {
-        return { getUrl(it) }
-    }
-
-    private fun getUrl(response: UrlResponse): Link.Url {
-        return Link.Url(
-            UUID.randomUUID().toString(),
-            response.url,
-            IntRange(response.indices.first(), response.indices.last())
-        )
     }
 
 }

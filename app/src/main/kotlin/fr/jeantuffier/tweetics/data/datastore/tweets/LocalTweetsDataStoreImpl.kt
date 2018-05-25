@@ -4,6 +4,7 @@ import fr.jeantuffier.tweetics.data.mapper.TweetsFactory
 import fr.jeantuffier.tweetics.data.room.dao.TweetDao
 import fr.jeantuffier.tweetics.domain.datastore.LocalTweetsDataStore
 import fr.jeantuffier.tweetics.domain.model.Link
+import fr.jeantuffier.tweetics.domain.model.Media
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -18,15 +19,13 @@ class LocalTweetsDataStoreImpl @Inject constructor(
 
     override fun getTweets(
         screenName: String,
-        hashTags: List<Link.HashTag>,
-        userMentions: List<Link.UserMention>,
-        urls: List<Link.Url>,
-        media: List<Link.Url>
+        links: List<Link>,
+        medias: List<Media>
     ): Single<List<Tweet>> {
         return tweetDao
             .getTweets(screenName)
             .switchIfEmpty(Maybe.just(emptyList()))
-            .map { factory.getTweets(it, screenName, hashTags, userMentions, urls, media) }
+            .map { factory.getTweets(it, screenName, links, medias) }
             .toSingle()
     }
 

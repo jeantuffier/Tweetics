@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.presentation.tweets.util.TweetParser
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -32,9 +34,8 @@ class TweetsAdapter @Inject constructor(
     override fun onBindViewHolder(holder: TweetsViewHolder, position: Int) {
         holder.clear()
         val tweet = tweets[position]
-
+        setText(tweet, holder)
         holder.date.text = getDisplayDate(holder.itemView.context, tweet.createdAt)
-        holder.text.text = tweetParser.parse(tweet)
         holder.text.movementMethod = LinkMovementMethod.getInstance()
     }
 
@@ -45,6 +46,15 @@ class TweetsAdapter @Inject constructor(
         val dateFormat = DateFormat.getLongDateFormat(context)
         val timeFormat = DateFormat.getTimeFormat(context)
         return "${dateFormat.format(parsedDate)} ${timeFormat.format(parsedDate)}"
+    }
+
+    private fun setText(tweet: Tweet, holder: TweetsViewHolder) {
+        tweetParser.parse(tweet)
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                holder.text.text = it
+            }
     }
 
 }

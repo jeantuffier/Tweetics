@@ -1,16 +1,15 @@
 package fr.jeantuffier.tweetics.domain.datastore
 
 import fr.jeantuffier.tweetics.domain.model.Link
+import fr.jeantuffier.tweetics.domain.model.Media
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import io.reactivex.Single
 
 interface LocalTweetsDataStore {
     fun getTweets(
         screenName: String,
-        hashTags: List<Link.HashTag>,
-        userMentions: List<Link.UserMention>,
-        urls: List<Link.Url>,
-        media: List<Link.Url>
+        links: List<Link>,
+        medias: List<Media>
     ): Single<List<Tweet>>
 
     fun saveTweets(
