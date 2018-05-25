@@ -6,7 +6,9 @@ import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import fr.jeantuffier.tweetics.R
+import fr.jeantuffier.tweetics.domain.model.Media
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.presentation.tweets.util.TweetParser
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,6 +16,8 @@ import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+
+private const val MEDIA_TYPE_PHOTO = "photo"
 
 class TweetsAdapter @Inject constructor(
     private val tweetParser: TweetParser
@@ -37,6 +41,7 @@ class TweetsAdapter @Inject constructor(
         setText(tweet, holder)
         holder.date.text = getDisplayDate(holder.itemView.context, tweet.createdAt)
         holder.text.movementMethod = LinkMovementMethod.getInstance()
+        setMedias(holder, tweet.medias)
     }
 
     private fun getDisplayDate(context: Context, date: String): String {
@@ -54,6 +59,16 @@ class TweetsAdapter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 holder.text.text = it
+            }
+    }
+
+    private fun setMedias(holder: TweetsViewHolder, medias: List<Media>) {
+        medias
+            .firstOrNull { it.type == MEDIA_TYPE_PHOTO }
+            ?.let {
+                Picasso.get()
+                    .load(it.url)
+                    .into(holder.media)
             }
     }
 
