@@ -44,4 +44,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_play"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/media"
+        app:layout_constraintLeft_toLeftOf="@+id/media"
+        app:layout_constraintRight_toRightOf="@+id/media"
+        app:layout_constraintBottom_toBottomOf="@+id/media" />
+
 </android.support.constraint.ConstraintLayout>

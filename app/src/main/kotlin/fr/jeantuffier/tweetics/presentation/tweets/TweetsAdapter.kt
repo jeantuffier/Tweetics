@@ -92,6 +92,7 @@ class TweetsAdapter @Inject constructor(
 
     private fun displayVideo(holder: TweetsViewHolder, videoUrl: String?, placeholderUrl: String) {
         videoUrl?.let { path ->
+            holder.play.visibility = View.VISIBLE
             holder.media.visibility = View.VISIBLE
             Picasso.get()
                 .load(placeholderUrl)

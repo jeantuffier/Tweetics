@@ -14,12 +14,14 @@ class TweetsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val date: TextView = view.findViewById(R.id.date)
     val text: AppCompatTextView = view.findViewById(R.id.text)
     val media: AppCompatImageView = view.findViewById(R.id.media)
+    val play: AppCompatImageView = view.findViewById(R.id.play)
 
     fun clear() {
         date.text = ""
         text.text = ""
         media.setImageResource(0)
         media.visibility = View.GONE
+        play.visibility = View.GONE
     }
 
 }
