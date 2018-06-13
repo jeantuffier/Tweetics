@@ -1,5 +1,7 @@
 package fr.jeantuffier.tweetics.domain.model
 
+import fr.jeantuffier.tweetics.presentation.common.Config
+
 data class Tweet(
     val id: String,
     val screenName: String,
@@ -35,4 +37,6 @@ data class Tweet(
         return links?.filter { it.type == type }
     }
 
+
+    fun getTweetUrl() = "${Config.TWITTER}/$id"
 }

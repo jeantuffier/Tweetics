@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.data.mapper
+package fr.jeantuffier.tweetics.data.factory
 
 import fr.jeantuffier.tweetics.data.retrofit.responses.PoliticianResponse
 import fr.jeantuffier.tweetics.data.room.entities.PoliticianEntity

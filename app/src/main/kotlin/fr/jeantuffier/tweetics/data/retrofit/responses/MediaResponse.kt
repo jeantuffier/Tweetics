@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.data.retrofit.responses.link
+package fr.jeantuffier.tweetics.data.retrofit.responses
 
 import com.google.gson.annotations.SerializedName
 
@@ -14,6 +14,9 @@ data class MediaResponse(
     val type: String,
 
     @SerializedName("sizes")
-    val sizes: SizesResponse
+    val sizes: SizesResponse,
+
+    @SerializedName("video_info")
+    val videoInfo: VideoInfoResponse?
 
 )

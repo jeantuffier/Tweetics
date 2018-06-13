@@ -1,8 +1,6 @@
 package fr.jeantuffier.tweetics.data.retrofit.responses
 
 import com.google.gson.annotations.SerializedName
-import fr.jeantuffier.tweetics.data.retrofit.responses.link.EntityResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.link.UserResponse
 
 data class TweetResponse(
 
@@ -23,6 +21,9 @@ data class TweetResponse(
 
     @SerializedName("entities")
     val entities: EntityResponse?,
+
+    @SerializedName("extended_entities")
+    val extendedEntities: ExtendedEntityResponse?,
 
     @SerializedName("display_text_range")
     val displayTextRange: List<Int>?

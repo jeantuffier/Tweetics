@@ -1,6 +1,6 @@
 package fr.jeantuffier.tweetics.data.datastore.politicians
 
-import fr.jeantuffier.tweetics.data.mapper.PoliticiansFactory
+import fr.jeantuffier.tweetics.data.factory.PoliticiansFactory
 import fr.jeantuffier.tweetics.data.retrofit.service.PoliticianService
 import fr.jeantuffier.tweetics.domain.datastore.RemotePoliticiansDataStore
 import fr.jeantuffier.tweetics.domain.model.Politician

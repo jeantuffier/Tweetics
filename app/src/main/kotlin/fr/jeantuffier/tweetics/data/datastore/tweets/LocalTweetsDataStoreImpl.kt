@@ -1,6 +1,6 @@
 package fr.jeantuffier.tweetics.data.datastore.tweets
 
-import fr.jeantuffier.tweetics.data.mapper.TweetsFactory
+import fr.jeantuffier.tweetics.data.factory.TweetsFactory
 import fr.jeantuffier.tweetics.data.room.dao.TweetDao
 import fr.jeantuffier.tweetics.domain.datastore.LocalTweetsDataStore
 import fr.jeantuffier.tweetics.domain.model.Link

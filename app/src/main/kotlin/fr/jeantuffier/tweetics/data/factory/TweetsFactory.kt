@@ -1,14 +1,12 @@
-package fr.jeantuffier.tweetics.data.mapper
+package fr.jeantuffier.tweetics.data.factory
 
-import fr.jeantuffier.tweetics.data.retrofit.responses.TweetResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.link.*
+import fr.jeantuffier.tweetics.data.retrofit.responses.*
 import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
-import fr.jeantuffier.tweetics.domain.model.Link
-import fr.jeantuffier.tweetics.domain.model.Media
-import fr.jeantuffier.tweetics.domain.model.Size
-import fr.jeantuffier.tweetics.domain.model.Tweet
+import fr.jeantuffier.tweetics.domain.model.*
 import java.util.*
 import javax.inject.Inject
+
+private const val VIDEO_CONTENT_TYPE = "application/x-mpegURL"
 
 class TweetsFactory @Inject constructor() {
 
@@ -76,7 +74,8 @@ class TweetsFactory @Inject constructor() {
             response.fullText ?: "",
             reTweet,
             getLinks(response),
-            getMedias(response.entities?.media),
+            getMedias(response.entities?.media
+                ?.union(response.extendedEntities?.media?: emptyList())?.toList()),
             getDisplayTextRangeFromResponse(response.displayTextRange ?: listOf(0, 0))
         )
     }
@@ -116,7 +115,19 @@ class TweetsFactory @Inject constructor() {
     }
 
     private fun getMedias(medias: List<MediaResponse>?): List<Media> {
-        return medias?.map { Media(it.id, it.url, it.type, getSizes(it.sizes)) } ?: emptyList()
+        return medias?.map {
+            Media(
+                it.id,
+                it.url,
+                it.type,
+                getSizes(it.sizes),
+                it.videoInfo?.let {
+                    it.variants.firstOrNull { it.contentType == VIDEO_CONTENT_TYPE }?.let {
+                        VideoInfo(it.contentType, it.url)
+                    }
+                }
+            )
+        } ?: emptyList()
     }
 
     private fun getSizes(response: SizesResponse): List<Size> {

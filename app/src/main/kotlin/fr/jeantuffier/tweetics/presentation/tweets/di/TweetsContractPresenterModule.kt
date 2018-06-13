@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import fr.jeantuffier.tweetics.data.datastore.tweets.LocalTweetsDataStoreImpl
 import fr.jeantuffier.tweetics.data.datastore.tweets.RemoteTweetsDataStoreImpl
-import fr.jeantuffier.tweetics.data.mapper.TweetsFactory
+import fr.jeantuffier.tweetics.data.factory.TweetsFactory
 import fr.jeantuffier.tweetics.data.repository.TweetsRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.TweetsService
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase

@@ -1,31 +1,32 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:padding="8dp">
+    android:paddingBottom="16dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="16dp">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:gravity="center_horizontal"
         android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:text="@sample/politicians.json/data/name" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/date"
@@ -36,7 +37,9 @@
         android:id="@+id/media"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:scaleType="centerCrop"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

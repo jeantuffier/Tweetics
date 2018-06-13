@@ -17,14 +17,16 @@ import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class TweetParser @Inject constructor(private val context: Context) {
+class TweetParser @Inject constructor(
+    private val context: Context,
+    private val tweetsOnItemClickHandler: TweetsOnItemClickHandler
+) {
 
     private val twitterBlue by lazy { ContextCompat.getColor(context, R.color.twitterBlue) }
 
     private inner class UrlSpan(private val url: String) : ClickableSpan() {
         override fun onClick(view: View) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            context.startActivity(intent)
+            tweetsOnItemClickHandler.onNext(url)
         }
 
         override fun updateDrawState(paint: TextPaint) {

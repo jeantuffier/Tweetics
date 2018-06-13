@@ -90,9 +90,6 @@ class TweetsActivity : AppCompatActivity(), TweetsContract.View {
     private fun setRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-
-        val dividerItemDecoration = DividerItemDecoration(this, RecyclerView.VERTICAL)
-        recyclerView.addItemDecoration(dividerItemDecoration)
     }
 
 }

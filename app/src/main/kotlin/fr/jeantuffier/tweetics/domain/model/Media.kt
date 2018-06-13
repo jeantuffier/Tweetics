@@ -4,7 +4,8 @@ data class Media(
     val id: Long,
     val url: String,
     val type: String,
-    val sizes: List<Size>
+    val sizes: List<Size>,
+    val videoInfo: VideoInfo?
 ) {
 
     val smallSize by lazy { filterSizesBByType(Size.Companion.Type.SMALL) }
