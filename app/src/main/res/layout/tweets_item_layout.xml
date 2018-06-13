@@ -46,9 +46,8 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/play"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
         android:src="@drawable/ic_play"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="@+id/media"

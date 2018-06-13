@@ -38,5 +38,5 @@ data class Tweet(
     }
 
 
-    fun getTweetUrl() = "${Config.TWITTER}/$id"
+    fun getTweetUrl() = "${Config.TWITTER}/$screenName/status/$id"
 }
