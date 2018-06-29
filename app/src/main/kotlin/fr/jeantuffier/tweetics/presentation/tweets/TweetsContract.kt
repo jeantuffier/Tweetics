@@ -9,6 +9,7 @@ class TweetsContract {
     interface Presenter {
         fun loadContent(screenName: String)
         fun getImageUrl(screenName: String): String
+        fun setView(view: View)
     }
 
 }

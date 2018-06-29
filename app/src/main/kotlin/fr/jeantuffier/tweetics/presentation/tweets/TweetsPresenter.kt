@@ -4,12 +4,12 @@ import fr.jeantuffier.tweetics.domain.repositories.TweetsRepository
 import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class TweetsPresenter @Inject constructor(
-    private val tweetRepository: TweetsRepository,
-    private val view: TweetsContract.View
+class TweetsPresenter(
+    private val tweetRepository: TweetsRepository
 ) : TweetsContract.Presenter {
+
+    private lateinit var view: TweetsContract.View
 
     override fun loadContent(screenName: String) {
         tweetRepository
@@ -31,4 +31,7 @@ class TweetsPresenter @Inject constructor(
     override fun getImageUrl(screenName: String) =
         "${Config.TWEETICS_SERVER_IMAGE}/$screenName.jpg"
 
+    override fun setView(view: TweetsContract.View) {
+        this.view = view
+    }
 }

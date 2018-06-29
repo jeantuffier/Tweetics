@@ -7,9 +7,8 @@ import fr.jeantuffier.tweetics.domain.model.Politician
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class LocalPoliticiansDataStoreImpl @Inject constructor(
+class LocalPoliticiansDataStoreImpl(
     private val politicianDao: PoliticianDao,
     private val factory: PoliticiansFactory
 ) : LocalPoliticiansDataStore {

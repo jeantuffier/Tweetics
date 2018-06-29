@@ -6,12 +6,11 @@ import fr.jeantuffier.tweetics.domain.datastore.RemoteTweetsDataStore
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.domain.repositories.TweetsRepository
 import io.reactivex.Single
-import javax.inject.Inject
 
 private const val TWEETS_PREFERENCES = "tweets_preferences"
 private const val POLITICIAN_TWEETS = "politician_tweets"
 
-class TweetsRepositoryImpl @Inject constructor(
+class TweetsRepositoryImpl(
     private val context: Context,
     private val localTweetsDataStore: LocalTweetsDataStore,
     private val remoteTweetsDataStore: RemoteTweetsDataStore
@@ -47,7 +46,7 @@ class TweetsRepositoryImpl @Inject constructor(
     private fun getRemoteTweets(screenName: String): Single<List<Tweet>> {
         return remoteTweetsDataStore
             .getTweets(screenName)
-            //.doOnSuccess { saveTweets(screenName, it) }
+        //.doOnSuccess { saveTweets(screenName, it) }
     }
 
     private fun saveTweets(screenName: String, tweets: List<Tweet>, politicianId: String) {

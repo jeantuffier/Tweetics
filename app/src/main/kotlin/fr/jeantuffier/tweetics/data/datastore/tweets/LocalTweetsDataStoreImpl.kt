@@ -10,9 +10,8 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class LocalTweetsDataStoreImpl @Inject constructor(
+class LocalTweetsDataStoreImpl(
     private val tweetDao: TweetDao,
     private val factory: TweetsFactory
 ) : LocalTweetsDataStore {

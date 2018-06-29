@@ -2,28 +2,33 @@ package fr.jeantuffier.tweetics.presentation.politician
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import dagger.android.AndroidInjection
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Politician
 import kotlinx.android.synthetic.main.politicians_activity.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-class PoliticianActivity : AppCompatActivity(), PoliticianContract.View {
+class PoliticianFragment : Fragment(), PoliticianContract.View {
 
-    @Inject
-    lateinit var politicianPresenter: PoliticianContract.Presenter
+    private val politicianPresenter: PoliticianContract.Presenter by inject()
 
-    @Inject
-    lateinit var adapter : PoliticianAdapter
+    private val adapter: PoliticianAdapter by inject()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.politicians_activity)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.politicians_activity, container, false)
+    }
 
-        title = getString(R.string.ministers)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //title = getString(R.string.ministers)
 
         setToolbar()
         setRecyclerView()
@@ -39,12 +44,12 @@ class PoliticianActivity : AppCompatActivity(), PoliticianContract.View {
     }
 
     private fun setToolbar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = getString(R.string.app_name)
+        //setSupportActionBar(toolbar)
+        //supportActionBar?.title = getString(R.string.app_name)
     }
 
     private fun setRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
     }
 

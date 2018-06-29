@@ -5,9 +5,8 @@ import fr.jeantuffier.tweetics.data.retrofit.service.TweetsService
 import fr.jeantuffier.tweetics.domain.datastore.RemoteTweetsDataStore
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import io.reactivex.Single
-import javax.inject.Inject
 
-class RemoteTweetsDataStoreImpl @Inject constructor(
+class RemoteTweetsDataStoreImpl(
     private val tweetService: TweetsService,
     private val factory: TweetsFactory
 ) : RemoteTweetsDataStore {

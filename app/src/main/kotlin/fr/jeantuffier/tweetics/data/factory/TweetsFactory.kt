@@ -4,11 +4,10 @@ import fr.jeantuffier.tweetics.data.retrofit.responses.*
 import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
 import fr.jeantuffier.tweetics.domain.model.*
 import java.util.*
-import javax.inject.Inject
 
 private const val VIDEO_CONTENT_TYPE = "application/x-mpegURL"
 
-class TweetsFactory @Inject constructor() {
+class TweetsFactory {
 
     fun getTweets(
         entities: List<TweetEntity>,
@@ -74,8 +73,10 @@ class TweetsFactory @Inject constructor() {
             response.fullText ?: "",
             reTweet,
             getLinks(response),
-            getMedias(response.entities?.media
-                ?.union(response.extendedEntities?.media?: emptyList())?.toList()),
+            getMedias(
+                response.entities?.media
+                    ?.union(response.extendedEntities?.media ?: emptyList())?.toList()
+            ),
             getDisplayTextRangeFromResponse(response.displayTextRange ?: listOf(0, 0))
         )
     }

@@ -3,9 +3,8 @@ package fr.jeantuffier.tweetics.data.factory
 import fr.jeantuffier.tweetics.data.retrofit.responses.PoliticianResponse
 import fr.jeantuffier.tweetics.data.room.entities.PoliticianEntity
 import fr.jeantuffier.tweetics.domain.model.Politician
-import javax.inject.Inject
 
-class PoliticiansFactory @Inject constructor() {
+class PoliticiansFactory {
 
     fun getPoliticiansFromEntities(entities: List<PoliticianEntity>): List<Politician> {
         return entities.map {

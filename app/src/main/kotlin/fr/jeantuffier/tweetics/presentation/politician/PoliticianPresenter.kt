@@ -5,12 +5,12 @@ import fr.jeantuffier.tweetics.domain.repositories.PoliticiansRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.text.Normalizer
-import javax.inject.Inject
 
-class PoliticianPresenter @Inject constructor(
-    private val politiciansRepository: PoliticiansRepository,
-    private val view: PoliticianContract.View
+class PoliticianPresenter(
+    private val politiciansRepository: PoliticiansRepository
 ) : PoliticianContract.Presenter {
+
+    private lateinit var view: PoliticianContract.View
 
     override fun loadContent() {
         politiciansRepository
@@ -34,4 +34,7 @@ class PoliticianPresenter @Inject constructor(
         }
     }
 
+    override fun setView(view: PoliticianContract.View) {
+        this.view = view
+    }
 }

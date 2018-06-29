@@ -8,9 +8,8 @@ import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Politician
 import fr.jeantuffier.tweetics.presentation.common.Config
 import fr.jeantuffier.tweetics.presentation.common.picasso.CircleImage
-import javax.inject.Inject
 
-class PoliticianAdapter @Inject constructor(
+class PoliticianAdapter(
     private val politicianOnItemClickHandler: PoliticianOnItemClickHandler
 ) : RecyclerView.Adapter<PoliticianViewHolder>() {
 

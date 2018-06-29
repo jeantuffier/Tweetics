@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
 
-class TweetsOnItemClickHandler @Inject constructor(private val context: Context) {
+class TweetsOnItemClickHandler(private val context: Context) {
 
     private val subject by lazy { PublishSubject.create<String>() }
 

@@ -9,10 +9,9 @@ import fr.jeantuffier.tweetics.presentation.tweets.util.TweetParser
 import fr.jeantuffier.tweetics.presentation.tweets.util.TweetsOnItemClickHandler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 
-class TweetsAdapter @Inject constructor(
+class TweetsAdapter(
     private val tweetParser: TweetParser,
     private val tweetsOnItemClickHandler: TweetsOnItemClickHandler
 ) : RecyclerView.Adapter<TweetsViewHolder>() {

@@ -15,7 +15,7 @@ import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
 )
 abstract class ApplicationDatabase : RoomDatabase() {
 
-    abstract fun ministerDao(): PoliticianDao
+    abstract fun politicianDao(): PoliticianDao
 
     abstract fun tweetDao(): TweetDao
 

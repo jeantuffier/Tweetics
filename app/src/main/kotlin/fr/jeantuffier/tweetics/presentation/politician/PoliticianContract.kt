@@ -8,6 +8,7 @@ class PoliticianContract {
 
     interface Presenter {
         fun loadContent()
+        fun setView(view: View)
     }
 
 }

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Tweetics</string>
 
+    <string name="home_tab_wall">Wall</string>
+    <string name="home_tab_politicians">Politicians</string>
+
     <string name="ministers">Ministers</string>
 
     <string name="error">An error occurred</string>

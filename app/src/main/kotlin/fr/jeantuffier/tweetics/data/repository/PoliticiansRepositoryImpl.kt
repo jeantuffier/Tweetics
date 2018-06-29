@@ -6,12 +6,11 @@ import fr.jeantuffier.tweetics.domain.datastore.RemotePoliticiansDataStore
 import fr.jeantuffier.tweetics.domain.model.Politician
 import fr.jeantuffier.tweetics.domain.repositories.PoliticiansRepository
 import io.reactivex.Single
-import javax.inject.Inject
 
 private const val POLITICIAN_PREFERENCES = "politician_preferences"
 private const val POLITICIAN_UPDATE = "politician_update"
 
-class PoliticiansRepositoryImpl @Inject constructor(
+class PoliticiansRepositoryImpl(
     private val context: Context,
     private val localDataStore: LocalPoliticiansDataStore,
     private val remoteDataStore: RemotePoliticiansDataStore

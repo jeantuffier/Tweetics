@@ -5,9 +5,8 @@ import fr.jeantuffier.tweetics.data.retrofit.service.PoliticianService
 import fr.jeantuffier.tweetics.domain.datastore.RemotePoliticiansDataStore
 import fr.jeantuffier.tweetics.domain.model.Politician
 import io.reactivex.Single
-import javax.inject.Inject
 
-class RemotePoliticiansDataStoreImpl @Inject constructor(
+class RemotePoliticiansDataStoreImpl(
     private val politicianService: PoliticianService,
     private val factory: PoliticiansFactory
 ) : RemotePoliticiansDataStore {
