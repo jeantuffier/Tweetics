@@ -9,12 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Politician
-import kotlinx.android.synthetic.main.politicians_activity.*
+import kotlinx.android.synthetic.main.politicians_activity.recyclerView
+import kotlinx.android.synthetic.main.politicians_activity.container
 import org.koin.android.ext.android.inject
 
 class PoliticianFragment : Fragment(), PoliticianContract.View {
 
-    private val politicianPresenter: PoliticianContract.Presenter by inject()
+    private val presenter: PoliticianContract.Presenter by inject()
 
     private val adapter: PoliticianAdapter by inject()
 
@@ -28,9 +29,8 @@ class PoliticianFragment : Fragment(), PoliticianContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //title = getString(R.string.ministers)
 
-        setToolbar()
+        presenter.attachView(this)
         setRecyclerView()
         loadContent()
     }
@@ -43,18 +43,13 @@ class PoliticianFragment : Fragment(), PoliticianContract.View {
         }
     }
 
-    private fun setToolbar() {
-        //setSupportActionBar(toolbar)
-        //supportActionBar?.title = getString(R.string.app_name)
-    }
-
     private fun setRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
     }
 
     private fun loadContent() {
-        politicianPresenter.loadContent()
+        presenter.loadContent()
         showLoading()
     }
 

@@ -34,7 +34,7 @@ class PoliticianPresenter(
         }
     }
 
-    override fun setView(view: PoliticianContract.View) {
+    override fun attachView(view: PoliticianContract.View) {
         this.view = view
     }
 }

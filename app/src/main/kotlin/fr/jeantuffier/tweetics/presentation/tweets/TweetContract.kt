@@ -1,9 +1,9 @@
 package fr.jeantuffier.tweetics.presentation.tweets
 
-class TweetsContract {
+class TweetContract {
 
     interface View {
-        fun updateViewState(state: TweetsViewState)
+        fun updateViewState(state: TweetViewState)
     }
 
     interface Presenter {

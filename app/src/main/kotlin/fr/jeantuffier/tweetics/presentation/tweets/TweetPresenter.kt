@@ -5,11 +5,11 @@ import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class TweetsPresenter(
+class TweetPresenter(
     private val tweetRepository: TweetsRepository
-) : TweetsContract.Presenter {
+) : TweetContract.Presenter {
 
-    private lateinit var view: TweetsContract.View
+    private lateinit var view: TweetContract.View
 
     override fun loadContent(screenName: String) {
         tweetRepository
@@ -18,10 +18,10 @@ class TweetsPresenter(
             .subscribeOn(Schedulers.io())
             .subscribe { tweets, throwable ->
                 val viewState = if (throwable == null) {
-                    TweetsViewState.Loaded(tweets)
+                    TweetViewState.Loaded(tweets)
                 } else {
                     throwable.printStackTrace()
-                    TweetsViewState.Error(throwable.message)
+                    TweetViewState.Error(throwable.message)
                 }
 
                 view.updateViewState(viewState)
@@ -31,7 +31,7 @@ class TweetsPresenter(
     override fun getImageUrl(screenName: String) =
         "${Config.TWEETICS_SERVER_IMAGE}/$screenName.jpg"
 
-    override fun setView(view: TweetsContract.View) {
+    override fun setView(view: TweetContract.View) {
         this.view = view
     }
 }

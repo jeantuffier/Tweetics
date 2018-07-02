@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Tweet
-import fr.jeantuffier.tweetics.presentation.tweets.util.TweetParser
-import fr.jeantuffier.tweetics.presentation.tweets.util.TweetsOnItemClickHandler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class TweetsAdapter(
+class TweetAdapter(
     private val tweetParser: TweetParser,
-    private val tweetsOnItemClickHandler: TweetsOnItemClickHandler
+    private val tweetsOnItemClickHandler: TweetOnItemClickHandler
 ) : RecyclerView.Adapter<TweetsViewHolder>() {
 
     var tweets: List<Tweet> = emptyList()

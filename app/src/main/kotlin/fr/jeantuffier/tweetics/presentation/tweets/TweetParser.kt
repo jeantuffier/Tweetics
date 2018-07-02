@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.presentation.tweets.util
+package fr.jeantuffier.tweetics.presentation.tweets
 
 import android.content.Context
 import android.support.v4.content.ContextCompat

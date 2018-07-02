@@ -1,11 +1,11 @@
-package fr.jeantuffier.tweetics.presentation.tweets.util
+package fr.jeantuffier.tweetics.presentation.tweets
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import io.reactivex.subjects.PublishSubject
 
-class TweetsOnItemClickHandler(private val context: Context) {
+class TweetOnItemClickHandler(private val context: Context) {
 
     private val subject by lazy { PublishSubject.create<String>() }
 

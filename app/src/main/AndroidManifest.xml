@@ -28,7 +28,7 @@
             android:name="fr.jeantuffier.tweetics.presentation.politician.PoliticianFragment" />
 
         <activity
-            android:name="fr.jeantuffier.tweetics.presentation.tweets.TweetsFragment">
+            android:name="fr.jeantuffier.tweetics.presentation.tweets.TweetActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fr.jeantuffier.tweetics.presentation.politician.PoliticianFragment" />

@@ -31,7 +31,7 @@ class Tweetics : Application() {
             .build()
     }
 
-    val appModule: Module = applicationContext {
+    private val appModule: Module = applicationContext {
         bean { retrofit }
         bean { database }
     }

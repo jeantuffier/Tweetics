@@ -8,7 +8,7 @@ class PoliticianContract {
 
     interface Presenter {
         fun loadContent()
-        fun setView(view: View)
+        fun attachView(view: View)
     }
 
 }

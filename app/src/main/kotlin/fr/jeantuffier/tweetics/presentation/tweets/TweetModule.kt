@@ -9,8 +9,6 @@ import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
 import fr.jeantuffier.tweetics.domain.datastore.LocalTweetsDataStore
 import fr.jeantuffier.tweetics.domain.datastore.RemoteTweetsDataStore
 import fr.jeantuffier.tweetics.domain.repositories.TweetsRepository
-import fr.jeantuffier.tweetics.presentation.tweets.util.TweetParser
-import fr.jeantuffier.tweetics.presentation.tweets.util.TweetsOnItemClickHandler
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.applicationContext
 import retrofit2.Retrofit
@@ -48,17 +46,17 @@ object TweetModule {
         }
 
         bean {
-            TweetsPresenter(
+            TweetPresenter(
                 get() //TweetsRepository
-            ) as TweetsContract.Presenter
+            ) as TweetContract.Presenter
         }
 
         bean { TweetParser(this.androidApplication()) }
 
-        bean { TweetsOnItemClickHandler(this.androidApplication()) }
+        bean { TweetOnItemClickHandler(this.androidApplication()) }
 
         bean {
-            TweetsAdapter(
+            TweetAdapter(
                 get(), //TweetParser
                 get() // TweetsOnItemClickHandler
             )
