@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.presentation.tweets
+package fr.jeantuffier.tweetics.presentation.tweet
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -29,6 +29,7 @@ class TweetActivity : AppCompatActivity(), TweetContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tweets_activity)
 
+        presenter.setView(this)
         presenter.loadContent(screenName)
 
         setToolbar()

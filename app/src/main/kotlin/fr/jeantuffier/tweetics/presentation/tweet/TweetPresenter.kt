@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.presentation.tweets
+package fr.jeantuffier.tweetics.presentation.tweet
 
 import fr.jeantuffier.tweetics.domain.repositories.TweetsRepository
 import fr.jeantuffier.tweetics.presentation.common.Config

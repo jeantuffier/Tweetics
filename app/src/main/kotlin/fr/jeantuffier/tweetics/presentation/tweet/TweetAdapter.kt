@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.presentation.tweets
+package fr.jeantuffier.tweetics.presentation.tweet
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

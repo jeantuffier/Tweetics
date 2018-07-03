@@ -3,7 +3,7 @@ package fr.jeantuffier.tweetics.presentation.politician
 import android.content.Context
 import android.content.Intent
 import fr.jeantuffier.tweetics.domain.model.Politician
-import fr.jeantuffier.tweetics.presentation.tweets.TweetActivity
+import fr.jeantuffier.tweetics.presentation.tweet.TweetActivity
 import io.reactivex.subjects.PublishSubject
 
 class PoliticianOnItemClickHandler(private val context: Context) {

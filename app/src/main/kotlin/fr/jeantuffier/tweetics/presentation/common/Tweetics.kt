@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
 import fr.jeantuffier.tweetics.presentation.home.HomeModule
 import fr.jeantuffier.tweetics.presentation.politician.PoliticianModule
-import fr.jeantuffier.tweetics.presentation.tweets.TweetModule
+import fr.jeantuffier.tweetics.presentation.tweet.TweetModule
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
