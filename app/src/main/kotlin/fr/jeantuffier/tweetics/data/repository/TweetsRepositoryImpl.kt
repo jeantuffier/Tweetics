@@ -1,10 +1,9 @@
 package fr.jeantuffier.tweetics.data.repository
 
 import android.content.Context
-import fr.jeantuffier.tweetics.domain.datastore.LocalTweetsDataStore
-import fr.jeantuffier.tweetics.domain.datastore.RemoteTweetsDataStore
+import fr.jeantuffier.tweetics.data.datastore.tweet.LocalTweetsDataStore
+import fr.jeantuffier.tweetics.data.datastore.tweet.RemoteTweetsDataStore
 import fr.jeantuffier.tweetics.domain.model.Tweet
-import fr.jeantuffier.tweetics.domain.repositories.TweetsRepository
 import io.reactivex.Single
 
 private const val TWEETS_PREFERENCES = "tweets_preferences"

@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.domain.repositories
+package fr.jeantuffier.tweetics.data.repository
 
 import fr.jeantuffier.tweetics.domain.model.Politician
 import io.reactivex.Single

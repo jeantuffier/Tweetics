@@ -6,9 +6,9 @@ import fr.jeantuffier.tweetics.data.factory.PoliticiansFactory
 import fr.jeantuffier.tweetics.data.repository.PoliticiansRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.PoliticianService
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
-import fr.jeantuffier.tweetics.domain.datastore.LocalPoliticiansDataStore
-import fr.jeantuffier.tweetics.domain.datastore.RemotePoliticiansDataStore
-import fr.jeantuffier.tweetics.domain.repositories.PoliticiansRepository
+import fr.jeantuffier.tweetics.data.datastore.politicians.LocalPoliticiansDataStore
+import fr.jeantuffier.tweetics.data.datastore.politicians.RemotePoliticiansDataStore
+import fr.jeantuffier.tweetics.data.repository.PoliticiansRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext

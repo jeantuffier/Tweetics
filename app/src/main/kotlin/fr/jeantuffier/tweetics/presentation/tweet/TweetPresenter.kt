@@ -1,6 +1,6 @@
 package fr.jeantuffier.tweetics.presentation.tweet
 
-import fr.jeantuffier.tweetics.domain.repositories.TweetsRepository
+import fr.jeantuffier.tweetics.data.repository.TweetsRepository
 import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

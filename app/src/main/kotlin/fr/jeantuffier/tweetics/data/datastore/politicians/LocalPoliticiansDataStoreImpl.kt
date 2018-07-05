@@ -2,7 +2,6 @@ package fr.jeantuffier.tweetics.data.datastore.politicians
 
 import fr.jeantuffier.tweetics.data.factory.PoliticiansFactory
 import fr.jeantuffier.tweetics.data.room.dao.PoliticianDao
-import fr.jeantuffier.tweetics.domain.datastore.LocalPoliticiansDataStore
 import fr.jeantuffier.tweetics.domain.model.Politician
 import io.reactivex.Observable
 import io.reactivex.Single

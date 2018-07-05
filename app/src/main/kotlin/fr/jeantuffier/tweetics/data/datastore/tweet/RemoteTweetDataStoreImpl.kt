@@ -1,12 +1,11 @@
-package fr.jeantuffier.tweetics.data.datastore.tweets
+package fr.jeantuffier.tweetics.data.datastore.tweet
 
 import fr.jeantuffier.tweetics.data.factory.TweetsFactory
 import fr.jeantuffier.tweetics.data.retrofit.service.TweetsService
-import fr.jeantuffier.tweetics.domain.datastore.RemoteTweetsDataStore
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import io.reactivex.Single
 
-class RemoteTweetsDataStoreImpl(
+class RemoteTweetDataStoreImpl(
     private val tweetService: TweetsService,
     private val factory: TweetsFactory
 ) : RemoteTweetsDataStore {

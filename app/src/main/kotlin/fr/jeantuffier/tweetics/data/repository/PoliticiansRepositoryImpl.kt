@@ -1,10 +1,9 @@
 package fr.jeantuffier.tweetics.data.repository
 
 import android.content.Context
-import fr.jeantuffier.tweetics.domain.datastore.LocalPoliticiansDataStore
-import fr.jeantuffier.tweetics.domain.datastore.RemotePoliticiansDataStore
+import fr.jeantuffier.tweetics.data.datastore.politicians.LocalPoliticiansDataStore
+import fr.jeantuffier.tweetics.data.datastore.politicians.RemotePoliticiansDataStore
 import fr.jeantuffier.tweetics.domain.model.Politician
-import fr.jeantuffier.tweetics.domain.repositories.PoliticiansRepository
 import io.reactivex.Single
 
 private const val POLITICIAN_PREFERENCES = "politician_preferences"

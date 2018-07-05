@@ -1,7 +1,7 @@
 package fr.jeantuffier.tweetics.presentation.politician
 
 import fr.jeantuffier.tweetics.domain.model.Politician
-import fr.jeantuffier.tweetics.domain.repositories.PoliticiansRepository
+import fr.jeantuffier.tweetics.data.repository.PoliticiansRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.text.Normalizer

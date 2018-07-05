@@ -1,4 +1,4 @@
-package fr.jeantuffier.tweetics.domain.datastore
+package fr.jeantuffier.tweetics.data.datastore.tweet
 
 import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Media

@@ -1,14 +1,14 @@
 package fr.jeantuffier.tweetics.presentation.tweet
 
-import fr.jeantuffier.tweetics.data.datastore.tweets.LocalTweetsDataStoreImpl
-import fr.jeantuffier.tweetics.data.datastore.tweets.RemoteTweetsDataStoreImpl
+import fr.jeantuffier.tweetics.data.datastore.tweet.LocalTweetDataStoreImpl
+import fr.jeantuffier.tweetics.data.datastore.tweet.RemoteTweetDataStoreImpl
 import fr.jeantuffier.tweetics.data.factory.TweetsFactory
 import fr.jeantuffier.tweetics.data.repository.TweetsRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.TweetsService
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
-import fr.jeantuffier.tweetics.domain.datastore.LocalTweetsDataStore
-import fr.jeantuffier.tweetics.domain.datastore.RemoteTweetsDataStore
-import fr.jeantuffier.tweetics.domain.repositories.TweetsRepository
+import fr.jeantuffier.tweetics.data.datastore.tweet.LocalTweetsDataStore
+import fr.jeantuffier.tweetics.data.datastore.tweet.RemoteTweetsDataStore
+import fr.jeantuffier.tweetics.data.repository.TweetsRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.applicationContext
 import retrofit2.Retrofit
@@ -22,7 +22,7 @@ object TweetModule {
         bean { TweetsFactory() }
 
         bean {
-            LocalTweetsDataStoreImpl(
+            LocalTweetDataStoreImpl(
                 get(), //TweetDao
                 get() //TweetsFactory
             ) as LocalTweetsDataStore
@@ -31,7 +31,7 @@ object TweetModule {
         bean { get<Retrofit>().create(TweetsService::class.java) }
 
         bean {
-            RemoteTweetsDataStoreImpl(
+            RemoteTweetDataStoreImpl(
                 get(), //TweetsService
                 get() //TweetsFactory
             ) as RemoteTweetsDataStore
