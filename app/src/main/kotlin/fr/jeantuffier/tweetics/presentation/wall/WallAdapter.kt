@@ -1,32 +1,32 @@
-package fr.jeantuffier.tweetics.presentation.tweet
+package fr.jeantuffier.tweetics.presentation.wall
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Tweet
+import fr.jeantuffier.tweetics.presentation.tweet.TweetParser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-
-class TweetAdapter(
+class WallAdapter(
     private val tweetParser: TweetParser,
-    private val tweetsOnItemClickHandler: TweetOnItemClickHandler
-) : RecyclerView.Adapter<TweetsViewHolder>() {
+    private val wallOnItemClickHandler: WallOnItemClickHandler
+) : RecyclerView.Adapter<WallViewHolder>() {
 
     var tweets: List<Tweet> = emptyList()
 
     override fun getItemCount() = tweets.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TweetsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.tweets_item, parent, false)
+            .inflate(R.layout.wall_item, parent, false)
 
-        return TweetsViewHolder(view)
+        return WallViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: TweetsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WallViewHolder, position: Int) {
         val tweet = tweets[position]
 
         holder.setDate(tweet.createdAt)
@@ -34,11 +34,11 @@ class TweetAdapter(
         holder.setMedias(tweet.medias)
 
         holder.itemView.setOnClickListener {
-            tweetsOnItemClickHandler.onNext(tweet.getTweetUrl())
+            wallOnItemClickHandler.onNext(tweet.getTweetUrl())
         }
     }
 
-    private fun setText(tweet: Tweet, holder: TweetsViewHolder) {
+    private fun setText(tweet: Tweet, holder: WallViewHolder) {
         tweetParser.parse(tweet)
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
@@ -47,7 +47,7 @@ class TweetAdapter(
             }
     }
 
-    override fun onViewRecycled(holder: TweetsViewHolder) {
+    override fun onViewRecycled(holder: WallViewHolder) {
         super.onViewRecycled(holder)
         holder.clear()
     }

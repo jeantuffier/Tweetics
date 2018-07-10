@@ -1,23 +1,37 @@
 package fr.jeantuffier.tweetics.presentation.wall
 
-import fr.jeantuffier.tweetics.data.repository.TweetsRepository
-import fr.jeantuffier.tweetics.presentation.common.Config
+import fr.jeantuffier.tweetics.data.repository.WallRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class WallPresenter(
-    private val tweetRepository: TweetsRepository
-): WallContract.Presenter {
+    private val wallRepository: WallRepository
+) : WallContract.Presenter {
 
-    private lateinit var view: WallContract.View
+    private var view: WallContract.View? = null
 
     override fun attach(view: WallContract.View) {
         this.view = view
     }
 
-    override fun getImageUrl(screenName: String)=
-        "${Config.TWEETICS_SERVER_IMAGE}/$screenName.jpg"
+    override fun detach() {
+        view = null
+    }
 
-    override fun loadContent(screenName: String) {
+    override fun loadContent() {
+        wallRepository.getTweets()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe { tweets, throwable ->
+                val viewState = if (throwable == null) {
+                    WallViewState.Loaded(tweets)
+                } else {
+                    throwable.printStackTrace()
+                    WallViewState.Error(throwable.message)
+                }
 
+                view?.updateViewState(viewState)
+            }
     }
 
 }

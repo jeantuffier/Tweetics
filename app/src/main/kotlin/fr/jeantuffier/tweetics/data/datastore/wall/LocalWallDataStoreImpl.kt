@@ -11,7 +11,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class LocalWallDataStoreImplprivate(
+class LocalWallDataStoreImpl(
     private val tweetDao: TweetDao,
     private val factory: TweetsFactory
 ) : LocalWallDataStore {
