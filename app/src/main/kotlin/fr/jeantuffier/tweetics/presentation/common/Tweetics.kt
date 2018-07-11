@@ -6,6 +6,7 @@ import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
 import fr.jeantuffier.tweetics.presentation.home.HomeModule
 import fr.jeantuffier.tweetics.presentation.politician.PoliticianModule
 import fr.jeantuffier.tweetics.presentation.tweet.TweetModule
+import fr.jeantuffier.tweetics.presentation.wall.WallModule
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -43,7 +44,8 @@ class Tweetics : Application() {
                 appModule,
                 HomeModule.module,
                 PoliticianModule.module,
-                TweetModule.module
+                TweetModule.module,
+                WallModule.module
             )
         )
     }

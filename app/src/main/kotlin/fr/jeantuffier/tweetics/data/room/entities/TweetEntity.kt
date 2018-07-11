@@ -36,5 +36,8 @@ data class TweetEntity(
     var retweetId: String,
 
     @ColumnInfo(name = "display_text_range")
-    var displayTextRange: String
+    var displayTextRange: String,
+
+    @ColumnInfo(name = "userId")
+    var userId: Int
 )

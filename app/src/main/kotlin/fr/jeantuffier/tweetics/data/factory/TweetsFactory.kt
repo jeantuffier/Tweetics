@@ -24,7 +24,8 @@ class TweetsFactory {
                 null,
                 links,
                 medias,
-                getDisplayTextRangeFromEntity(it.displayTextRange)
+                getDisplayTextRangeFromEntity(it.displayTextRange),
+                getUser(it.userId)
             )
         }
     }
@@ -47,7 +48,8 @@ class TweetsFactory {
                 it.fullText,
                 screenName,
                 it.reTweet?.id ?: "",
-                it.displayTextRange.toString()
+                it.displayTextRange.toString(),
+                it.user.id.toInt()
             )
         }
     }
@@ -77,7 +79,8 @@ class TweetsFactory {
                 response.entities?.media
                     ?.union(response.extendedEntities?.media ?: emptyList())?.toList()
             ),
-            getDisplayTextRangeFromResponse(response.displayTextRange ?: listOf(0, 0))
+            getDisplayTextRangeFromResponse(response.displayTextRange ?: listOf(0, 0)),
+            getUser(response.user)
         )
     }
 
@@ -147,6 +150,18 @@ class TweetsFactory {
         val start = range.first()
         val end = range.last()
         return IntRange(start, end)
+    }
+
+    private fun getUser(response: UserResponse?): User {
+        return User(
+            response?.idStr ?: "",
+            response?.name ?: "",
+            response?.picture ?: ""
+        )
+    }
+
+    private fun getUser(userId: Int): User {
+        return User("", "", "")
     }
 
 }

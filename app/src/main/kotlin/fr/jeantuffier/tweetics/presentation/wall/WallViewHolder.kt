@@ -21,13 +21,15 @@ private const val MEDIA_TYPE_VIDEO = "video"
 
 class WallViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+    val name: TextView = view.findViewById(R.id.name)
     val date: TextView = view.findViewById(R.id.date)
     val text: AppCompatTextView = view.findViewById(R.id.text)
     val media: AppCompatImageView = view.findViewById(R.id.media)
     val play: AppCompatImageView = view.findViewById(R.id.play)
 
-    fun setDate(stringDate: String) {
-        date.text = getDisplayDate(stringDate)
+    fun setHeader(name: String, date: String) {
+        this.name.text = name
+        this.date.text = getDisplayDate(date)
     }
 
     private fun getDisplayDate(date: String): String {

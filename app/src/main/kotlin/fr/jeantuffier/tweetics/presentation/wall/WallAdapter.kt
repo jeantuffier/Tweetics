@@ -29,7 +29,7 @@ class WallAdapter(
     override fun onBindViewHolder(holder: WallViewHolder, position: Int) {
         val tweet = tweets[position]
 
-        holder.setDate(tweet.createdAt)
+        holder.setHeader(tweet.user.name, tweet.createdAt)
         setText(tweet, holder)
         holder.setMedias(tweet.medias)
 

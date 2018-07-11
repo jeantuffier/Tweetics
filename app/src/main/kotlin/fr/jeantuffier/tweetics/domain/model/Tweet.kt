@@ -10,7 +10,8 @@ data class Tweet(
     val reTweet: Tweet?,
     val links: List<Link>?,
     val medias: List<Media>,
-    val displayTextRange: IntRange
+    val displayTextRange: IntRange,
+    val user: User
 ) {
 
     val content by lazy {
