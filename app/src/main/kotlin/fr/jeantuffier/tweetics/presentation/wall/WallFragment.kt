@@ -3,6 +3,7 @@ package fr.jeantuffier.tweetics.presentation.wall
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -70,7 +71,13 @@ class WallFragment : Fragment(), WallContract.View {
     }
 
     private fun setRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = layoutManager
+
+        val dividerItemDecoration = DividerItemDecoration(recyclerView.context,
+            layoutManager.orientation)
+        recyclerView.addItemDecoration(dividerItemDecoration)
+
         recyclerView.adapter = adapter
     }
 

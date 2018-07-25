@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import fr.jeantuffier.tweetics.R
 import fr.jeantuffier.tweetics.domain.model.Media
+import fr.jeantuffier.tweetics.presentation.common.picasso.CircleImage
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,11 +22,19 @@ private const val MEDIA_TYPE_VIDEO = "video"
 
 class WallViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+    val profile: AppCompatImageView = view.findViewById(R.id.profile)
     val name: TextView = view.findViewById(R.id.name)
     val date: TextView = view.findViewById(R.id.date)
     val text: AppCompatTextView = view.findViewById(R.id.text)
     val media: AppCompatImageView = view.findViewById(R.id.media)
     val play: AppCompatImageView = view.findViewById(R.id.play)
+
+    fun setProfilePicture(url: String) {
+        Picasso.get()
+            .load(url)
+            .transform(CircleImage())
+            .into(profile)
+    }
 
     fun setHeader(name: String, date: String) {
         this.name.text = name
