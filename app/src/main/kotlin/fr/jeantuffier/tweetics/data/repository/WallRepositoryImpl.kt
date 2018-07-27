@@ -17,25 +17,24 @@ class WallRepositoryImpl(
 ) : WallRepository {
 
     override fun getTweets(): Single<List<Tweet>> {
-        return getRemoteTweets()
-        /*return localTweetsDataStore.getTweets(screenName)
+        return localWallDataStore.getTweets()
             .flatMap { tweets ->
-                if (shouldLoadFromApi(tweets.size, screenName)) {
-                    getRemoteTweets(screenName)
+                if (shouldLoadFromApi(tweets.size)) {
+                    getRemoteTweets()
                 } else {
                     Single.just(tweets)
                 }
-            }*/
+            }
     }
 
-    private fun shouldLoadFromApi(listSize: Int, screenName: String) =
-        listSize == 0 || isMoreThanTenMinutesSinceLastUpdate(screenName)
+    private fun shouldLoadFromApi(listSize: Int) =
+        listSize == 0 || isMoreThanTenMinutesSinceLastUpdate()
 
-    private fun isMoreThanTenMinutesSinceLastUpdate(screeName: String): Boolean {
-        return getLastUpdate(screeName) > 10 * 60 * 1000
+    private fun isMoreThanTenMinutesSinceLastUpdate(): Boolean {
+        return getLastUpdate() > 10 * 60 * 1000
     }
 
-    private fun getLastUpdate(screenName: String): Long {
+    private fun getLastUpdate(): Long {
         return context
             .getSharedPreferences(WALL_PREFERENCES, Context.MODE_PRIVATE)
             .getLong(getPreferenceKey(), 0)
@@ -44,12 +43,12 @@ class WallRepositoryImpl(
     private fun getRemoteTweets(): Single<List<Tweet>> {
         return remoteWallDataStore
             .getTweets()
-        //.doOnSuccess { saveTweets(screenName, it) }
+            .doOnSuccess { saveTweets(it) }
     }
 
-    private fun saveTweets(tweets: List<Tweet>, politicianId: String) {
+    private fun saveTweets(tweets: List<Tweet>) {
         localWallDataStore
-            .saveTweets(tweets, politicianId) {
+            .saveTweets(tweets) {
                 setLastUpdate()
             }
     }

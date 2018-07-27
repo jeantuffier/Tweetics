@@ -16,6 +16,10 @@ class LocalWallDataStoreImpl(
     private val factory: TweetsFactory
 ) : LocalWallDataStore {
 
+    override fun getLinksAndMedia(): Single<Pair<List<Link>, List<Media>>> {
+
+    }
+
     override fun getTweets(
         links: List<Link>,
         medias: List<Media>
@@ -29,7 +33,6 @@ class LocalWallDataStoreImpl(
 
     override fun saveTweets(
         tweets: List<Tweet>,
-        politicianId: String,
         doOnNext: (String) -> Unit
     ) {
         if (tweets.isNotEmpty()) {
@@ -38,7 +41,7 @@ class LocalWallDataStoreImpl(
                     factory.getTweetEntities(
                         tweets,
                         Config.WALL_SCREEN_NAME,
-                        politicianId
+                        Config.WALL_SCREEN_NAME
                     )
                 }
                 .map { tweetDao.insertAll(it) }

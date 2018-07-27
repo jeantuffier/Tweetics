@@ -6,6 +6,6 @@
 
     <string name="ministers">Ministers</string>
 
-    <string name="error">An error occurred</string>
+    <string name="error">An error occurred, please try again later</string>
     <string name="network_error">Network error</string>
 </resources>

@@ -39,7 +39,7 @@ class PoliticianFragment : Fragment(), PoliticianContract.View {
         when (state) {
             is PoliticianViewState.Loading -> showLoading()
             is PoliticianViewState.Loaded -> updateAdapter(state.politicians)
-            is PoliticianViewState.Error -> showErrorMessage(state.error)
+            is PoliticianViewState.Error -> showErrorMessage()
         }
     }
 
@@ -63,12 +63,10 @@ class PoliticianFragment : Fragment(), PoliticianContract.View {
         adapter.notifyDataSetChanged()
     }
 
-    private fun showErrorMessage(error: String?) {
-        error?.let {
-            Snackbar
-                .make(container, it, Snackbar.LENGTH_SHORT)
-                .show()
-        }
+    private fun showErrorMessage() {
+        Snackbar
+            .make(container, getString(R.string.error), Snackbar.LENGTH_SHORT)
+            .show()
     }
 
 }

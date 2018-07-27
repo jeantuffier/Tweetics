@@ -1,8 +1,10 @@
 package fr.jeantuffier.tweetics.presentation.politician
 
-import fr.jeantuffier.tweetics.domain.model.Politician
 import fr.jeantuffier.tweetics.data.repository.PoliticiansRepository
+import fr.jeantuffier.tweetics.domain.model.Politician
+import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.text.Normalizer
 
@@ -18,14 +20,19 @@ class PoliticianPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .map { politicians -> sortList(politicians) }
-            .subscribe { politicians, throwable ->
-                val state = if (throwable == null) {
-                    PoliticianViewState.Loaded(politicians)
-                } else {
-                    PoliticianViewState.Error(throwable.message)
+            .subscribe(object : SingleObserver<List<Politician>> {
+                override fun onSuccess(politicians: List<Politician>) {
+                    val state = PoliticianViewState.Loaded(politicians)
+                    view.updateViewState(state)
                 }
-                view.updateViewState(state)
-            }
+
+                override fun onError(throwable: Throwable) {
+                    val state = PoliticianViewState.Error()
+                    view.updateViewState(state)
+                }
+
+                override fun onSubscribe(d: Disposable) = Unit
+            })
     }
 
     private fun sortList(politicians: List<Politician>): List<Politician> {

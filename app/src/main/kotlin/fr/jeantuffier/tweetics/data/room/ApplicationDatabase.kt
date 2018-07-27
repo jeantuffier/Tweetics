@@ -10,7 +10,7 @@ import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
 
 @Database(
     entities = [PoliticianEntity::class, TweetEntity::class, LinkEntity::class],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class ApplicationDatabase : RoomDatabase() {

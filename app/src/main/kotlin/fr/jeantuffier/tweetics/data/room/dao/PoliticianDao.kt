@@ -18,4 +18,7 @@ interface PoliticianDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(politicians: List<PoliticianEntity>)
+
+    @Query("DELETE FROM Politician")
+    fun clear()
 }

@@ -12,6 +12,10 @@ class LocalPoliticiansDataStoreImpl(
     private val factory: PoliticiansFactory
 ) : LocalPoliticiansDataStore {
 
+    override fun clearPoliticians() {
+        politicianDao.clear()
+    }
+
     override fun getPoliticians(): Single<List<Politician>> {
         return politicianDao
             .getPoliticians()

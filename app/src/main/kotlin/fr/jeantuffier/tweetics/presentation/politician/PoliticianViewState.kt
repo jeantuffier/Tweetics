@@ -8,6 +8,6 @@ sealed class PoliticianViewState {
 
     data class Loaded(val politicians: List<Politician>) : PoliticianViewState()
 
-    data class Error(val error: String?) : PoliticianViewState()
+    class Error : PoliticianViewState()
 
 }
