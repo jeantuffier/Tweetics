@@ -8,13 +8,13 @@ data class Media(
     val videoInfo: VideoInfo?
 ) {
 
-    val smallSize by lazy { filterSizesBByType(Size.Companion.Type.SMALL) }
+    val smallSize by lazy { filterSizesByType(Size.Companion.Type.SMALL) }
 
-    val mediumSize by lazy { filterSizesBByType(Size.Companion.Type.MEDIUM) }
+    val mediumSize by lazy { filterSizesByType(Size.Companion.Type.MEDIUM) }
 
-    val largeSize by lazy { filterSizesBByType(Size.Companion.Type.LARGE) }
+    val largeSize by lazy { filterSizesByType(Size.Companion.Type.LARGE) }
 
-    private fun filterSizesBByType(type: Size.Companion.Type) =
+    private fun filterSizesByType(type: Size.Companion.Type) =
             sizes.filter { it.type == type }
 
 }

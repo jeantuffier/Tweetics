@@ -1,6 +1,7 @@
 package fr.jeantuffier.tweetics.data.factory
 
 import fr.jeantuffier.tweetics.data.retrofit.responses.*
+import fr.jeantuffier.tweetics.data.room.entities.LinkEntity
 import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
 import fr.jeantuffier.tweetics.domain.model.*
 import java.util.*
@@ -12,8 +13,7 @@ class TweetsFactory {
     fun getTweets(
         entities: List<TweetEntity>,
         screenName: String,
-        links: List<Link>,
-        medias: List<Media>
+        links: List<Link>
     ): List<Tweet> {
         return entities.map {
             Tweet(
@@ -23,7 +23,7 @@ class TweetsFactory {
                 it.fullText,
                 null,
                 links,
-                medias,
+                emptyList(),
                 getDisplayTextRangeFromEntity(it.displayTextRange),
                 getUser(it.userId)
             )

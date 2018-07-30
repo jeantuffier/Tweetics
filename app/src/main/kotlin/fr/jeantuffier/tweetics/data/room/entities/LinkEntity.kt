@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
+import fr.jeantuffier.tweetics.domain.model.Link
 
 @Entity(
     tableName = "Link",
@@ -29,5 +30,11 @@ data class LinkEntity(
     val text: String,
 
     @ColumnInfo(name = "indices")
-    val name: String
+    val indices: String,
+
+    @ColumnInfo(name = "is_tweet_url")
+    val isTweetUrl: Boolean,
+
+    @ColumnInfo(name = "link_type")
+    val linkType: String
 )

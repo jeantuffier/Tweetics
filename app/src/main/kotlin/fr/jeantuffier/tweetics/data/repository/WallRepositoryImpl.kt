@@ -5,6 +5,7 @@ import fr.jeantuffier.tweetics.data.datastore.wall.LocalWallDataStore
 import fr.jeantuffier.tweetics.data.datastore.wall.RemoteWallDataStore
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.presentation.common.Config
+import io.reactivex.Observable
 import io.reactivex.Single
 
 private const val WALL_PREFERENCES = "wall_preferences"
@@ -17,12 +18,13 @@ class WallRepositoryImpl(
 ) : WallRepository {
 
     override fun getTweets(): Single<List<Tweet>> {
-        return localWallDataStore.getTweets()
-            .flatMap { tweets ->
+        return localWallDataStore.getLinks()
+            .flatMap { localWallDataStore.getTweets(it) }
+            .map { tweets ->
                 if (shouldLoadFromApi(tweets.size)) {
                     getRemoteTweets()
                 } else {
-                    Single.just(tweets)
+                    tweets
                 }
             }
     }

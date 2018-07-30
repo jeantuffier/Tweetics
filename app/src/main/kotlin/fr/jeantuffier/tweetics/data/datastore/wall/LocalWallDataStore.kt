@@ -7,11 +7,10 @@ import io.reactivex.Single
 
 interface LocalWallDataStore {
 
-    fun getLinksAndMedia(): Single<Pair<List<Link>, List<Media>>>
+    fun getLinks(): Single<List<Link>>
 
     fun getTweets(
-        links: List<Link>,
-        medias: List<Media>
+        links: List<Link>
     ): Single<List<Tweet>>
 
     fun saveTweets(
