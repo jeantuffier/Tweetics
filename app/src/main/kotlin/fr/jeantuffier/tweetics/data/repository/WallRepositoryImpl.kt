@@ -20,11 +20,11 @@ class WallRepositoryImpl(
     override fun getTweets(): Single<List<Tweet>> {
         return localWallDataStore.getLinks()
             .flatMap { localWallDataStore.getTweets(it) }
-            .map { tweets ->
+            .flatMap { tweets ->
                 if (shouldLoadFromApi(tweets.size)) {
                     getRemoteTweets()
                 } else {
-                    tweets
+                    Single.just(tweets)
                 }
             }
     }

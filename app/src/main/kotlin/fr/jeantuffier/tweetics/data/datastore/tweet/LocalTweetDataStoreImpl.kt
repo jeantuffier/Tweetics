@@ -5,6 +5,7 @@ import fr.jeantuffier.tweetics.data.room.dao.TweetDao
 import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Media
 import fr.jeantuffier.tweetics.domain.model.Tweet
+import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -16,14 +17,13 @@ class LocalTweetDataStoreImpl(
 ) : LocalTweetsDataStore {
 
     override fun getTweets(
-        screenName: String,
         links: List<Link>,
         medias: List<Media>
     ): Single<List<Tweet>> {
         return tweetDao
-            .getTweets(screenName)
+            .getTweets(Config.WALL_SCREEN_NAME)
             .switchIfEmpty(Maybe.just(emptyList()))
-            .map { factory.getTweets(it, screenName, links, medias) }
+            .map { factory.getTweets(it, Config.WALL_SCREEN_NAME, links) }
             .toSingle()
     }
 

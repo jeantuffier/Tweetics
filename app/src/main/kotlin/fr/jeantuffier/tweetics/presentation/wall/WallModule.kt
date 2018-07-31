@@ -18,12 +18,15 @@ object WallModule {
 
     val module = applicationContext {
 
+        bean { get<ApplicationDatabase>().linkDao() }
+
         bean { get<ApplicationDatabase>().tweetDao() }
 
         bean { TweetsFactory() }
 
         bean {
             LocalWallDataStoreImpl(
+                get(), //LinkDao
                 get(), //TweetDao
                 get() //TweetsFactory
             ) as LocalWallDataStore

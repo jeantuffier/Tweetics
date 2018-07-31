@@ -39,5 +39,5 @@ data class TweetEntity(
     var displayTextRange: String,
 
     @ColumnInfo(name = "userId")
-    var userId: Int
+    var userId: String
 )

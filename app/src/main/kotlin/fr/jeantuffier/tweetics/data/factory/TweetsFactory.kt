@@ -49,7 +49,7 @@ class TweetsFactory {
                 screenName,
                 it.reTweet?.id ?: "",
                 it.displayTextRange.toString(),
-                it.user.id.toInt()
+                it.user.id
             )
         }
     }
@@ -160,7 +160,7 @@ class TweetsFactory {
         )
     }
 
-    private fun getUser(userId: Int): User {
+    private fun getUser(userId: String): User {
         return User("", "", "")
     }
 

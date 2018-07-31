@@ -7,7 +7,6 @@ import io.reactivex.Single
 
 interface LocalTweetsDataStore {
     fun getTweets(
-        screenName: String,
         links: List<Link>,
         medias: List<Media>
     ): Single<List<Tweet>>
