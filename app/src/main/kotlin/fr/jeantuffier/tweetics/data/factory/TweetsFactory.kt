@@ -1,7 +1,6 @@
 package fr.jeantuffier.tweetics.data.factory
 
 import fr.jeantuffier.tweetics.data.retrofit.responses.*
-import fr.jeantuffier.tweetics.data.room.entities.LinkEntity
 import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
 import fr.jeantuffier.tweetics.domain.model.*
 import java.util.*
@@ -82,40 +81,6 @@ class TweetsFactory {
             getDisplayTextRangeFromResponse(response.displayTextRange ?: listOf(0, 0)),
             getUser(response.user)
         )
-    }
-
-    private fun getLinks(response: TweetResponse): List<Link> {
-        return mutableListOf<Link>().apply {
-            addAll(getHashTags(response.entities?.hashTags))
-            addAll(getUserMentions(response.entities?.userMentions))
-            addAll(getUrls(response.entities?.urls))
-        }
-    }
-
-    private fun getHashTags(responses: List<HashTagResponse>?): List<Link> {
-        return responses?.map { createLink(it.text, it.indices, Link.Companion.LinkType.HASH_TAG) }
-                ?: emptyList()
-    }
-
-    private fun getUserMentions(responses: List<UserMentionResponse>?): List<Link> {
-        return responses?.map {
-            createLink(
-                it.screenName,
-                it.indices,
-                Link.Companion.LinkType.USER_MENTION
-            )
-        } ?: emptyList()
-    }
-
-    private fun getUrls(responses: List<UrlResponse>?): List<Link> {
-        return responses?.map { createLink(it.url, it.indices, Link.Companion.LinkType.URL) }
-                ?: emptyList()
-    }
-
-    private fun createLink(text: String, indices: List<Int>, type: Link.Companion.LinkType): Link {
-        val id = UUID.randomUUID().toString()
-        val range = IntRange(indices.first(), indices.last())
-        return Link(id, text, range, type)
     }
 
     private fun getMedias(medias: List<MediaResponse>?): List<Media> {
