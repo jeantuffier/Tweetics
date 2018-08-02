@@ -1,20 +1,19 @@
 package fr.jeantuffier.tweetics.data.factory
 
-import fr.jeantuffier.tweetics.data.retrofit.responses.HashTagResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.TweetResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.UrlResponse
-import fr.jeantuffier.tweetics.data.retrofit.responses.UserMentionResponse
+import fr.jeantuffier.tweetics.data.retrofit.responses.*
 import fr.jeantuffier.tweetics.data.room.entities.LinkEntity
 import fr.jeantuffier.tweetics.domain.model.Link
 import java.util.*
 
-class LinkFactory {
+object LinkFactory {
 
-    fun getLinksFromRemote(response: TweetResponse): List<Link> {
+    private val random = Random()
+
+    fun getLinksFromRemote(response: EntityResponse): List<Link> {
         return mutableListOf<Link>().apply {
-            addAll(getHashTags(response.entities?.hashTags))
-            addAll(getUserMentions(response.entities?.userMentions))
-            addAll(getUrls(response.entities?.urls))
+            addAll(getHashTags(response.hashTags))
+            addAll(getUserMentions(response.userMentions))
+            addAll(getUrls(response.urls))
         }
     }
 
@@ -37,7 +36,7 @@ class LinkFactory {
     }
 
     private fun createLink(text: String, indices: List<Int>, type: Link.Companion.LinkType): Link {
-        val id = UUID.randomUUID().toString()
+        val id = random.nextInt()
         val range = IntRange(indices.first(), indices.last())
         return Link(id, text, range, type)
     }
@@ -57,4 +56,5 @@ class LinkFactory {
         val values = stringIndices.split(",")
         return IntRange(values[0].toInt(), values[1].toInt())
     }
+
 }

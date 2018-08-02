@@ -14,7 +14,7 @@ class RemoteWallDataStoreImpl(
     override fun getTweets(): Single<List<Tweet>> {
         return wallService
             .getTweets()
-            .map { factory.getTweets(it, Config.WALL_SCREEN_NAME) }
+            .map { factory.getTweetsFromRemote(it, Config.WALL_SCREEN_NAME) }
     }
 
 }

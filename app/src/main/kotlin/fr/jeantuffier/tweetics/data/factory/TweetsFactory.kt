@@ -1,18 +1,19 @@
 package fr.jeantuffier.tweetics.data.factory
 
-import fr.jeantuffier.tweetics.data.retrofit.responses.*
+import fr.jeantuffier.tweetics.data.retrofit.responses.TweetResponse
 import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
-import fr.jeantuffier.tweetics.domain.model.*
-import java.util.*
-
-private const val VIDEO_CONTENT_TYPE = "application/x-mpegURL"
+import fr.jeantuffier.tweetics.domain.model.Link
+import fr.jeantuffier.tweetics.domain.model.Media
+import fr.jeantuffier.tweetics.domain.model.Tweet
+import fr.jeantuffier.tweetics.domain.model.User
 
 class TweetsFactory {
 
-    fun getTweets(
+    fun getTweetsFromLocal(
         entities: List<TweetEntity>,
         screenName: String,
-        links: List<Link>
+        links: List<Link>,
+        user: User
     ): List<Tweet> {
         return entities.map {
             Tweet(
@@ -24,7 +25,7 @@ class TweetsFactory {
                 links,
                 emptyList(),
                 getDisplayTextRangeFromEntity(it.displayTextRange),
-                getUser(it.userId)
+                user
             )
         }
     }
@@ -53,18 +54,28 @@ class TweetsFactory {
         }
     }
 
-    fun getTweets(responses: List<TweetResponse>, screenName: String): List<Tweet> {
+    fun getTweetsFromRemote(
+        responses: List<TweetResponse>,
+        screenName: String
+    ): List<Tweet> {
         return responses.map {
-            getTweet(it, screenName)
+            val links = it.entities?.let { LinkFactory.getLinksFromRemote(it) } ?: emptyList()
+            val medias = it.extendedEntities?.let { MediaFactory.getMedias(it.media) }
+                    ?: emptyList()
+            val user = UserFactory.getUserFromRemote(it.user)
+            getTweet(it, screenName, links, medias, user)
         }
     }
 
     private fun getTweet(
         response: TweetResponse,
-        screenName: String
+        screenName: String,
+        links: List<Link>,
+        medias: List<Media>,
+        user: User
     ): Tweet {
         val reTweet = if (response.retweetedStatus?.idStr != null) {
-            getTweet(response.retweetedStatus, screenName)
+            getTweet(response.retweetedStatus, screenName, links, medias, user)
         } else null
 
         return Tweet(
@@ -73,60 +84,21 @@ class TweetsFactory {
             response.createdAt ?: "",
             response.fullText ?: "",
             reTweet,
-            getLinks(response),
-            getMedias(
-                response.entities?.media
-                    ?.union(response.extendedEntities?.media ?: emptyList())?.toList()
-            ),
-            getDisplayTextRangeFromResponse(response.displayTextRange ?: listOf(0, 0)),
-            getUser(response.user)
+            links,
+            medias,
+            getDisplayTextRangeFromResponse(response.displayTextRange),
+            user
         )
     }
 
-    private fun getMedias(medias: List<MediaResponse>?): List<Media> {
-        return medias?.map {
-            Media(
-                it.id,
-                it.url,
-                it.type,
-                getSizes(it.sizes),
-                it.videoInfo?.let {
-                    it.variants.firstOrNull { it.contentType == VIDEO_CONTENT_TYPE }?.let {
-                        VideoInfo(it.contentType, it.url)
-                    }
-                }
-            )
-        } ?: emptyList()
-    }
-
-    private fun getSizes(response: SizesResponse): List<Size> {
-        return mutableListOf<Size>().apply {
-            add(getSize(response.thumb, Size.Companion.Type.THUMB))
-            add(getSize(response.small, Size.Companion.Type.SMALL))
-            add(getSize(response.medium, Size.Companion.Type.MEDIUM))
-            add(getSize(response.large, Size.Companion.Type.LARGE))
+    private fun getDisplayTextRangeFromResponse(range: List<Int>?): IntRange {
+        if (range == null) {
+            return IntRange(0, 0)
         }
-    }
 
-    private fun getSize(response: SizeResponse, type: Size.Companion.Type) =
-        Size(UUID.randomUUID().toString(), response.width, response.height, response.resize, type)
-
-    private fun getDisplayTextRangeFromResponse(range: List<Int>): IntRange {
         val start = range.first()
         val end = range.last()
         return IntRange(start, end)
-    }
-
-    private fun getUser(response: UserResponse?): User {
-        return User(
-            response?.idStr ?: "",
-            response?.name ?: "",
-            response?.picture ?: ""
-        )
-    }
-
-    private fun getUser(userId: String): User {
-        return User("", "", "")
     }
 
 }

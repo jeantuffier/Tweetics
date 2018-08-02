@@ -22,12 +22,15 @@ object WallModule {
 
         bean { get<ApplicationDatabase>().tweetDao() }
 
+        bean { get<ApplicationDatabase>().userDao() }
+
         bean { TweetsFactory() }
 
         bean {
             LocalWallDataStoreImpl(
                 get(), //LinkDao
                 get(), //TweetDao
+                get(), //UserDao
                 get() //TweetsFactory
             ) as LocalWallDataStore
         }

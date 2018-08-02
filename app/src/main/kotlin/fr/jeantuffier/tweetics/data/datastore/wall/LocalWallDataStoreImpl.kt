@@ -3,9 +3,12 @@ package fr.jeantuffier.tweetics.data.datastore.wall
 import fr.jeantuffier.tweetics.data.factory.TweetsFactory
 import fr.jeantuffier.tweetics.data.room.dao.LinkDao
 import fr.jeantuffier.tweetics.data.room.dao.TweetDao
+import fr.jeantuffier.tweetics.data.room.dao.UserDao
 import fr.jeantuffier.tweetics.data.room.entities.LinkEntity
+import fr.jeantuffier.tweetics.data.room.entities.UserEntity
 import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Tweet
+import fr.jeantuffier.tweetics.domain.model.User
 import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -15,20 +18,21 @@ import io.reactivex.schedulers.Schedulers
 class LocalWallDataStoreImpl(
     private val linkDao: LinkDao,
     private val tweetDao: TweetDao,
+    private val userDao: UserDao,
     private val factory: TweetsFactory
 ) : LocalWallDataStore {
 
     override fun getLinks(): Single<List<Link>> {
         return linkDao.getLinks(Config.WALL_SCREEN_NAME)
             .switchIfEmpty(Maybe.just(emptyList()))
-            .map { getLinks(it) }
+            .map { createLinks(it) }
             .toSingle()
     }
 
-    private fun getLinks(linkEntities: List<LinkEntity>): List<Link> {
+    private fun createLinks(linkEntities: List<LinkEntity>): List<Link> {
         return linkEntities.map {
             Link(
-                it.id.toString(),
+                it.id,
                 it.text,
                 getIndices(it.indices),
                 Link.Companion.LinkType.valueOf(it.linkType)
@@ -41,13 +45,19 @@ class LocalWallDataStoreImpl(
         return IntRange(array[0].toInt(), array[1].toInt())
     }
 
+    override fun getUser(screenName: String): Single<User> {
+        return userDao.getUser(screenName)
+            .map { User(it.id, it.name, it.pictureUrl) }
+    }
+
     override fun getTweets(
-        links: List<Link>
+        links: List<Link>,
+        user: User
     ): Single<List<Tweet>> {
         return tweetDao
             .getTweets(Config.WALL_SCREEN_NAME)
             .switchIfEmpty(Maybe.just(emptyList()))
-            .map { factory.getTweets(it, Config.WALL_SCREEN_NAME, links) }
+            .map { factory.getTweetsFromLocal(it, Config.WALL_SCREEN_NAME, links, user) }
             .toSingle()
     }
 

@@ -13,7 +13,7 @@ class RemoteTweetDataStoreImpl(
     override fun getTweets(screenName: String): Single<List<Tweet>> {
         return tweetService
             .getTweets(screenName)
-            .map { factory.getTweets(it, screenName) }
+            .map { factory.getTweetsFromRemote(it, screenName) }
     }
 
 }

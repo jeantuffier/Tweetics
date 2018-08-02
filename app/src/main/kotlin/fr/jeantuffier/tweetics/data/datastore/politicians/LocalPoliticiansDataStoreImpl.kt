@@ -19,7 +19,7 @@ class LocalPoliticiansDataStoreImpl(
     override fun getPoliticians(): Single<List<Politician>> {
         return politicianDao
             .getPoliticians()
-            .map { factory.getPoliticiansFromEntities(it) }
+            .map { factory.getPoliticiansFromLocal(it) }
     }
 
     override fun savePoliticians(politicians: List<Politician>, doOnNext: () -> Unit) {

@@ -3,10 +3,12 @@ package fr.jeantuffier.tweetics.data.repository
 import android.content.Context
 import fr.jeantuffier.tweetics.data.datastore.wall.LocalWallDataStore
 import fr.jeantuffier.tweetics.data.datastore.wall.RemoteWallDataStore
+import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Tweet
+import fr.jeantuffier.tweetics.domain.model.User
 import fr.jeantuffier.tweetics.presentation.common.Config
-import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 
 private const val WALL_PREFERENCES = "wall_preferences"
 private const val WALL_TWEETS = "wall_tweets"
@@ -18,8 +20,14 @@ class WallRepositoryImpl(
 ) : WallRepository {
 
     override fun getTweets(): Single<List<Tweet>> {
-        return localWallDataStore.getLinks()
-            .flatMap { localWallDataStore.getTweets(it) }
+        return Single.zip(
+            localWallDataStore.getUser(Config.WALL_SCREEN_NAME),
+            localWallDataStore.getLinks(),
+            BiFunction<User, List<Link>, Pair<User, List<Link>>> { user, links ->
+                Pair(user, links)
+            }
+        )
+            .flatMap { localWallDataStore.getTweets(it.second, it.first) }
             .flatMap { tweets ->
                 if (shouldLoadFromApi(tweets.size)) {
                     getRemoteTweets()

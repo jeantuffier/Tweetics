@@ -6,7 +6,7 @@ import fr.jeantuffier.tweetics.domain.model.Politician
 
 class PoliticiansFactory {
 
-    fun getPoliticiansFromEntities(entities: List<PoliticianEntity>): List<Politician> {
+    fun getPoliticiansFromLocal(entities: List<PoliticianEntity>): List<Politician> {
         return entities.map {
             Politician(
                 it.id,
