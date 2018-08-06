@@ -22,11 +22,10 @@ class LocalWallDataStoreImpl(
     private val factory: TweetsFactory
 ) : LocalWallDataStore {
 
-    override fun getLinks(): Single<List<Link>> {
+    override fun getLinks(): Maybe<List<Link>> {
         return linkDao.getLinks(Config.WALL_SCREEN_NAME)
             .switchIfEmpty(Maybe.just(emptyList()))
             .map { createLinks(it) }
-            .toSingle()
     }
 
     private fun createLinks(linkEntities: List<LinkEntity>): List<Link> {
@@ -45,7 +44,7 @@ class LocalWallDataStoreImpl(
         return IntRange(array[0].toInt(), array[1].toInt())
     }
 
-    override fun getUser(screenName: String): Single<User> {
+    override fun getUser(screenName: String): Maybe<User> {
         return userDao.getUser(screenName)
             .map { User(it.id, it.name, it.pictureUrl) }
     }
@@ -53,12 +52,11 @@ class LocalWallDataStoreImpl(
     override fun getTweets(
         links: List<Link>,
         user: User
-    ): Single<List<Tweet>> {
+    ): Maybe<List<Tweet>> {
         return tweetDao
             .getTweets(Config.WALL_SCREEN_NAME)
             .switchIfEmpty(Maybe.just(emptyList()))
             .map { factory.getTweetsFromLocal(it, Config.WALL_SCREEN_NAME, links, user) }
-            .toSingle()
     }
 
     override fun saveTweets(

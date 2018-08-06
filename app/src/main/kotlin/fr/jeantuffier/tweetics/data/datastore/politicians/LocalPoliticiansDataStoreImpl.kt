@@ -3,8 +3,8 @@ package fr.jeantuffier.tweetics.data.datastore.politicians
 import fr.jeantuffier.tweetics.data.factory.PoliticiansFactory
 import fr.jeantuffier.tweetics.data.room.dao.PoliticianDao
 import fr.jeantuffier.tweetics.domain.model.Politician
+import io.reactivex.Maybe
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 class LocalPoliticiansDataStoreImpl(
@@ -16,7 +16,7 @@ class LocalPoliticiansDataStoreImpl(
         politicianDao.clear()
     }
 
-    override fun getPoliticians(): Single<List<Politician>> {
+    override fun getPoliticians(): Maybe<List<Politician>> {
         return politicianDao
             .getPoliticians()
             .map { factory.getPoliticiansFromLocal(it) }

@@ -5,13 +5,13 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import fr.jeantuffier.tweetics.data.room.entities.UserEntity
-import io.reactivex.Single
+import io.reactivex.Maybe
 
 @Dao
 interface UserDao {
 
     @Query("SELECT * FROM User WHERE screen_name LIKE :screenName")
-    fun getUser(screenName: String): Single<UserEntity>
+    fun getUser(screenName: String): Maybe<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(entity: UserEntity)

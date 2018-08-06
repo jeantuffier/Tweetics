@@ -7,6 +7,7 @@ import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.domain.model.User
 import fr.jeantuffier.tweetics.presentation.common.Config
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 
@@ -19,8 +20,8 @@ class WallRepositoryImpl(
     private val remoteWallDataStore: RemoteWallDataStore
 ) : WallRepository {
 
-    override fun getTweets(): Single<List<Tweet>> {
-        return Single.zip(
+    override fun getTweets(): Maybe<List<Tweet>> {
+        return Maybe.zip(
             localWallDataStore.getUser(Config.WALL_SCREEN_NAME),
             localWallDataStore.getLinks(),
             BiFunction<User, List<Link>, Pair<User, List<Link>>> { user, links ->
@@ -32,7 +33,7 @@ class WallRepositoryImpl(
                 if (shouldLoadFromApi(tweets.size)) {
                     getRemoteTweets()
                 } else {
-                    Single.just(tweets)
+                    Maybe.just(tweets)
                 }
             }
     }
@@ -50,10 +51,11 @@ class WallRepositoryImpl(
             .getLong(getPreferenceKey(), 0)
     }
 
-    private fun getRemoteTweets(): Single<List<Tweet>> {
+    private fun getRemoteTweets(): Maybe<List<Tweet>> {
         return remoteWallDataStore
             .getTweets()
             .doOnSuccess { saveTweets(it) }
+            .toMaybe()
     }
 
     private fun saveTweets(tweets: List<Tweet>) {

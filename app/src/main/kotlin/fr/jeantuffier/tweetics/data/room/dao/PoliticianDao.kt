@@ -5,13 +5,13 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import fr.jeantuffier.tweetics.data.room.entities.PoliticianEntity
-import io.reactivex.Single
+import io.reactivex.Maybe
 
 @Dao
 interface PoliticianDao {
 
     @Query("SELECT * FROM Politician")
-    fun getPoliticians(): Single<List<PoliticianEntity>>
+    fun getPoliticians(): Maybe<List<PoliticianEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(politician: PoliticianEntity)

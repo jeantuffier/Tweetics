@@ -17,6 +17,7 @@ class PoliticiansRepositoryImpl(
 
     override fun getPoliticians(): Single<List<Politician>> {
         return localDataStore.getPoliticians()
+            .toSingle()
             .flatMap { politicians ->
                 if (shouldLoadFromApi(getLastUpdate(), politicians)) {
                     getRemotePoliticians()
