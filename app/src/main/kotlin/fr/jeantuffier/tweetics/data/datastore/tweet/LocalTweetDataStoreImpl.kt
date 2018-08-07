@@ -1,6 +1,6 @@
 package fr.jeantuffier.tweetics.data.datastore.tweet
 
-import fr.jeantuffier.tweetics.data.factory.TweetsFactory
+import fr.jeantuffier.tweetics.data.factory.TweetFactory
 import fr.jeantuffier.tweetics.data.room.dao.TweetDao
 import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Media
@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 
 class LocalTweetDataStoreImpl(
     private val tweetDao: TweetDao,
-    private val factory: TweetsFactory
+    private val factory: TweetFactory
 ) : LocalTweetsDataStore {
 
     override fun getTweets(
@@ -25,7 +25,7 @@ class LocalTweetDataStoreImpl(
         return tweetDao
             .getTweets(Config.WALL_SCREEN_NAME)
             .switchIfEmpty(Maybe.just(emptyList()))
-            .map { factory.getTweetsFromLocal(it, Config.WALL_SCREEN_NAME, links, user) }
+            .map { factory.mapToTweets(it, Config.WALL_SCREEN_NAME, links, user) }
             .toSingle()
     }
 
@@ -37,7 +37,7 @@ class LocalTweetDataStoreImpl(
     ) {
         if (tweets.isNotEmpty()) {
             Observable
-                .fromCallable { factory.getTweetEntities(tweets, screenName, politicianId) }
+                .fromCallable { factory.mapToTweetEntities(tweets, screenName, politicianId) }
                 .map { tweetDao.insertAll(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())

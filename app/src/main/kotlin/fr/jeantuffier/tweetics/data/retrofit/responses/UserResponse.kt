@@ -11,6 +11,9 @@ data class UserResponse(
     val name: String,
 
     @SerializedName("profile_image_url_https")
-    val picture: String
+    val picture: String,
+
+    @SerializedName("screen_name")
+    val screenName: String
 
 )

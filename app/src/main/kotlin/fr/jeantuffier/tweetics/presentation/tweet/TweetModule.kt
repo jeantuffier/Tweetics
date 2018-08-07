@@ -2,7 +2,7 @@ package fr.jeantuffier.tweetics.presentation.tweet
 
 import fr.jeantuffier.tweetics.data.datastore.tweet.LocalTweetDataStoreImpl
 import fr.jeantuffier.tweetics.data.datastore.tweet.RemoteTweetDataStoreImpl
-import fr.jeantuffier.tweetics.data.factory.TweetsFactory
+import fr.jeantuffier.tweetics.data.factory.TweetFactory
 import fr.jeantuffier.tweetics.data.repository.TweetsRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.TweetsService
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
@@ -19,7 +19,7 @@ object TweetModule {
 
         bean { get<ApplicationDatabase>().tweetDao() }
 
-        bean { TweetsFactory() }
+        bean { TweetFactory() }
 
         bean {
             LocalTweetDataStoreImpl(

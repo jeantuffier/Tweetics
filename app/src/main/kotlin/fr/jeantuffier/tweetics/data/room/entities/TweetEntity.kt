@@ -29,15 +29,10 @@ data class TweetEntity(
     @ColumnInfo(name = "full_text")
     val fullText: String,
 
-    @ColumnInfo(name = "screen_name")
-    var screenName: String,
-
     @ColumnInfo(name = "rt_id")
     var retweetId: String,
 
     @ColumnInfo(name = "display_text_range")
-    var displayTextRange: String,
+    var displayTextRange: String
 
-    @ColumnInfo(name = "userId")
-    var userId: String
 )

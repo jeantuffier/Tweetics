@@ -4,7 +4,7 @@ import fr.jeantuffier.tweetics.data.datastore.wall.LocalWallDataStore
 import fr.jeantuffier.tweetics.data.datastore.wall.LocalWallDataStoreImpl
 import fr.jeantuffier.tweetics.data.datastore.wall.RemoteWallDataStore
 import fr.jeantuffier.tweetics.data.datastore.wall.RemoteWallDataStoreImpl
-import fr.jeantuffier.tweetics.data.factory.TweetsFactory
+import fr.jeantuffier.tweetics.data.factory.TweetFactory
 import fr.jeantuffier.tweetics.data.repository.WallRepository
 import fr.jeantuffier.tweetics.data.repository.WallRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.WallService
@@ -24,7 +24,7 @@ object WallModule {
 
         bean { get<ApplicationDatabase>().userDao() }
 
-        bean { TweetsFactory() }
+        bean { TweetFactory() }
 
         bean {
             LocalWallDataStoreImpl(

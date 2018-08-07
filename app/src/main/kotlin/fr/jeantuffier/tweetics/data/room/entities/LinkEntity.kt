@@ -22,17 +22,11 @@ data class LinkEntity(
     @ColumnInfo(name = "tweet_id")
     val tweetId: Int,
 
-    @ColumnInfo(name = "politician_screen_name")
-    val politicianScreenName: String,
-
     @ColumnInfo(name = "text")
     val text: String,
 
     @ColumnInfo(name = "indices")
     val indices: String,
-
-    @ColumnInfo(name = "is_tweet_url")
-    val isTweetUrl: Boolean,
 
     @ColumnInfo(name = "link_type")
     val linkType: String

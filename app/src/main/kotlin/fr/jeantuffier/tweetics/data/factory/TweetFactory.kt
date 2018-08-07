@@ -1,5 +1,7 @@
 package fr.jeantuffier.tweetics.data.factory
 
+import fr.jeantuffier.tweetics.data.retrofit.responses.EntityResponse
+import fr.jeantuffier.tweetics.data.retrofit.responses.ExtendedEntityResponse
 import fr.jeantuffier.tweetics.data.retrofit.responses.TweetResponse
 import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
 import fr.jeantuffier.tweetics.domain.model.Link
@@ -7,18 +9,16 @@ import fr.jeantuffier.tweetics.domain.model.Media
 import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.domain.model.User
 
-class TweetsFactory {
+object TweetFactory {
 
-    fun getTweetsFromLocal(
+    fun mapToTweets(
         entities: List<TweetEntity>,
-        screenName: String,
         links: List<Link>,
         user: User
     ): List<Tweet> {
         return entities.map {
             Tweet(
                 it.id,
-                screenName,
                 it.createdAt,
                 it.fullText,
                 null,
@@ -35,52 +35,53 @@ class TweetsFactory {
         return IntRange(list.first().toInt(), list.last().toInt())
     }
 
-    fun getTweetEntities(
-        models: List<Tweet>,
-        screenName: String,
-        politicianId: String
+    fun mapToTweetEntities(
+        models: List<Tweet>
     ): List<TweetEntity> {
         return models.map {
             TweetEntity(
                 it.id,
-                politicianId,
+                it.user.id,
                 it.createdAt,
                 it.fullText,
-                screenName,
                 it.reTweet?.id ?: "",
-                it.displayTextRange.toString(),
-                it.user.id
+                it.displayTextRange.toString()
             )
         }
     }
 
-    fun getTweetsFromRemote(
+    fun mapToTweets(
         responses: List<TweetResponse>,
-        screenName: String
+        tweetId: Int
     ): List<Tweet> {
         return responses.map {
-            val links = it.entities?.let { LinkFactory.getLinksFromRemote(it) } ?: emptyList()
-            val medias = it.extendedEntities?.let { MediaFactory.getMedias(it.media) }
-                    ?: emptyList()
-            val user = UserFactory.getUserFromRemote(it.user)
-            getTweet(it, screenName, links, medias, user)
+            val links = getLinks(tweetId, it.entities)
+            val medias = getMedias(it.extendedEntities)
+            val user = UserFactory.mapToUser(it.user)
+            getTweet(it, links, medias, user)
         }
+    }
+
+    private fun getLinks(tweetId: Int, entityResponse: EntityResponse?): List<Link> {
+        return entityResponse?.let { LinkFactory.mapToLinks(tweetId, it) } ?: emptyList()
+    }
+
+    private fun getMedias(extendedEntityResponse: ExtendedEntityResponse?): List<Media> {
+        return extendedEntityResponse?.let { MediaFactory.getMedias(it.media) } ?: emptyList()
     }
 
     private fun getTweet(
         response: TweetResponse,
-        screenName: String,
         links: List<Link>,
         medias: List<Media>,
         user: User
     ): Tweet {
         val reTweet = if (response.retweetedStatus?.idStr != null) {
-            getTweet(response.retweetedStatus, screenName, links, medias, user)
+            getTweet(response.retweetedStatus, links, medias, user)
         } else null
 
         return Tweet(
             response.idStr ?: "",
-            screenName,
             response.createdAt ?: "",
             response.fullText ?: "",
             reTweet,

@@ -4,7 +4,6 @@ import fr.jeantuffier.tweetics.presentation.common.Config
 
 data class Tweet(
     val id: String,
-    val screenName: String,
     val createdAt: String,
     val fullText: String,
     val reTweet: Tweet?,
@@ -39,5 +38,5 @@ data class Tweet(
     }
 
 
-    fun getTweetUrl() = "${Config.TWITTER}/$screenName/status/$id"
+    fun getTweetUrl() = "${Config.TWITTER}/${user.screenName}/status/$id"
 }

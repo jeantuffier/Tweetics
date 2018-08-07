@@ -13,9 +13,9 @@ data class UserEntity(
     @ColumnInfo(name = "name")
     val name: String,
 
-    @ColumnInfo(name = "screen_name")
-    val screenName: String,
-
     @ColumnInfo(name = "picture_url")
-    val pictureUrl: String
+    val pictureUrl: String,
+
+    @ColumnInfo(name = "screen_name")
+    val screenName: String
 )

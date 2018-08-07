@@ -8,7 +8,6 @@ import fr.jeantuffier.tweetics.domain.model.Tweet
 import fr.jeantuffier.tweetics.domain.model.User
 import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.Maybe
-import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 
 private const val WALL_PREFERENCES = "wall_preferences"
@@ -21,28 +20,16 @@ class WallRepositoryImpl(
 ) : WallRepository {
 
     override fun getTweets(): Maybe<List<Tweet>> {
-        return Maybe.zip(
-            localWallDataStore.getUser(Config.WALL_SCREEN_NAME),
-            localWallDataStore.getLinks(),
-            BiFunction<User, List<Link>, Pair<User, List<Link>>> { user, links ->
-                Pair(user, links)
-            }
-        )
-            .flatMap { localWallDataStore.getTweets(it.second, it.first) }
-            .flatMap { tweets ->
-                if (shouldLoadFromApi(tweets.size)) {
-                    getRemoteTweets()
-                } else {
-                    Maybe.just(tweets)
-                }
-            }
+        return if (isMoreThanTenMinutesSinceLastUpdate()) {
+            getRemoteTweets()
+        } else {
+            getLocalTweets()
+        }
     }
 
-    private fun shouldLoadFromApi(listSize: Int) =
-        listSize == 0 || isMoreThanTenMinutesSinceLastUpdate()
-
     private fun isMoreThanTenMinutesSinceLastUpdate(): Boolean {
-        return getLastUpdate() > 10 * 60 * 1000
+        val lastUpdate = getLastUpdate()
+        return lastUpdate == 0L || lastUpdate > 10 * 60 * 1000
     }
 
     private fun getLastUpdate(): Long {
@@ -74,5 +61,16 @@ class WallRepositoryImpl(
     }
 
     private fun getPreferenceKey() = "$WALL_TWEETS:${Config.WALL_SCREEN_NAME}"
+
+    private fun getLocalTweets(): Maybe<List<Tweet>> {
+        return Maybe.zip(
+            localWallDataStore.getUser(Config.WALL_SCREEN_NAME),
+            localWallDataStore.getLinks(),
+            BiFunction<User, List<Link>, Pair<User, List<Link>>> { user, links ->
+                Pair(user, links)
+            }
+        )
+            .flatMap { localWallDataStore.getTweets(it.second, it.first) }
+    }
 
 }

@@ -15,8 +15,8 @@ interface LinkDao {
     fun getLinks(screenName: String): Maybe<List<LinkEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(politician: LinkEntity)
+    fun insert(link: LinkEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(politicians: List<LinkEntity>)
+    fun insertAll(links: List<LinkEntity>)
 }
