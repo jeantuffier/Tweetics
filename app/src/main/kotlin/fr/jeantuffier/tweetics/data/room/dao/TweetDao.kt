@@ -4,15 +4,14 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import fr.jeantuffier.tweetics.data.room.entities.LinkEntity
 import fr.jeantuffier.tweetics.data.room.entities.TweetEntity
 import io.reactivex.Maybe
 
 @Dao
 interface TweetDao {
 
-    @Query("SELECT * FROM Tweet WHERE screen_name LIKE :screenName")
-    fun getTweets(screenName: String): Maybe<List<TweetEntity>>
+    @Query("SELECT * FROM Tweet WHERE politician_id LIKE :politicianId")
+    fun getTweets(politicianId: String): Maybe<List<TweetEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(tweet: TweetEntity)

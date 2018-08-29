@@ -19,12 +19,9 @@ object TweetModule {
 
         bean { get<ApplicationDatabase>().tweetDao() }
 
-        bean { TweetFactory() }
-
         bean {
             LocalTweetDataStoreImpl(
-                get(), //TweetDao
-                get() //TweetsFactory
+                get() //TweetDao
             ) as LocalTweetsDataStore
         }
 

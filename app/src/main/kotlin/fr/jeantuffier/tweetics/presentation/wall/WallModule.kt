@@ -22,16 +22,13 @@ object WallModule {
 
         bean { get<ApplicationDatabase>().tweetDao() }
 
-        bean { get<ApplicationDatabase>().userDao() }
-
-        bean { TweetFactory() }
+        bean { get<ApplicationDatabase>().politicianDao() }
 
         bean {
             LocalWallDataStoreImpl(
                 get(), //LinkDao
                 get(), //TweetDao
-                get(), //UserDao
-                get() //TweetsFactory
+                get() //UserDao
             ) as LocalWallDataStore
         }
 
@@ -39,8 +36,7 @@ object WallModule {
 
         bean {
             RemoteWallDataStoreImpl(
-                get(), //WallService
-                get() //TweetsFactory
+                get() //WallService
             ) as RemoteWallDataStore
         }
 

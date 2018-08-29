@@ -20,7 +20,7 @@ data class LinkEntity(
     val id: Int,
 
     @ColumnInfo(name = "tweet_id")
-    val tweetId: Int,
+    val tweetId: String,
 
     @ColumnInfo(name = "text")
     val text: String,

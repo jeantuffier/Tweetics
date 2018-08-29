@@ -13,6 +13,9 @@ interface PoliticianDao {
     @Query("SELECT * FROM Politician")
     fun getPoliticians(): Maybe<List<PoliticianEntity>>
 
+    @Query("SELECT * FROM Politician WHERE screen_name LIKE :screenName")
+    fun getPolitician(screenName: String): Maybe<PoliticianEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(politician: PoliticianEntity)
 

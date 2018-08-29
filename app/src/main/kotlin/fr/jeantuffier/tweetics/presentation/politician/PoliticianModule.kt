@@ -2,7 +2,7 @@ package fr.jeantuffier.tweetics.presentation.politician
 
 import fr.jeantuffier.tweetics.data.datastore.politicians.LocalPoliticiansDataStoreImpl
 import fr.jeantuffier.tweetics.data.datastore.politicians.RemotePoliticiansDataStoreImpl
-import fr.jeantuffier.tweetics.data.factory.PoliticiansFactory
+import fr.jeantuffier.tweetics.data.factory.PoliticianFactory
 import fr.jeantuffier.tweetics.data.repository.PoliticiansRepositoryImpl
 import fr.jeantuffier.tweetics.data.retrofit.service.PoliticianService
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
@@ -23,12 +23,9 @@ object PoliticianModule {
 
         bean { get<ApplicationDatabase>().politicianDao() }
 
-        bean { PoliticiansFactory() }
-
         bean {
             LocalPoliticiansDataStoreImpl(
-                get(), //PoliticianDao
-                get() //PoliticiansFactory
+                get() //PoliticianDao
             ) as LocalPoliticiansDataStore
         }
 

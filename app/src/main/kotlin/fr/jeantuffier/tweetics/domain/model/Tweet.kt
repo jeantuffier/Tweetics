@@ -7,10 +7,10 @@ data class Tweet(
     val createdAt: String,
     val fullText: String,
     val reTweet: Tweet?,
-    val links: List<Link>?,
-    val medias: List<Media>,
+    var links: List<Link>,
+    var medias: List<Media>,
     val displayTextRange: IntRange,
-    val user: User
+    val politician: Politician
 ) {
 
     val content by lazy {
@@ -38,5 +38,6 @@ data class Tweet(
     }
 
 
-    fun getTweetUrl() = "${Config.TWITTER}/${user.screenName}/status/$id"
+    fun getTweetUrl() = "${Config.TWITTER}/${politician.screenName}/status/$id"
+
 }

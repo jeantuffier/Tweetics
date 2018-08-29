@@ -12,7 +12,7 @@ object LinkFactory {
 
     private val random = Random()
 
-    fun mapToLinks(tweetId: Int, response: EntityResponse): List<Link> {
+    fun mapToLinks(tweetId: String, response: EntityResponse): List<Link> {
         return mutableListOf<Link>().apply {
             addAll(getHashTags(tweetId, response.hashTags))
             addAll(getUserMentions(tweetId, response.userMentions))
@@ -20,26 +20,26 @@ object LinkFactory {
         }
     }
 
-    private fun getHashTags(tweetId: Int, responses: List<HashTagResponse>?): List<Link> {
+    private fun getHashTags(tweetId: String, responses: List<HashTagResponse>?): List<Link> {
         return responses?.map {
             createLink(tweetId, it.text, it.indices, Link.Companion.LinkType.HASH_TAG)
         } ?: emptyList()
     }
 
-    private fun getUserMentions(tweetId: Int, responses: List<UserMentionResponse>?): List<Link> {
+    private fun getUserMentions(tweetId: String, responses: List<UserMentionResponse>?): List<Link> {
         return responses?.map {
             createLink(tweetId, it.screenName, it.indices, Link.Companion.LinkType.USER_MENTION)
         } ?: emptyList()
     }
 
-    private fun getUrls(tweetId: Int, responses: List<UrlResponse>?): List<Link> {
+    private fun getUrls(tweetId: String, responses: List<UrlResponse>?): List<Link> {
         return responses?.map {
             createLink(tweetId, it.url, it.indices, Link.Companion.LinkType.URL)
         } ?: emptyList()
     }
 
     private fun createLink(
-        tweetId: Int,
+        tweetId: String,
         text: String,
         indices: List<Int>,
         type: Link.Companion.LinkType
@@ -49,7 +49,7 @@ object LinkFactory {
         return Link(id, tweetId, text, range, type)
     }
 
-    fun mapToLinks(tweetId: Int, entities: List<LinkEntity>): List<Link> {
+    fun mapToLinks(tweetId: String, entities: List<LinkEntity>): List<Link> {
         return entities.map {
             Link(
                 it.id,

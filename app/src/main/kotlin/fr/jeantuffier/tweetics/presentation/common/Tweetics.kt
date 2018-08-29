@@ -3,7 +3,6 @@ package fr.jeantuffier.tweetics.presentation.common
 import android.app.Application
 import android.arch.persistence.room.Room
 import fr.jeantuffier.tweetics.data.room.ApplicationDatabase
-import fr.jeantuffier.tweetics.presentation.home.HomeModule
 import fr.jeantuffier.tweetics.presentation.politician.PoliticianModule
 import fr.jeantuffier.tweetics.presentation.tweet.TweetModule
 import fr.jeantuffier.tweetics.presentation.wall.WallModule
@@ -42,7 +41,6 @@ class Tweetics : Application() {
         startKoin(
             this, listOf(
                 appModule,
-                HomeModule.module,
                 PoliticianModule.module,
                 TweetModule.module,
                 WallModule.module

@@ -29,8 +29,8 @@ class WallAdapter(
     override fun onBindViewHolder(holder: WallViewHolder, position: Int) {
         val tweet = tweets[position]
 
-        holder.setProfilePicture(tweet.user.pictureUrl)
-        holder.setHeader(tweet.user.name, tweet.createdAt)
+        holder.setProfilePicture(tweet.politician.pictureUrl)
+        holder.setHeader(tweet.politician.name, tweet.createdAt)
         setText(tweet, holder)
         holder.setMedias(tweet.medias)
 

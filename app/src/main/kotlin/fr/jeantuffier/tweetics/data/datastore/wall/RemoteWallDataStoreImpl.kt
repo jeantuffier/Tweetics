@@ -7,14 +7,13 @@ import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.Single
 
 class RemoteWallDataStoreImpl(
-    private val wallService: WallService,
-    private val factory: TweetFactory
+    private val wallService: WallService
 ) : RemoteWallDataStore {
 
     override fun getTweets(): Single<List<Tweet>> {
         return wallService
             .getTweets()
-            .map { factory.mapToTweets(it, Config.WALL_SCREEN_NAME) }
+            .map { TweetFactory.mapToTweets(it) }
     }
 
 }

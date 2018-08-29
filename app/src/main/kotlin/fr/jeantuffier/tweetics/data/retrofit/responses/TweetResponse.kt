@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class TweetResponse(
 
     @SerializedName("id_str")
-    val idStr: String?,
+    val id: String?,
 
     @SerializedName("created_at")
     val createdAt: String?,
@@ -14,7 +14,7 @@ data class TweetResponse(
     val fullText: String?,
 
     @SerializedName("user")
-    val user: UserResponse?,
+    val politician: PoliticianResponse,
 
     @SerializedName("retweeted_status")
     val retweetedStatus: TweetResponse?,
