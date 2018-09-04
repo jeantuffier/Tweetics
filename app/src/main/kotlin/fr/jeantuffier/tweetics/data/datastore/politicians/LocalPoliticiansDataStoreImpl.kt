@@ -18,12 +18,12 @@ class LocalPoliticiansDataStoreImpl(
     override fun getPoliticians(): Maybe<List<Politician>> {
         return politicianDao
             .getPoliticians()
-            .map { PoliticianFactory.getPoliticiansFromLocal(it) }
+            .map { PoliticianFactory.mapEntitiesToPoliticians(it) }
     }
 
     override fun savePoliticians(politicians: List<Politician>, doOnNext: () -> Unit) {
         Observable
-            .fromCallable { PoliticianFactory.getPoliticianEntities(politicians) }
+            .fromCallable { PoliticianFactory.mapPoliticiansToEntities(politicians) }
             .map { politicianDao.insertAll(it) }
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())

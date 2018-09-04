@@ -6,11 +6,11 @@ import fr.jeantuffier.tweetics.domain.model.Politician
 
 object PoliticianFactory {
 
-    fun getPoliticiansFromLocal(entities: List<PoliticianEntity>): List<Politician> {
-        return entities.map { getPoliticianFromLocal(it) }
+    fun mapEntitiesToPoliticians(entities: List<PoliticianEntity>): List<Politician> {
+        return entities.map { mapEntityToPolitician(it) }
     }
 
-    fun getPoliticianFromLocal(entity: PoliticianEntity): Politician {
+    fun mapEntityToPolitician(entity: PoliticianEntity): Politician {
         return Politician(
             entity.id,
             entity.group.split(" "),
@@ -21,11 +21,11 @@ object PoliticianFactory {
         )
     }
 
-    fun getPoliticianEntities(models: List<Politician>): List<PoliticianEntity> {
-        return models.map { getPoliticianEntity(it) }
+    fun mapPoliticiansToEntities(models: List<Politician>): List<PoliticianEntity> {
+        return models.map { mapPoliticianToEntity(it) }
     }
 
-    fun getPoliticianEntity(politician: Politician): PoliticianEntity {
+    fun mapPoliticianToEntity(politician: Politician): PoliticianEntity {
         return PoliticianEntity(
             politician.id,
             politician.groups.joinToString(" "),
@@ -36,11 +36,11 @@ object PoliticianFactory {
         )
     }
 
-    fun getPoliticiansFromResponses(responses: List<PoliticianResponse>): List<Politician> {
-        return responses.map { getPoliticianFromResponse(it) }
+    fun mapResponsesToPoliticians(responses: List<PoliticianResponse>): List<Politician> {
+        return responses.map { mapResponseToPolitician(it) }
     }
 
-    fun getPoliticianFromResponse(response: PoliticianResponse): Politician {
+    fun mapResponseToPolitician(response: PoliticianResponse): Politician {
         return Politician(
             response.id,
             response.group.split(" "),

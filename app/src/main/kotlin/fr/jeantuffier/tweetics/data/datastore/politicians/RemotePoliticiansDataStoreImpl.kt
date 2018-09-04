@@ -13,7 +13,7 @@ class RemotePoliticiansDataStoreImpl(
     override fun getPoliticians(): Single<List<Politician>> {
         return politicianService
             .getPoliticians()
-            .map { factory.getPoliticiansFromResponses(it) }
+            .map { factory.mapResponsesToPoliticians(it) }
     }
 
 }

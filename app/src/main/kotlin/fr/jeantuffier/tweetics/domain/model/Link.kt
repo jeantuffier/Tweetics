@@ -1,7 +1,7 @@
 package fr.jeantuffier.tweetics.domain.model
 
 data class Link (
-    val id: Int,
+    val id: String,
     val tweetId: String,
     val text: String,
     val indices: IntRange,

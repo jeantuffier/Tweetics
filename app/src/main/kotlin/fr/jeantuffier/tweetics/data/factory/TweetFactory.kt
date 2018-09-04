@@ -23,7 +23,7 @@ object TweetFactory {
                 null,
                 emptyList(),
                 emptyList(),
-                getDisplayTextRangeFromEntity(""/*it.tweet.displayTextRange*/),
+                getDisplayTextRangeFromEntity(it.displayTextRange),
                 politician
             )
         }
@@ -34,7 +34,7 @@ object TweetFactory {
         return IntRange(list.first().toInt(), list.last().toInt())
     }
 
-    fun mapToTweetEntities(
+    fun mapToEntities(
         models: List<Tweet>
     ): List<TweetEntity> {
         return models.map {
@@ -53,7 +53,7 @@ object TweetFactory {
         return responses.map {
             val links = getLinks(it.id, it.entities)
             val medias = getMedias(it.extendedEntities)
-            val user = PoliticianFactory.getPoliticianFromResponse(it.politician)
+            val user = PoliticianFactory.mapResponseToPolitician(it.politician)
             getTweet(it, links, medias, user)
         }
     }

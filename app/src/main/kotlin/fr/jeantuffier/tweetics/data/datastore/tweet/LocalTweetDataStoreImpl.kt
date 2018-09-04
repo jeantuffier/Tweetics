@@ -34,7 +34,7 @@ class LocalTweetDataStoreImpl(
     ) {
         if (tweets.isNotEmpty()) {
             Observable
-                .fromCallable { TweetFactory.mapToTweetEntities(tweets) }
+                .fromCallable { TweetFactory.mapToEntities(tweets) }
                 .map { tweetDao.insertAll(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())

@@ -46,7 +46,7 @@ class LocalWallDataStoreImpl(
 
     override fun getPolitician(screenName: String): Maybe<Politician> {
         return politicianDao.getPolitician(screenName)
-            .map { PoliticianFactory.getPoliticianFromLocal(it) }
+            .map { PoliticianFactory.mapEntityToPolitician(it) }
     }
 
     override fun getTweets(): Maybe<List<Tweet>> {
@@ -83,7 +83,7 @@ class LocalWallDataStoreImpl(
     }
 
     private fun insertPolitician(politician: Politician) {
-        val politicianEntity = PoliticianFactory.getPoliticianEntity(politician)
+        val politicianEntity = PoliticianFactory.mapPoliticianToEntity(politician)
         politicianDao.insert(politicianEntity)
     }
 
@@ -95,7 +95,7 @@ class LocalWallDataStoreImpl(
     }
 
     private fun insertTweets(tweets: List<Tweet>) {
-        val tweetEntities = TweetFactory.mapToTweetEntities(tweets)
+        val tweetEntities = TweetFactory.mapToEntities(tweets)
         tweetDao.insertAll(tweetEntities)
     }
 

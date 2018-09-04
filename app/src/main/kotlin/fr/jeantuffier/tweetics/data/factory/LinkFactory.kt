@@ -44,7 +44,7 @@ object LinkFactory {
         indices: List<Int>,
         type: Link.Companion.LinkType
     ): Link {
-        val id = random.nextInt()
+        val id = UUID.randomUUID().toString()
         val range = IntRange(indices.first(), indices.last())
         return Link(id, tweetId, text, range, type)
     }
@@ -62,7 +62,7 @@ object LinkFactory {
     }
 
     private fun getIndices(stringIndices: String): IntRange {
-        val values = stringIndices.split(",")
+        val values = stringIndices.split("..")
         return IntRange(values[0].toInt(), values[1].toInt())
     }
 
@@ -76,6 +76,16 @@ object LinkFactory {
                 it.type.toString()
             )
         }
+    }
+
+    fun mapToEntity(link: Link): LinkEntity {
+        return LinkEntity(
+            link.id,
+            link.tweetId,
+            link.text,
+            link.indices.toString(),
+            link.type.toString()
+        )
     }
 
 }

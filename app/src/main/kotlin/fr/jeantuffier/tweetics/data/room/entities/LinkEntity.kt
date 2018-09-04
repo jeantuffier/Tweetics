@@ -15,9 +15,9 @@ import android.arch.persistence.room.PrimaryKey
     )]
 )
 data class LinkEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     @ColumnInfo(name = "_id")
-    val id: Int,
+    val id: String,
 
     @ColumnInfo(name = "tweet_id")
     val tweetId: String,
