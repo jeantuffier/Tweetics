@@ -13,10 +13,9 @@ object PoliticianFactory {
     fun mapEntityToPolitician(entity: PoliticianEntity): Politician {
         return Politician(
             entity.id,
-            entity.group.split(" "),
+            entity.description,
+            entity.image,
             entity.name,
-            entity.pictureUrl,
-            entity.role,
             entity.screenName
         )
     }
@@ -28,10 +27,9 @@ object PoliticianFactory {
     fun mapPoliticianToEntity(politician: Politician): PoliticianEntity {
         return PoliticianEntity(
             politician.id,
-            politician.groups.joinToString(" "),
+            politician.description,
+            politician.image,
             politician.name,
-            politician.pictureUrl,
-            politician.role,
             politician.screenName
         )
     }
@@ -43,10 +41,9 @@ object PoliticianFactory {
     fun mapResponseToPolitician(response: PoliticianResponse): Politician {
         return Politician(
             response.id,
-            response.group.split(" "),
+            response.description,
+            response.image,
             response.name,
-            "",
-            response.role,
             response.screenName
         )
     }

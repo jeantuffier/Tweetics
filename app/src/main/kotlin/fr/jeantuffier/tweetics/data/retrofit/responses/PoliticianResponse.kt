@@ -4,19 +4,19 @@ import com.google.gson.annotations.SerializedName
 
 data class PoliticianResponse(
 
-    @SerializedName("_id")
+    @SerializedName("id_str")
     val id: String,
 
-    @SerializedName("screen_name")
-    val screenName: String,
+    @SerializedName("description")
+    val description: String,
+
+    @SerializedName("profile_image_url_https")
+    val image: String,
 
     @SerializedName("name")
     val name: String,
 
-    @SerializedName("role")
-    val role: String,
-
-    @SerializedName("group")
-    val group: String
+    @SerializedName("screen_name")
+    val screenName: String
 
 )

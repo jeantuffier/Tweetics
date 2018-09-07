@@ -10,11 +10,11 @@ class PoliticianViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     val image: ImageView = view.findViewById(R.id.image)
     val name: TextView = view.findViewById(R.id.name)
-    val role: TextView = view.findViewById(R.id.role)
+    val description: TextView = view.findViewById(R.id.description)
 
     fun clear() {
         image.setImageResource(0)
         name.text = ""
-        role.text = ""
+        description.text = ""
     }
 }

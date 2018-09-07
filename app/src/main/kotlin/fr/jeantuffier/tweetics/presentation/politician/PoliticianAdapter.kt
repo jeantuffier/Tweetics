@@ -33,7 +33,7 @@ class PoliticianAdapter(
 
         loadProfileImage(holder, "${Config.TWEETICS_SERVER_IMAGE}/${politician.screenName}.jpg")
         holder.name.text = politician.name
-        holder.role.text = politician.role
+        holder.description.text = politician.description
     }
 
     private fun loadProfileImage(holder: PoliticianViewHolder, url: String) {

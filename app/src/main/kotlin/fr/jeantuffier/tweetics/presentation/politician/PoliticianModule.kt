@@ -33,8 +33,7 @@ object PoliticianModule {
 
         bean {
             RemotePoliticiansDataStoreImpl(
-                get(), //PoliticianService
-                get() //PoliticianFactory()
+                get() //PoliticianService
             ) as RemotePoliticiansDataStore
         }
 

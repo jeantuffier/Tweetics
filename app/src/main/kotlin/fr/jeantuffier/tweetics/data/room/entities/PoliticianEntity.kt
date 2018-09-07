@@ -10,17 +10,14 @@ data class PoliticianEntity(
     @ColumnInfo(name = "_id")
     val id: String,
 
-    @ColumnInfo(name = "group")
-    val group: String,
+    @ColumnInfo(name = "description")
+    val description: String,
+
+    @ColumnInfo(name = "profile_image_url")
+    val image: String,
 
     @ColumnInfo(name = "name")
     val name: String,
-
-    @ColumnInfo(name = "picture_url")
-    val pictureUrl: String,
-
-    @ColumnInfo(name = "role")
-    val role: String,
 
     @ColumnInfo(name = "screen_name")
     val screenName: String

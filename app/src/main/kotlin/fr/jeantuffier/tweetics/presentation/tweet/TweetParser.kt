@@ -63,12 +63,14 @@ class TweetParser(private val context: Context) {
 
     private fun parseLink(links: List<Link>?, baseSpan: SpannableString) {
         links?.forEach {
-            baseSpan.setSpan(
-                UrlSpan(getLinkUrl(it)),
-                it.indices.first(),
-                it.indices.last(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+            if (it.indices.last() <= baseSpan.length) {
+                baseSpan.setSpan(
+                    UrlSpan(getLinkUrl(it)),
+                    it.indices.first(),
+                    it.indices.last(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
         }
     }
 

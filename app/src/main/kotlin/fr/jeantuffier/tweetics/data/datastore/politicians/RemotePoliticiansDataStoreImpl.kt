@@ -6,14 +6,13 @@ import fr.jeantuffier.tweetics.domain.model.Politician
 import io.reactivex.Single
 
 class RemotePoliticiansDataStoreImpl(
-    private val politicianService: PoliticianService,
-    private val factory: PoliticianFactory
+    private val politicianService: PoliticianService
 ) : RemotePoliticiansDataStore {
 
     override fun getPoliticians(): Single<List<Politician>> {
         return politicianService
             .getPoliticians()
-            .map { factory.mapResponsesToPoliticians(it) }
+            .map { PoliticianFactory.mapResponsesToPoliticians(it) }
     }
 
 }
