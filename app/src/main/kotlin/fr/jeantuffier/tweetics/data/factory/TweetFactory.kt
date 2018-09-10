@@ -37,16 +37,18 @@ object TweetFactory {
     fun mapToEntities(
         models: List<Tweet>
     ): List<TweetEntity> {
-        return models.map {
-            TweetEntity(
-                it.id,
-                it.politician.id,
-                it.createdAt,
-                it.fullText,
-                it.reTweet?.id ?: "",
-                it.displayTextRange.toString()
-            )
-        }
+        return models.map { mapToEntity(it) }
+    }
+
+    fun mapToEntity(tweet: Tweet): TweetEntity {
+        return TweetEntity(
+            tweet.id,
+            tweet.politician.id,
+            tweet.createdAt,
+            tweet.fullText,
+            tweet.reTweet?.id ?: "",
+            tweet.displayTextRange.toString()
+        )
     }
 
     fun mapToTweets(responses: List<TweetResponse>): List<Tweet> {

@@ -66,37 +66,26 @@ class LocalWallDataStoreImpl(
         tweets: List<Tweet>,
         lambda: (String) -> Unit
     ) {
-        /*if (tweets.isNotEmpty()) {
-            Completable
-
-                //.andThen { insertUser(it.user) }
-                //.andThen { insertTweets(tweets) }
-                //.andThen { tweets.map { insertLinks(it.links) } }
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .doOnComplete { lambda(Config.WALL_SCREEN_NAME) }
-                .doOnError {
-                    it.printStackTrace()
-                }
-                .subscribe()
-        }*/
-    }
-
-    private fun insertPolitician(politician: Politician) {
-        val politicianEntity = PoliticianFactory.mapPoliticianToEntity(politician)
-        politicianDao.insert(politicianEntity)
-    }
-
-    private fun insertLinks(links: List<Link>?) {
-        if (links != null) {
-            val linkEntities = LinkFactory.mapToEntities(links)
-            linkDao.insertAll(linkEntities)
+        if (tweets.isNotEmpty()) {
+            tweets.forEach { tweet ->
+                politicianDao.insert(getPoliticianEntity(tweet.politician))
+                tweetDao.insert(getTweetEntity(tweet))
+                linkDao.insertAll(getLinkEntities(tweet.links))
+            }
+            lambda(Config.WALL_SCREEN_NAME)
         }
     }
 
-    private fun insertTweets(tweets: List<Tweet>) {
-        val tweetEntities = TweetFactory.mapToEntities(tweets)
-        tweetDao.insertAll(tweetEntities)
+    private fun getPoliticianEntity(politician: Politician) =
+        PoliticianFactory.mapPoliticianToEntity(politician)
+
+    private fun getTweetEntity(tweet: Tweet) = TweetFactory.mapToEntity(tweet)
+
+    private fun getLinkEntities(links: List<Link>?): List<LinkEntity> {
+        return when (links) {
+            null -> emptyList()
+            else -> LinkFactory.mapToEntities(links)
+        }
     }
 
 }

@@ -26,7 +26,7 @@ class WallRepositoryImpl(
 
     private fun isMoreThanTenMinutesSinceLastUpdate(): Boolean {
         val lastUpdate = getLastUpdate()
-        return lastUpdate == 0L || lastUpdate > 10 * 60 * 1000
+        return lastUpdate == 0L || System.currentTimeMillis() > (10 * 60 * 1000 + lastUpdate)
     }
 
     private fun getLastUpdate(): Long {
