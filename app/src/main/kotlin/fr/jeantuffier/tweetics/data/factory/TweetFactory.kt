@@ -13,20 +13,27 @@ object TweetFactory {
 
     fun mapToTweets(
         entities: List<TweetEntity>,
-        politician: Politician
+        politician: Politician,
+        links: List<Link>
     ): List<Tweet> {
-        return entities.map {
-            Tweet(
-                it.id,
-                it.createdAt,
-                it.fullText,
-                null,
-                emptyList(),
-                emptyList(),
-                getDisplayTextRangeFromEntity(it.displayTextRange),
-                politician
-            )
-        }
+        return entities.map { mapToTweet(it, politician, links)}
+    }
+
+    fun mapToTweet(
+        entity: TweetEntity,
+        politician: Politician,
+        links: List<Link>
+    ) : Tweet {
+        return Tweet(
+            entity.id,
+            entity.createdAt,
+            entity.fullText,
+            null,
+            links,
+            emptyList(),
+            getDisplayTextRangeFromEntity(entity.displayTextRange),
+            politician
+        )
     }
 
     private fun getDisplayTextRangeFromEntity(range: String): IntRange {

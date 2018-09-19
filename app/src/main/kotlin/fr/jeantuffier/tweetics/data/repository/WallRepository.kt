@@ -1,8 +1,8 @@
 package fr.jeantuffier.tweetics.data.repository
 
 import fr.jeantuffier.tweetics.domain.model.Tweet
-import io.reactivex.Maybe
+import io.reactivex.Single
 
 interface WallRepository {
-    fun getTweets(): Maybe<List<Tweet>>
+    fun getTweets(): Single<List<Tweet>>
 }

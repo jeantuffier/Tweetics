@@ -13,6 +13,9 @@ interface TweetDao {
     @Query("SELECT * FROM Tweet WHERE politician_id LIKE :politicianId")
     fun getTweets(politicianId: String): Maybe<List<TweetEntity>>
 
+    @Query("SELECT * FROM Tweet WHERE politician_id ORDER BY date(created_at) LIMIT 50")
+    fun getTweetsByDate(): Maybe<List<TweetEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(tweet: TweetEntity)
 

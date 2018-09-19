@@ -3,19 +3,16 @@ package fr.jeantuffier.tweetics.data.datastore.wall
 import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Politician
 import fr.jeantuffier.tweetics.domain.model.Tweet
-import io.reactivex.Maybe
+import io.reactivex.Single
 
 interface LocalWallDataStore {
 
-    fun getLinks(tweetId: String): Maybe<List<Link>>
+    fun getLinks(tweetId: String): Single<List<Link>>
 
-    fun getTweets(): Maybe<List<Tweet>>
+    fun getPolitician(politicianId: String): Single<Politician?>
 
-    fun getPolitician(screenName: String): Maybe<Politician>
+    fun getTweets(): Single<List<Tweet>>
 
-    fun saveTweets(
-        tweets: List<Tweet>,
-        doOnNext: (String) -> Unit
-    )
+    fun saveTweets(tweets: List<Tweet>)
 
 }
