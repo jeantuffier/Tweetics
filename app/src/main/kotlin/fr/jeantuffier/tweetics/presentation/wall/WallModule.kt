@@ -43,8 +43,9 @@ object WallModule {
 
         bean {
             GetLocalTweetUseCase(
-                get(), //TweetDao
-                get() //GetLocalPoliticianUseCase
+                get(), //GetLocalLinkUseCase
+                get(), //GetLocalPoliticianUseCase
+                get()  //TweetDao
             )
         }
 
@@ -56,13 +57,15 @@ object WallModule {
 
         bean {
             InsertPoliticianUseCase(
-                get() //TweetDao
+                get() //PoliticianDao
             )
         }
 
         bean {
             InsertTweetUseCase(
-                get() //TweetDao
+                get(), //InsertLinkUseCase
+                get(), //InsertPoliticianUseCase
+                get()  //TweetDao
             )
         }
 
@@ -71,8 +74,6 @@ object WallModule {
                 get(), //GetLinkUseCase
                 get(), //GetLocalPoliticianUseCase
                 get(), //GetLocalTweetUseCase
-                get(), //InsertLinkUseCase
-                get(), //InsertPoliticianUseCase
                 get()  //InsertTweetUseCase
             ) as LocalWallDataStore
         }

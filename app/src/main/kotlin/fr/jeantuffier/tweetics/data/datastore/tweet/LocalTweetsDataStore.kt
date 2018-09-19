@@ -3,6 +3,7 @@ package fr.jeantuffier.tweetics.data.datastore.tweet
 import fr.jeantuffier.tweetics.domain.model.Media
 import fr.jeantuffier.tweetics.domain.model.Politician
 import fr.jeantuffier.tweetics.domain.model.Tweet
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface LocalTweetsDataStore {
@@ -11,10 +12,5 @@ interface LocalTweetsDataStore {
         politician: Politician
     ): Single<List<Tweet>>
 
-    fun saveTweets(
-        screenName: String,
-        tweets: List<Tweet>,
-        politicianId: String,
-        doOnNext: (String) -> Unit
-    )
+    fun saveTweets(tweets: List<Tweet>): Completable
 }

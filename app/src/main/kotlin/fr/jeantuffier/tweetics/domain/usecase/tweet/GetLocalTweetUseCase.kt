@@ -17,7 +17,7 @@ class GetLocalTweetUseCase(
     private val tweetDao: TweetDao
 ) {
 
-    fun get(): Single<List<Tweet>> {
+    fun getWallTweets(): Single<List<Tweet>> {
         return tweetDao.getTweetsByDate()
             .switchIfEmpty(Maybe.just(emptyList()))
             .toObservable()

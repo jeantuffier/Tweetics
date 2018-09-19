@@ -49,10 +49,10 @@ class TweetsRepositoryImpl(
     }
 
     private fun saveTweets(screenName: String, tweets: List<Tweet>, politicianId: String) {
-        localTweetsDataStore
+        /*localTweetsDataStore
             .saveTweets(screenName, tweets, politicianId) {
                 setLastUpdate(screenName)
-            }
+            }*/
     }
 
     private fun setLastUpdate(screenName: String) {

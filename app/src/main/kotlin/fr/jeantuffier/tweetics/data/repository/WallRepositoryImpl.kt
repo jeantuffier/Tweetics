@@ -4,8 +4,8 @@ import android.content.Context
 import fr.jeantuffier.tweetics.data.datastore.wall.LocalWallDataStore
 import fr.jeantuffier.tweetics.data.datastore.wall.RemoteWallDataStore
 import fr.jeantuffier.tweetics.domain.model.Tweet
-import fr.jeantuffier.tweetics.presentation.common.Config
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
 private const val WALL_PREFERENCES = "wall_preferences"
 private const val WALL_TWEETS = "wall_tweets"
@@ -32,7 +32,7 @@ class WallRepositoryImpl(
     private fun getLastUpdate(): Long {
         return context
             .getSharedPreferences(WALL_PREFERENCES, Context.MODE_PRIVATE)
-            .getLong(getPreferenceKey(), 0)
+            .getLong(WALL_TWEETS, 0)
     }
 
     private fun getRemoteTweets(): Single<List<Tweet>> {
@@ -43,21 +43,20 @@ class WallRepositoryImpl(
 
     private fun saveTweets(tweets: List<Tweet>) {
         localWallDataStore.saveTweets(tweets)
-        setLastUpdate()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .doOnComplete { setLastUpdate() }
+            .subscribe()
     }
 
     private fun setLastUpdate() {
         context
             .getSharedPreferences(WALL_PREFERENCES, Context.MODE_PRIVATE)
             .edit()
-            .putLong(getPreferenceKey(), System.currentTimeMillis())
+            .putLong(WALL_TWEETS, System.currentTimeMillis())
             .apply()
     }
 
-    private fun getPreferenceKey() = "$WALL_TWEETS:${Config.WALL_SCREEN_NAME}"
-
-    private fun getLocalTweets(): Single<List<Tweet>> {
-        return localWallDataStore.getTweets()
-    }
+    private fun getLocalTweets() = localWallDataStore.getTweets()
 
 }

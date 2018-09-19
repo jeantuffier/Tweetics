@@ -3,6 +3,7 @@ package fr.jeantuffier.tweetics.data.datastore.wall
 import fr.jeantuffier.tweetics.domain.model.Link
 import fr.jeantuffier.tweetics.domain.model.Politician
 import fr.jeantuffier.tweetics.domain.model.Tweet
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface LocalWallDataStore {
@@ -13,6 +14,6 @@ interface LocalWallDataStore {
 
     fun getTweets(): Single<List<Tweet>>
 
-    fun saveTweets(tweets: List<Tweet>)
+    fun saveTweets(tweets: List<Tweet>): Completable
 
 }

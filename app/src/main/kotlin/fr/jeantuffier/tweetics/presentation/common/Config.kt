@@ -8,5 +8,4 @@ object Config {
     const val TWITTER = "https://twitter.com"
     const val TWITTER_HASHTAG = "https://twitter.com/hashtag"
 
-    const val WALL_SCREEN_NAME = "tweetics_app"
 }
