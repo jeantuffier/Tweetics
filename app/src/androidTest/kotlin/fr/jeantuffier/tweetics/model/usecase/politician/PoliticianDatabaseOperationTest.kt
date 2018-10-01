@@ -11,7 +11,9 @@ import io.kotlintest.Spec
 import io.kotlintest.extensions.TestListener
 import io.kotlintest.specs.StringSpec
 
-class PoliticianDatabaseOperationTest : StringSpec() {
+class PoliticianDatabaseOperationTest : StringSpec({
+
+}) /*{
 
     lateinit var applicationDatabase: ApplicationDatabase
 
@@ -56,3 +58,4 @@ class PoliticianDatabaseOperationTest : StringSpec() {
         }
     }
 }
+*/
